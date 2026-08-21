@@ -1,0 +1,13 @@
+# Normalise text so the repository is consistent whatever it is cloned onto.
+* text=auto
+
+# Patches are binary. If line endings were "fixed" in one of these it would
+# still look like a patch and would still be accepted by a patcher -- and it
+# would produce a wrong ROM. Mark them so that can never happen.
+*.bps binary
+*.a78 binary
+*.bin binary
+*.wav binary
+
+# Generated pages carry base64 payloads; leave them exactly as written.
+site/*.html -text

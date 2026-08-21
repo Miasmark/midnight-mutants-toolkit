@@ -1,0 +1,870 @@
+<title>Midnight Mutants -- Atari 7800 disassembly</title>
+<style>
+:root{
+  --bg:#f5f3ef; --surface:#ffffff; --sunk:#efece6; --line:#dcd8d1;
+  --text:#1c1a24; --muted:#5e5a69; --accent:#b45f18; --accent-soft:#f0e2d4;
+  --ok:#3f7d51; --ok-soft:#e2efe5;
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --r:3px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141219; --surface:#1c1a24; --sunk:#17151d; --line:#2f2c3a;
+    --text:#dedae6; --muted:#918da1; --accent:#e0833c; --accent-soft:#33261b;
+    --ok:#74b184; --ok-soft:#1c2a20;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141219; --surface:#1c1a24; --sunk:#17151d; --line:#2f2c3a;
+  --text:#dedae6; --muted:#918da1; --accent:#e0833c; --accent-soft:#33261b;
+  --ok:#74b184; --ok-soft:#1c2a20;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+.col{max-width:68ch}
+
+.hero{border-bottom:1px solid var(--line); padding:68px 0 40px; position:relative; overflow:hidden}
+.hero::after{content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
+  background:repeating-linear-gradient(to bottom,transparent 0 3px,rgba(127,127,140,.055) 3px 4px)}
+.eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 20px}
+h1{font-family:var(--mono); font-weight:700; letter-spacing:-.035em;
+  font-size:clamp(2.1rem,6.2vw,4rem); line-height:1.02; margin:0 0 20px; text-wrap:balance}
+h1 .dim{color:var(--muted); font-weight:400}
+.lede{font-size:1.12rem; color:var(--muted); margin:0; max-width:60ch}
+.lede strong{color:var(--text); font-weight:600}
+.badge{display:inline-flex; align-items:center; gap:10px; margin-top:28px;
+  background:var(--ok-soft); color:var(--ok); border:1px solid currentColor;
+  border-radius:var(--r); padding:9px 14px; font-family:var(--mono); font-size:12.5px}
+.badge b{font-weight:700}
+.dot{width:7px; height:7px; border-radius:50%; background:currentColor; flex:none}
+
+nav{position:sticky; top:0; z-index:5; background:var(--bg);
+  border-bottom:1px solid var(--line); padding:11px 0}
+nav ul{list-style:none; margin:0; padding:0; display:flex; gap:20px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase}
+nav a{color:var(--muted); text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px}
+nav a:hover,nav a:focus-visible{color:var(--accent); border-bottom-color:var(--accent)}
+
+section{padding:54px 0; border-bottom:1px solid var(--line); scroll-margin-top:58px}
+h2{font-family:var(--mono); font-size:.82rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 8px; font-weight:700}
+h3{font-size:1.45rem; letter-spacing:-.015em; margin:0 0 16px; text-wrap:balance}
+h4{font-size:1rem; margin:32px 0 10px}
+p{margin:0 0 16px}
+a{color:var(--accent)}
+code{font-family:var(--mono); font-size:.875em; background:var(--sunk);
+  border:1px solid var(--line); border-radius:var(--r); padding:1px 5px}
+ul.body{margin:0 0 16px; padding-left:1.15em}
+ul.body li{margin-bottom:7px}
+
+.scroll{overflow-x:auto; margin:22px 0; border:1px solid var(--line);
+  border-radius:var(--r); background:var(--surface)}
+pre{margin:0; padding:18px 20px; font-family:var(--mono); font-size:12.8px;
+  line-height:1.7; white-space:pre; color:var(--text)}
+pre .c{color:var(--muted)} pre .k{color:var(--accent)}
+
+table{border-collapse:collapse; width:100%; font-size:14px; font-variant-numeric:tabular-nums}
+th,td{text-align:left; padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.m,th.m{font-family:var(--mono); font-size:12.6px; white-space:nowrap}
+td.w{white-space:nowrap}
+
+.map{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:24px 0}
+.slot{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:14px 16px}
+.slot .rng{font-family:var(--mono); font-size:13px; font-weight:700}
+.slot .who{font-family:var(--mono); font-size:11px; color:var(--accent);
+  letter-spacing:.08em; text-transform:uppercase; margin-top:3px}
+.slot p{margin:8px 0 0; font-size:13.5px; color:var(--muted); line-height:1.55}
+
+.banks{display:grid; grid-template-columns:repeat(8,1fr); gap:5px; margin:20px 0 8px; min-width:640px}
+.bank{border:1px solid var(--line); border-radius:var(--r); background:var(--surface);
+  padding:10px 8px; text-align:center}
+.bank.fixed{border-color:var(--accent); background:var(--accent-soft)}
+.bank .n{font-family:var(--mono); font-weight:700; font-size:15px}
+.bank .r{font-size:10.5px; color:var(--muted); line-height:1.35; margin-top:5px}
+.legend{display:flex; gap:20px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); font-family:var(--mono)}
+.swatch{display:inline-block; width:10px; height:10px; border:1px solid var(--line);
+  border-radius:2px; margin-right:6px; vertical-align:-1px}
+.swatch.f{background:var(--accent-soft); border-color:var(--accent)}
+.swatch.p{background:var(--surface)}
+
+.chain{display:flex; gap:12px; flex-wrap:wrap; margin:24px 0}
+.step{flex:1 1 210px; border:1px solid var(--line); border-left:3px solid var(--accent);
+  border-radius:var(--r); background:var(--surface); padding:14px 16px}
+.step .addr{font-family:var(--mono); font-weight:700; font-size:14px}
+.step p{margin:6px 0 0; font-size:13.5px; color:var(--muted); line-height:1.55}
+
+.gallery{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px; margin:26px 0}
+figure{margin:0; border:1px solid var(--line); border-radius:var(--r);
+  background:var(--sunk); padding:12px; text-align:center}
+figure img{width:100%; height:auto; image-rendering:pixelated; display:block; border-radius:2px}
+figcaption{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:10px; line-height:1.5}
+figcaption b{color:var(--text); font-weight:700; display:block}
+
+blockquote{margin:22px 0; padding:16px 20px; border-left:3px solid var(--accent);
+  background:var(--sunk); border-radius:0 var(--r) var(--r) 0;
+  font-family:var(--mono); font-size:13px; line-height:1.75; white-space:pre-wrap}
+.note{font-size:14px; color:var(--muted)}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--r);
+  overflow:hidden; margin:26px 0}
+.stat{background:var(--surface); padding:14px 16px}
+.stat .v{font-family:var(--mono); font-size:1.5rem; font-weight:700; letter-spacing:-.02em}
+.stat .l{font-size:11px; color:var(--muted); text-transform:uppercase;
+  letter-spacing:.09em; font-family:var(--mono); margin-top:2px}
+footer{padding:40px 0 64px; font-size:13px; color:var(--muted)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+ul.pages{list-style:none;padding:0;margin:1rem 0 0}
+ul.pages li{padding:.45rem 0;border-bottom:1px solid var(--rule)}
+ul.pages a{font-weight:600}
+</style>
+
+<div class="hero"><div class="wrap">
+  <p class="eyebrow">Atari 7800 &middot; 128K SuperGame &middot; NTSC &middot; 1990</p>
+  <h1>Midnight&nbsp;Mutants<br><span class="dim">disassembled</span></h1>
+  <p class="lede">A complete, bank-aware disassembly of all 131,072 bytes of cartridge
+  ROM &mdash; display kernel, paging scheme, graphics format, game mechanics and the
+  full script &mdash; <strong>reassembled back into the original ROM to prove it
+  right</strong>.</p>
+  <div class="badge"><span class="dot"></span>
+    <span>ROUND-TRIP <b>PASSED</b> &nbsp;&middot;&nbsp; 131,200 bytes rebuilt &nbsp;&middot;&nbsp; md5 991721cc&hellip; matches</span>
+  </div>
+</div></div>
+
+<nav><div class="wrap"><ul>
+  <li><a href="#files">Files</a></li>
+  <li><a href="#cart">Cartridge</a></li>
+  <li><a href="#boot">Boot</a></li>
+  <li><a href="#display">Display</a></li>
+  <li><a href="#gfx">Graphics</a></li>
+  <li><a href="#areas">Areas</a></li>
+  <li><a href="#map">Map</a></li>
+  <li><a href="#text">Script</a></li>
+  <li><a href="#state">Mechanics</a></li>
+  <li><a href="#enemies">Enemies</a></li>
+  <li><a href="#bosses">Bosses</a></li>
+  <li><a href="#player">Player</a></li>
+  <li><a href="#sound">Sound</a></li>
+  <li><a href="#maps">Maps</a></li>
+  <li><a href="#dark">Darkness</a></li>
+  <li><a href="#credits">Credits</a></li>
+  <li><a href="#debug">Debug</a></li>
+  <li><a href="#tools">Toolchain</a></li>
+  <li><a href="#method">Method</a></li>
+  <li><a href="#pages">Pages</a></li>
+</ul></div></nav>
+
+<section id="files"><div class="wrap">
+  <div class="col"><h2>Files</h2><h3>What is in the reference</h3>
+  <p>Everything is generated from the ROM and regenerable. The annotation database is the
+  only file meant to be hand-edited; the listings, maps and script are outputs of it.</p></div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">18,219</div><div class="l">lines of asm</div></div>
+    <div class="stat"><div class="v">142</div><div class="l">labels</div></div>
+    <div class="stat"><div class="v">417</div><div class="l">RAM addresses</div></div>
+    <div class="stat"><div class="v">113</div><div class="l">text records</div></div>
+    <div class="stat"><div class="v">11</div><div class="l">tile sheets</div></div>
+    <div class="stat"><div class="v">34</div><div class="l">tools</div></div>
+  </div>
+
+  <div class="scroll"><table>
+    <thead><tr><th>file</th><th>what</th><th>detail</th></tr></thead>
+    <tbody><tr><td class='m'>src/f6.asm</td><td class='w'>engine bank</td><td>ROM bank 6 at $4000 &mdash; vector table, DLI handlers, main loop, item and terrain logic. The largest listing.</td></tr>
+<tr><td class='m'>src/f7.asm</td><td class='w'>fixed high bank</td><td>ROM bank 7 at $C000 &mdash; sprite data, the 23-slot service jump table at $D000, the area descriptor tables, RESET.</td></tr>
+<tr><td class='m'>src/b0.asm</td><td class='w'>text bank</td><td>ROM bank 0 &mdash; sound engine, text renderer, Grampa's message selector, the 50-entry message pointer table and the whole script.</td></tr>
+<tr><td class='m'>src/b1.asm, b2.asm, b4.asm</td><td class='w'>area data</td><td>Area graphics and map data. No executable code was reached in any of them.</td></tr>
+<tr><td class='m'>src/b3.asm</td><td class='w'>code + graphics</td><td>Code entered at $8000, character sets from $9000.</td></tr>
+<tr><td class='m'>src/b5.asm</td><td class='w'>code + scenery</td><td>Code at $B000-$BBFF including the sequence reward, scenery art at $A000.</td></tr>
+<tr><td class='m'>src/b7.asm</td><td class='w'>bank 7 through the window</td><td>The same bytes as f7.asm but assembled at $8000, for the rare case it is paged in.</td></tr>
+<tr><td class='m'>MEMORY_MAP.md</td><td class='w'>page-level map</td><td>All 128K, 256 bytes at a time: how much of each page the tracer proved to be code, and a content guess for the rest.</td></tr>
+<tr><td class='m'>RAM_MAP.md</td><td class='w'>RAM and I/O map</td><td>417 distinct addresses below $4000, 157 of them named, with reference counts and which banks touch each.</td></tr>
+<tr><td class='m'>TEXT.md</td><td class='w'>the script</td><td>All 113 text records decoded with control codes expanded &mdash; Grampa's hints, the monster backstories, the endings.</td></tr>
+<tr><td class='m'>annotations.json</td><td class='w'>the annotation database</td><td>142 labels, 100 comments, 137 data blocks, 141 RAM names, plus bank-switch hints. Survives regeneration &mdash; this is the file to edit.</td></tr>
+<tr><td class='m'>build/gfx/*.png</td><td class='w'>extracted artwork</td><td>11 character-set sheets decoded from MARIA's line-planar format.</td></tr>
+<tr><td class='m'>build/rebuilt.a78</td><td class='w'>the proof</td><td>The cartridge reassembled from src/. Byte-identical to the original, same MD5.</td></tr>
+<tr><td class='m'>tools/mame/</td><td class='w'>emulator harness</td><td>MAME Lua scripts plus notes, for settling questions by observation when static reading stalls.</td></tr></tbody></table></div>
+
+  <div class="col"><h4>Regenerating</h4></div>
+  <div class="scroll"><pre>python tools/disasm.py  &lt;rom.a78&gt; -c annotations.json -o src
+python tools/map.py     &lt;rom.a78&gt; -c annotations.json -o MEMORY_MAP.md
+python tools/rammap.py  &lt;rom.a78&gt; -c annotations.json -o RAM_MAP.md
+python tools/text.py    &lt;rom.a78&gt; -o TEXT.md
+python tools/verify.py  &lt;rom.a78&gt;     <span class="c">; must print ROUND-TRIP PASSED</span>
+python tools/build.py   &lt;rom.a78&gt;     <span class="c">; must print identical: YES</span></pre></div>
+</div></section>
+
+<section id="cart"><div class="wrap">
+  <div class="col"><h2>Cartridge</h2><h3>Three windows onto eight banks</h3>
+  <p>The <code>.a78</code> header claims SuperGame with bank&nbsp;6 at <code>$4000</code>.
+  That was confirmed rather than trusted: RESET ends in <code>JMP $4000</code>, and
+  <code>$4000</code> holds a valid jump table &mdash; only true under this mapping.</p></div>
+  <div class="map">
+    <div class="slot"><div class="rng">$4000&ndash;$7FFF</div><div class="who">fixed &middot; bank 6</div>
+      <p>The engine. Vector table, DLI handlers, main loop, item and terrain logic.</p></div>
+    <div class="slot"><div class="rng">$8000&ndash;$BFFF</div><div class="who">paged &middot; bank 0&ndash;7</div>
+      <p>The window. Area graphics, the script, and three separate code banks.</p></div>
+    <div class="slot"><div class="rng">$C000&ndash;$FFFF</div><div class="who">fixed &middot; bank 7</div>
+      <p>Sprites, the service jump table, area descriptors, RESET and the vectors.</p></div>
+  </div>
+  <div class="scroll"><div class="banks">
+    <div class="bank"><div class="n">0</div><div class="r">text engine + script</div></div>
+    <div class="bank"><div class="n">1</div><div class="r">area gfx</div></div>
+    <div class="bank"><div class="n">2</div><div class="r">area gfx</div></div>
+    <div class="bank"><div class="n">3</div><div class="r">code + gfx</div></div>
+    <div class="bank"><div class="n">4</div><div class="r">area gfx</div></div>
+    <div class="bank"><div class="n">5</div><div class="r">code + scenery</div></div>
+    <div class="bank fixed"><div class="n">6</div><div class="r">engine<br>always at $4000</div></div>
+    <div class="bank fixed"><div class="n">7</div><div class="r">sprites + services<br>always at $C000</div></div>
+  </div></div>
+  <p class="legend"><span><span class="swatch f"></span>permanently mapped</span>
+  <span><span class="swatch p"></span>paged through $8000</span></p>
+  <div class="col"><p>Only banks 6 and 7 are always visible, so they carry the cross-bank
+  ABI: two jump tables, five slots at <code>$4000</code> and twenty-three at
+  <code>$D000</code>. Every call between banks goes through them.</p>
+  <p>Paging is a write to anywhere in <code>$8000-$FFFF</code>, and the register cannot be
+  read back, so the engine keeps a shadow copy in <code>$BF</code>:</p></div>
+  <div class="scroll"><pre>    LDA  #$03
+    STA  $8000     <span class="c">; any write to $8000-$FFFF sets the bank</span>
+    STA  $BF       <span class="c">; shadow it, because interrupts will clobber it</span>
+    JSR  $8000     <span class="c">; ...and now $8000 is bank 3's code</span></pre></div>
+</div></section>
+
+<section id="boot"><div class="wrap">
+  <div class="col"><h2>Boot</h2><h3>The BIOS is gone by the second instruction</h3>
+  <p>Worth knowing if you are wondering whether the console BIOS images matter for
+  studying the game. They matter for the power-on handshake and nothing after it.</p></div>
+  <div class="scroll"><pre><span class="c">; bank 7, $FF00 -- RESET</span>
+    LDA  #$07
+    STA  INPTCTRL   <span class="c">; 7800 mode, MARIA enabled, BIOS ROM mapped out</span>
+    CLI
+    CLD
+    LDA  #$7F
+    STA  CTRL       <span class="c">; MARIA DMA off while we set up</span>
+    LDX  #$FF
+    TXS
+    LDA  #$00
+    STA  $8000      <span class="c">; select bank 0</span>
+    STA  $BF        <span class="c">; shadow copy -- cur_bank</span>
+    STA  OFFSET
+    LDX  #$40       <span class="c">; clear zero page $40-$FF</span>
+    <span class="c">;               ($00-$3F is TIA and MARIA, not RAM)</span>
+    JMP  $4000      <span class="c">; into the engine via the bank-6 table</span></pre></div>
+</div></section>
+
+<section id="display"><div class="wrap">
+  <div class="col"><h2>Display</h2><h3>Three interrupts, one of which does nothing</h3>
+  <p>MARIA raises NMI at the end of any display-list zone flagged for it. The vector at
+  <code>$400C</code> is <code>JMP ($2135)</code> &mdash; indirect through RAM &mdash; so
+  every handler installs its own successor. The disassembler rediscovers the chain by
+  scanning for the stores that write that vector.</p></div>
+  <div class="chain">
+    <div class="step"><div class="addr">$4104</div><p>Top of frame. Sets border and palette registers, then arms the sync tick.</p></div>
+    <div class="step"><div class="addr">$416F</div><p><code>DEC $1E68</code>, then <code>RTI</code>. One instruction. Its only job is to happen.</p></div>
+    <div class="step"><div class="addr">$400F</div><p>Per-zone palette swap, eleven zones, four bytes each from <code>$1ECC</code>.</p></div>
+  </div>
+  <div class="col"><h4>Why a do-nothing interrupt earns its slot</h4>
+  <p>Foreground code cannot page a bank out while MARIA is still reading graphics from it,
+  and there is no status bit to poll. So the engine parks the CPU against the raster
+  instead:</p></div>
+  <div class="scroll"><pre>    LDA  $BF        <span class="c">; hold the bank we want back</span>
+L_4152:
+    BIT  $1E68
+    BEQ  L_4152     <span class="c">; spin until the $416F tick fires</span>
+    STA  $8000      <span class="c">; safe now -- the raster has passed the zone</span></pre></div>
+  <div class="col"><p class="note">MARIA runs with <code>CTRL = $50</code>: DMA on,
+  one-byte characters, read mode 00 (160&times;2). The display list list sits at
+  <code>$0140</code> in RAM.</p></div>
+</div></section>
+
+<section id="gfx"><div class="wrap">
+  <div class="col"><h2>Graphics</h2><h3>Character sets stored sideways</h3>
+  <p>In character-map mode MARIA builds a glyph's address as
+  <code>((CHARBASE + line) &lt;&lt; 8) | char_number</code>. The line number lands in the
+  <em>high</em> byte, so a character set is line-planar: one whole 256-byte page holds
+  line&nbsp;0 of every character, the next holds line&nbsp;1. At 160&times;2 each byte is
+  four 2-bit pixels, so a character is four pixels wide.</p></div>
+  <div class="gallery">
+    <figure><img src="data:image/png;base64,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" alt="Mansion, gravestone and fence tiles from bank 5">
+      <figcaption><b>bank 5 &middot; $A000</b>mansion, gravestones, fence</figcaption></figure>
+    <figure><img src="data:image/png;base64,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" alt="Character and monster sprites from bank 7">
+      <figcaption><b>bank 7 &middot; $C000</b>character &amp; monster sprites</figcaption></figure>
+    <figure><img src="data:image/png;base64,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" alt="Area tiles and font from bank 1">
+      <figcaption><b>bank 1 &middot; $8000</b>area tiles and 4&times;8 font</figcaption></figure>
+    <figure><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAAGACAIAAAB0kfqIAAAS10lEQVR4nO2dLZYsxxGFNT6zBAEhay0m2oGQgZGAsES8AhPtQMjASEBYj2gt8h5EhAyeTvScvj13IvJmVfcbfx+a012dlV0TJ6IjMn6ePv/8i8928PXXf//4x08//ad/cVGfMuv8+OO/P/7x1Vd/+/jH99//87V1RtTK33zzj4WP6zq6w87Gfvvtv1evjD6ubP+nKH9Z2BZAgQBBxPOZNzOa0LxVlF348su/Xn2qYwHNTWtlo8aVMlgfPnx4814j9Aua56M7NA/BvKXPsGPU0EAQgQBBxNMuL6wYWYER6iuF91Kn6cOHX69uYVBzsLag+ZQax10Ps0PndwUaCCIQIIg4wwtb85X0mtLwFXDrxNnM3RXjT93az1dX13RsUOe7G8s1isGuPefROmggiECAIGKbF9ZxiMK4n7np2sfDsye1pD/88K+FBde8sLVo4YjOLdBAEIEAQcQ2L8xoOWVky1TDF6XqQ5tY66hjZdbREytdcI3O4ZrZ2MjnWrtFgQaCCAQIIg70wpS1aJhJF1zzROqtcpo0s9FsvjDxTH3LrKP7KXTlTlw09NQIJMJ5IEAQced0js7F6oUZ92fkfJWh0cDdWiBRnbi1BcP91PMpjgstooEgAgGCiKdvv/3u41+jOqzjzrlGGQjKWgxNbUd5fPUQ4CZoIIhAgCCidRZm4myjfL9O8Mq80jn9GdU9FXp0deuaPx0i42oVdY1+6p2tgwaCCAQIIi5eWKGHUKPqpBPS4ULUPKn27nhhRvmPeLR1RqCBIAIBgojLWZgqds12KN1oMisMa/VKu9ZZyxhRO268lZFrc+Y6a+jhY0FSPewBAYIIl86h6QF3KePa1UWqMM00jK4OLcUuixOaJ5MfogeChWlKiQaCCAQIIlomrNBsh7Xc7GJXjbO5qb5VlBUwuY4jS2GcuDMxBXQdE1YPwZR+F2ggiECAIKKVkVioC2Bs2a56pc46nf3oLYwJK0ZVaaObKuYWutVCzUrHNBfqk75Y57pbSEE6B+wBAYKI513JEqNmEUbnj/wy066ws1WtRNabmva8a99L7UsnH7J40Ujk2pbpLeriTlfJ+qYmoqiggSACAYKIp59//uXee9iAJhCqhu+MaDkzl+99gAaCCAQIIi4m7EHqjMJ1zDGQ+fhx+3m0dTp0MkYIJMIeECCIcF7Yo9UrmXWMF2YyGcJci7XvZQ6zOt3st++nU/RnMmHQQBCBAEHEYiDx0eqe9BynwoadQZl3qefqNBk21jb8YWAyWDpQFwZ7QIAg4kZpc1hw9CAuW2f21l3quUw7emPUOsbRoK5fYUxYJxcUDQQRCBBEXJLqTXSuGEXeOsdS6hmZUciddTqBxLVvumawCrVBastGCSejr6MVXi+2utIVHxMGe0CAIOLS5ndUlDSqM7plg94+f1lbRyOKaiVVV5tc+hd3fzu34cWDevXiW97cr1fbqGuMNTGWy2TFm5z8YlS1hwaCCAQIImbDVkxQzijbXXOsRut0OkuMCqvV/SnC07FOgsfa+Z3+4zqttIrOnE00EEQgQBCxrS7MlADDlNFANNOfuejkbHT6PCtoIIhAgCDiEkgM65XgCDpT2EZz0LbfCw0EEQgQRGyrC8MLyzED2opOxHU0bttAm184HAQIIp5tp4uV1hCwkbU5aCPLZdbRlvW6DhoIIhAgiLgxtVnBCzuHUVd8w1oqi9JJTUQDQQQCBBHP5r1OGjls5LifAWtnlx0zhwaCCAQIIpwJKzp1T7uGtsBnqzNoTBpGEY5s0/2ggSACAYKIxUCi6VJ4HBofW+vv9wkxih+aOr4i/DdR2gybQYAg4j7zwsIesx063X1HaeSFsaTmprvyXnY9Ot2q+V50qoejQIAgYltd2LDZ+5962DTc2EUnU71Qo2baWxXaumqN3nN+dRu7MP8LHQyNBoIIBAgiLp3qt4/z6KxzgjtWqC3reGHaH7KicyZvUNk1NsVMo17DhB+NA1uNO9BAEIEAQYTzwmJX6+11ihPcMe3ca3oLF8asGJtoMG5U5zl3+vQeB14YbAYBgoiLCRvNwwonQr546zrf4ExbNsruU9vRad+ktzA2aPiczzNhxjSjgSACAYKIbXVhxnEYrnPeMZmZaXJm1xGNpprzuxM2Vvvp5EOigSACAYIIN/KyuMtE5rsck3UYDZopOuNgbt3rVUdve2qitqVSdPNoIIhAgCDiks5RmAzqondqE83VqoSBM4u/RrbMBCSN/6K3MGOpz3w+6vZ2pqehgSACAYKIp99//+PqJVMNpOhoqsL0mB3VYa2hzoU2rTUTPM1+RqMhDZ11tHK800exMN6uLvjiU2/P5iYjEfaAAEHE5SzMhI+UUrbGhK0p/+2UneoE7gpjg3TPZvOhUSvUItfX6bTwNa6xsWWK2kQ0EEQgQBBx8cJMPMqoVjMgeFc3jF2YIuW1Ru7FqDmhfmpUnlYYL2xtskDnUEyr5NBAEIEAQcTFhGncr3PE03Ft1uYtHocp5jUVXp2n0fG5RjORtSDa5NLrc9bMRo1Mmv+p/hrBC4PNIEAQ4erCOpq5U2k7iqGdkMWhobNR7yll1PV9bZ1CcxQ7hdXGLxvtBy8MNoMAQcTFhJke5lY3ml4TfypbE1E03KXGeYQ5FAvjkGadTuq7sta8sX5OUBcGR4EAQcSN0uZRxp2m+RWlbDuWwvzOPwGT7bA2V6sYxRiPS24ZeWFlHMuEmV4laCCIQIAgwiXVG8wBigktjo7b7lIXVuzyp3alhXS6BJsatM58t9FhH3VhsAcECCLuMy/MsKvpxAlxSL2Xoj2jDCZIuHaCpr8rhin01/vRW6CBIAIBgohnVVMnzAuz61zXPRVrxuhMW6Zh1VshOO0h+WopcScOacKPmvvR2U9hjttqHTQQRCBAEHE5C1vLZwub2OunTFfAkTE6YSiJOjL1ilH+nXb9xVo803DrzHGl72WtgwaCCAQIIp61eYXpl759Xthonc5wk+PoZby/2gHYdvJ/teHGWvxQb2rSTc1+9C0CibAZBAginrW8t3TjCfPC1tbpuGPb52r1xlle2ym1Svq99FuMMhLX6qA7rnHnK6OBIAIBggg3L8xw5LywlXWUMwd+Fab8ynwvPfWrnxPmLGzUqrHQlMLOKG2zHzQQRCBAEHGjwZRiMudH7Jo71sla1IMqE0wzdOrCtFGk6fWkdPLbR2+ZRJFibUSaRibRQBCBAEGE88JGjRCVcF6YKTcuTETRODuj1MROJXKZMLXsnUCi2dgonUMdNE2MrLdG55IGNBBEIEAQ8XB1YUX9zjfZ9WZClh4DjUq0Xiy4eXj0cWNl7hI7RQNBBAIEERcvLK7n2lUX9qoeNkZEc/AKEyAd1al9QnS+V3mOYT0gGggiECCIcF5Yr57rOqFxbZ1C20foLUzTRTO/rBjN1TLe3BrHeWHF6Ht1XFoDGggiECCIcGdhHcul7KoLG2G6BJuJIb2TuMNLpLcz+l5hPSAaCCIQIIh4Vo+mY01Use+qCxsxqtUymQxmP7siiic4X0Xne+2qB0QDQQQCBBHPxnJ1ZtMXoyZUaxjHyqDfYq1OLcQ0ezeEp4d2nRWLrOuggSACAYIIN/LS1BkVowKxzi0MmphxK0g40Mxh9fQaHQPa2c+udUzNwq1zSbww2AoCBBGtszANOtUrptG9yfToRNU0qb4zx0p3qGc9w8aMR6UmHlc3t9Zpueg0geQsDPaAAEHEtrqwUe8LDUiaOSOKSUTUcSd3mZjZwdS71fPRk8pdLet3gQaCCAQIIrbVhRk0w61DOAHZZNzdF9PqRBMqHh80EEQgQBBxMWHhnK9O9MkUIBejIY+FloM9PlrmVow6994XNBBEIEAQ4bywtXouU4dVdAqidcHCzClWHtYdK9RLfbRooQENBBEIEEQ8ffvtdx//CnMAzFmYtrrt9NAoTPKG9rM16zyaCdO2/8aEcRYG7xMECCKed835MpgWRh0vrBNIhHuBBoIIBAgi3FlYMbJual/UC9O8wcL4XHoLzaXXe71oyvFYEUUtc+sMdnk00EAQgQBBxI1A4lqd0SiQ2PnUKHRmsvTNfu5rwnQbnZDpo4EGgggECCKePv/8i/7VWq9UbM+dC9X4LnOwVqe2xihN5UH2gwaCCAQIIlx3juJFG6jrLoXFCW7C2ghjo37Ngvops06nbYhxcjtfR8d73Xc/BRoIIhAgiGiZMNOx/C7uWLiOeSW8qX7KFKyp7TATu+ogT23ZmfvRldFAEIEAQUTLhCkmI3GXxTGsBfc6aSFrRs183IwbM9ak3hp9XNM7d+3HLIgGgggECCJaZ2GaN6j5fmeyK8lhZAo7wcai0+v4xcWD/v+m5XKhDtrafkzOZH13NBBEIEAQMfPCXqjN69DimdkFunLHlnWM0VpCxa0A4Ktt7dWIjAbW3Bo2+vbHj9sPGggiECCImJqwe7afHRma0GCthQ0L4yKZt/Qag3WjrlM11vbT+XejgSACAYKIWSDx0VohjRIj18KGHVNocyTeNlhrF6+xth+TtIMGgggECCIupc27GCn/E3I/6hZV1FaYAm2tlS46lcgaaNWVO68oZj93KdlGA0EEAgQRs9LmEWsd5juNO9bojC3TtIdCA3eddTqtkjuWS2dYK3dpNoIGgggECCIuZ2Fn1nOFpcRrqKVY88I0iGqdpoHlMrbM3AIvDD5hECCIuJiwB6nnOhP1lUyvxXrrVpPhwTy1YmSnjBd235aPaCCIQIAg4sBAojKqsTouolgYk/FiG5pz/nYb5A6chQEgQJBxI5C43R3rpHOYoFznDCvczxomZ6PQr9OJFnZsWbHLcpkezgY0EEQgQBDhvLC7NJ83SX3bq9I6+zEjUUbrdGzZXbywTvTSgAaCCAQIIm6UNt+lsEvdMZMceFxosWPLTH/dji17WC9sDTQQRCBAEPH0++9/fPxruwLUxAO9RUf97rrmvugOdzlNxt6d0E0FDQQRCBBE3PDCdlUeqa5Wpd3R52vXrO1Z6Zie0DyF9rfjqRXlFapTORrjUqCBIAIBgogbJsyYgzVlexdbFu75YelkjKwxslwFGggiECCIaAUSt3eEODPGuHbxdoynVuxKKVS0HNv8T0eggSACAYKI2VnY/6Et2274dh2KGUwZwvaKCTQQRCBAEDEbtmI8iDWOizHqW+bi9xFjLCrYeFyjlQINBBEIEETMTFjxCdmy8HBNOc7wbQ8tasOr7aCBIAIBgogDk+pDwhjjWsxze7ah4YTTMaUz42wEGggiECCI2D8vbI1RGXUYHzPa25jCUfK5XtN5xazzaD8wCjQQRCBAELEYSHx81kxGJy7aWVCvWVvn8UEDQQQCBBF3NmFnTl3pGAi9Rm3QyDgaW7ZmZB8NNBBEIEAQcTkLuwu7UvFHrBmItfhheE1BIBHeJwgQRFw61YcHTJ2Co10+13FnYR3rhi17CRoIIhAgiLh4YWE4y4TFdExJaMuOK3dSk3GmnfoU8zrQQBCBAEHEDRO2hurh4865TqjYLe5ip8yRHCYM3hUIEESccRZ2nNZdOxT7hM7CjEv7IKCBIAIBgogbU5vVx9EBytov/cxBmWeiYyh3YZ6zaaah/wuDTgtVPnz49c1P6TUFGggiECCIuJFUv9YJttyEd2bCjmOUAHPL3v1paIx9KTrXGMy90EAQgQBBhKsLK/2pv/yP87k6dvPMzMZyiI5zx/Q5G1fLWJOOzzUyfAVeGBwFAgQRN5Lq9Ze/BrjUiGjzvUc7tQnZZcLMc65XzL3M8d8uV8uAFwabQYAg4sZZmKKzFM1hzXs1YcUJp2OdXwhlTUZHV2temAENBBEIEEQsNpgyiQeVRPdep3EdRydAqpbLRBSNmTOM3DE0EEQgQBBx6VRvfvmbo5nyRExH95EJO665x9rK5lOdRE1dxzxnE1os1CMegRcGjwUCBBEukNjRljog+Liapl0tsHZhsuJ3xRjVloX9IUeWq2Pv0EAQgQBBxKW0ee1nuQk6dRbUjz9a1HF7J5BOFodhuxtV1lbP+MypX72FBoIIBAginn7++Zc3L+qozdHRjGF7jkTImaXNxpaNnmHnd0X4dTBhsAcECCKew4P+UolGtZ6ZIHccJ7hjhs4zHH0qpCwgGggiECCIuJGReFx50ZoefhA63Z9CypZpKO/FNq6N/n2tPxoIIhAgiLiYsE62dtFJ29a3Otc8PtvTQo5zx06wbmggiECAIMJ5YR1/Kux3pAs+PuUZ7XLHTJr9mjt25u8BNBBEIEAQcTFho4JWvXhNbX5CZ2HHYerCDB2DdcLjRQNBBAIEETcCiYWxU2sxxk/6LEzZXgWmdNyxDsfZMjQQRCBAENHqkQjwGmggiECAIAIBgggECCIQIIhAgCACAYIIBAgiECCIQIAgAgGCCAQIIhAgiECAIAIBgggECCIQIIhAgCACAYIIBAgiECCIQIAgAgGCiP8BqcClE8L0OEEAAAAASUVORK5CYII=" alt="Area tiles from bank 4">
+      <figcaption><b>bank 4 &middot; $8000</b>area tiles</figcaption></figure>
+  </div>
+  <div class="col"><p class="note">Rendered as four grey levels, one per 2-bit pixel value.
+  Deliberate: the colours are not in the ROM at these addresses &mdash; they are written to
+  MARIA's palette registers at run time and swapped per zone by the DLI. The startup
+  palette is a 24-byte table at <code>$4D1B</code> copied into <code>$28&ndash;$3F</code>,
+  skipping every fourth register because those slots are control registers, not colours.
+  All 11 sheets are in <code>build/gfx/</code>.</p></div>
+</div></section>
+
+<section id="areas"><div class="wrap">
+  <div class="col"><h2>Areas</h2><h3>Eight areas, two per bank</h3>
+  <p>Five parallel tables at <code>$FEB5</code> describe the world. Index 0 is unused.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>table</th><th>purpose</th>
+      <th class="m">1</th><th class="m">2</th><th class="m">3</th><th class="m">4</th>
+      <th class="m">5</th><th class="m">6</th><th class="m">7</th><th class="m">8</th></tr></thead>
+    <tbody>
+      <tr><td class="m">$FEB5</td><td>window half</td>
+        <td class="m">$80</td><td class="m">$A0</td><td class="m">$80</td><td class="m">$A0</td>
+        <td class="m">$80</td><td class="m">$A0</td><td class="m">$80</td><td class="m">$A0</td></tr>
+      <tr><td class="m">$FEBE</td><td>ROM bank</td>
+        <td class="m">1</td><td class="m">1</td><td class="m">2</td><td class="m">2</td>
+        <td class="m">3</td><td class="m">3</td><td class="m">4</td><td class="m">4</td></tr>
+      <tr><td class="m">$FED0/$FEC7</td><td>descriptor ptr</td>
+        <td class="m">$DA00</td><td class="m">$DA80</td><td class="m">$DB00</td><td class="m">$DB80</td>
+        <td class="m">$DA80</td><td class="m">$DA80</td><td class="m">$DC00</td><td class="m">$DC80</td></tr>
+      <tr><td class="m">$FED9</td><td>area type</td>
+        <td class="m">1</td><td class="m">1</td><td class="m">8</td><td class="m">8</td>
+        <td class="m">1</td><td class="m">1</td><td class="m">9</td><td class="m">8</td></tr>
+    </tbody></table></div>
+  <div class="col"><p><code>$1FCF</code> carries the area index into the loader, which
+  overwrites it with the page byte from <code>$FEB5</code> &mdash; after which the same
+  variable serves as the <code>CHARBASE</code> high byte. One byte, two jobs, in
+  sequence.</p></div>
+</div></section>
+
+<section id="map"><div class="wrap">
+  <div class="col"><h2>Map</h2><h3>The level you see and the level you walk into are the same stream</h3>
+  <p>The world is 160&times;800 units, wrapped into a <strong>10&times;100 grid</strong>
+  &mdash; one cell per 16 units of X and 8 of Y. The grid lives in RAM as ten 100-byte
+  column strips based at <code>$2400</code>, <code>$2464</code>, <code>$24C8</code> and
+  so on, addressed through a pair of tables at <code>$D281</code>.</p>
+  <p><code>MapTileAt</code>, slot 9 of the bank-7 service table, resolves a position in
+  three steps:</p></div>
+  <div class="scroll"><pre><span class="c">; in:  Y = world X, X = world Y low, A = world Y high</span>
+<span class="c">; out: A = terrain code, 0 when out of bounds</span>
+
+    strip   = tbl_MapStrip[worldX &gt;&gt; 4]
+    cell    = strip[worldY &gt;&gt; 3]
+    terrain = area_ptr[cell &gt;&gt; 1]</pre></div>
+  <div class="col"><p>So the grid does not hold terrain directly &mdash; it holds an
+  index, doubled, into a per-area property table that <code>area_ptr</code> points at in
+  bank 7. Change the area, and the same grid byte means something else. World X above
+  <code>$A0</code> wraps by subtracting <code>$10</code> and adding 7 to Y.</p>
+
+  <h4>The area builder</h4>
+  <p><code>BuildArea</code> at <code>b3:$8000</code> unpacks an area from a record
+  stream, five bytes at a time: <code>$80</code> means the next two bytes are a new
+  source pointer to follow, <code>$FF</code> ends the stream, and any other lead byte is
+  the row the record belongs to &mdash; it is skipped unless that row is the one being
+  built.</p>
+  <p>The builder runs twice, and <code>$90</code> selects which of two parallel
+  structures it fills:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>pass</th><th>list data</th><th>pointer table</th></tr></thead><tbody>
+    <tr><td class="m">0</td><td class="m">$2200</td><td class="m">$1800</td></tr>
+    <tr><td class="m">1</td><td class="m">$2400</td><td class="m">$1B00</td></tr>
+    </tbody></table></div>
+  <p>Each row's slot in those pointer tables comes from a small offset table, and the
+  offsets step by <strong>three</strong> &mdash; MARIA display-list-list entry size. So
+  both passes build display structures.</p>
+
+  <h4>Double buffering</h4>
+  <p><code>FlipDisplayBuffer</code> at <code>b3:$8276</code> waits on <code>MSTAT</code>
+  for the end of the visible field, points <code>DPPH</code> at <code>$18</code> or
+  <code>$1B</code>, and toggles <code>build_pass</code> so the next build fills whichever
+  buffer is now off-screen. Both display list lists are seeded from a template and both
+  are genuinely handed to MARIA.</p>
+
+  <h4>Resolved: the character map <em>is</em> the terrain grid</h4>
+  <p>Settled by running the cartridge in MAME and dumping memory. The live display list
+  at <code>$2200</code> holds MARIA 5-byte headers whose data pointers are exactly the
+  strip bases, with the <strong>indirect (character map) bit set</strong> in byte 1:</p>
+  <div class="scroll"><pre>  00 60 24 2B 00   <span class="c">data $2400, indirect, write mode 1, palette 1, width 21</span>
+  64 60 24 0B 00   <span class="c">data $2464, indirect, write mode 1, palette 0, width 21</span>
+  C8 60 24 2B 00   <span class="c">data $24C8, ...</span></pre></div>
+  <p>And the live bytes at <code>$2400</code> are <strong>all even and all below
+  <code>$80</code></strong> &mdash; exactly the doubled indices <code>MapTileAt</code>
+  expects.</p>
+  <p>So one set of bytes does both jobs. Each byte is the character number MARIA draws
+  for that cell, <em>and</em> <code>byte &gt;&gt; 1</code> is the index into the per-area
+  terrain table that decides whether you can walk there. There was never a separate map,
+  and the two addressing schemes were never in conflict &mdash; the display list points
+  at the grid in indirect mode, which is the piece I had missed through three attempts at
+  explaining it.</p>
+  <p>The five visible entries all sit at <code>hpos $00</code> with width 21, stacked
+  vertically, so a strip is a horizontal band 100 cells long with 21 on screen. That also
+  means the axes were labelled backwards: the 16-bit coordinate is the long scrolling
+  axis and the single byte is the short one.</p></div>
+</div></section>
+
+<section id="text"><div class="wrap">
+  <div class="col"><h2>Script</h2><h3>Plain ASCII, hiding in plain sight</h3>
+  <p>The dialogue is not compressed or re-encoded. It is uppercase ASCII, which is why the
+  tracer kept walking into it and decoding <code>$52</code> as <code>JAM</code>. Those
+  bogus opcodes were the tell &mdash; 113 records, forty-three in bank 0 and five in
+  the engine bank near <code>$6BBF</code>. A second, unframed pool of monster taunts sits
+  at <code>$BC26</code>.</p></div>
+  <div class="scroll"><pre>    $FF &lt;p1&gt; &lt;p2&gt; '@'  <span class="c">record header, then the text, then</span>  '#'
+
+    <span class="k">$40</span> @  start of text        <span class="k">$7C</span> |  newline  <span class="c">(dst += $16 -- 22 columns)</span>
+    <span class="k">$23</span> #  end of text          <span class="k">$26</span> &amp;  new page <span class="c">(reset column, then newline)</span>
+    <span class="k">$5E</span> ^  apostrophe            <span class="k">$2A</span> *  draw glyph $3C
+
+  p1 -&gt; text palette      p2 -&gt; index into the indent table at $A4B2</pre></div>
+  <div class="col"><p>The 22-column figure is not a guess: the newline routine at
+  <code>$A2C6</code> adds <code>$16</code> to the destination pointer. All 113
+  records are decoded in <code>TEXT.md</code>, including Grampa's hints, which together
+  amount to a walkthrough.</p></div>
+</div></section>
+
+<section id="state"><div class="wrap">
+  <div class="col"><h2>Mechanics</h2><h3>Player state</h3>
+  <p>Four bytes carry almost everything. <code>RAM_MAP.md</code> lists all 417
+  referenced addresses; these are the ones that drive the game.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>addr</th><th>name</th><th>meaning</th></tr></thead><tbody>
+    <tr><td class="m">$C4</td><td class="m">blood_purity</td><td>starts 100, shown as a percentage; 0 gives the undead ending</td></tr>
+    <tr><td class="m">$C5</td><td class="m">hp_cur</td><td>current health, the status-line bar; 0 is death</td></tr>
+    <tr><td class="m">$C6</td><td class="m">hp_max</td><td>maximum health, starts $27 (39)</td></tr>
+    <tr><td class="m">$8B</td><td class="m">death_state</td><td>$FF on death, counts down through the death animation</td></tr>
+    <tr><td class="m">$1FD3</td><td class="m">revive_ok</td><td>latched while alive; lets Grampa resurrect you</td></tr>
+    <tr><td class="m">$1F3D+n</td><td class="m">inventory</td><td>16 per-item counters, indexed by item_type ($1E80)</td></tr>
+    </tbody></table></div>
+
+  <div class="col"><h4>Items</h4></div>
+  <div class="scroll"><table>
+    <thead><tr><th>item</th><th>effect</th><th>code</th></tr></thead><tbody>
+    <tr><td class="m">$05</td><td>destroys terrain $EF and sets win_flag &mdash; the ending</td><td class="m">f6:$575C</td></tr>
+    <tr><td class="m">$06</td><td>red potion: blood purity +50, capped at 100</td><td class="m">f6:$508B</td></tr>
+    <tr><td class="m">$07</td><td>blue potion: hp_cur = hp_max, consumed</td><td class="m">f6:$5072</td></tr>
+    <tr><td class="m">$08</td><td>diamond: hp_max += 8, hp_cur = hp_max</td><td class="m">f6:$520F</td></tr>
+    </tbody></table></div>
+  <div class="col"><p>Picking up a potion you already hold auto-uses the old one and leaves
+  the count at 1 &mdash; the rule the printed manual describes, implemented at
+  <code>$5226</code> and <code>$524B</code>.</p>
+
+  <h4>Terrain</h4>
+  <p><code>TerrainDispatch</code> at <code>$5776</code> switches on the code under the
+  player. <code>$A0</code> is the healing well: it adds a single point per tick, clamped to
+  <code>hp_max</code>, and never writes <code>hp_max</code> &mdash; which is why it refills
+  the bar but never extends it. Only diamonds and the bank-5 sequence reward do that.
+  <code>$EF</code> is the final target, <code>$8C</code>, <code>$8E</code> and
+  <code>$8F</code> are further handlers, and anything <code>&ge; $F0</code> goes to
+  <code>$5810</code>.</p>
+
+  <h4>Tracing one line of dialogue back to its condition</h4>
+  <p>Grampa's line <em>"SO YOU WANT TO BE RAISED FROM THE DEAD?"</em> is slot
+  <code>$0F</code> of a 50-entry pointer table. The selector takes the first match:</p></div>
+  <div class="scroll"><pre>GrampaPickMessage:
+    LDA  forced_msg     <span class="c">; $1F9E -- a message forced by an event</span>
+    BNE  ...            <span class="c">;   -&gt; ($1F9E &amp; $7F) | $20</span>
+    LDA  undead_flag    <span class="c">; $1FD5 -- blood purity reached zero</span>
+    BNE  ...            <span class="c">;   -&gt; $0C  "YOU'RE ONE OF THE UNDEAD"</span>
+    LDA  win_flag       <span class="c">; $1FCD</span>
+    BNE  ...            <span class="c">;   -&gt; $0D  the rescue ending</span>
+    LDA  death_state    <span class="c">; $8B   -- you are dead</span>
+    BEQ  hints
+    LDA  revive_ok      <span class="c">; $1FD3 -- latched while you were alive</span>
+    BEQ  no_revive      <span class="c">;   -&gt; $0B  "HIT RESET TO RESTART"</span>
+    <span class="k">...halve hp_max, hp_cur = hp_max, clear death_state...</span>
+    LDX  #$0F           <span class="c">;   -&gt; the resurrection</span></pre></div>
+  <div class="col">
+  <p>The latch happens in a tick every eighth frame, and only while blood purity is
+  non-zero, the mode flag is clear, and <strong>maximum health is at least 48</strong>.
+  Maximum health starts at 39, so early on Grampa <em>cannot</em> resurrect you at all.
+  Diamonds raise the ceiling by 8 each; the resurrection then halves it again, so the
+  mechanic pays for itself. Dying of blood poisoning takes a different branch entirely and
+  can never be revived &mdash; which is what the line goes on to say about not being able
+  to purify your blood.</p>
+
+  <h4>And one thing left in by accident</h4>
+  <p>A routine at <code>$BDC2</code> runs only while the console PAUSE switch is held. It
+  counts button presses and eventually grants bonus maximum health. It reads as abandoned
+  debug code: the intermediate states branch to <code>$BE0E</code> and <code>$BE13</code>,
+  which are both inside the sound-effect data, so the bonus cannot be reached without
+  crashing first.</p></div>
+</div></section>
+
+<section id="dark"><div class="wrap">
+  <div class="col"><h2>Darkness</h2><h3>The cave is not drawn differently &mdash; it is just never lit</h3>
+  <p>Settled by replaying a recorded play session in MAME and sampling the zone palette
+  shadow every 30 frames. <code>FadeToBlack</code> (<code>b3:$85FC</code>) ramps every
+  zone palette down to <code>$00</code>, writing both the shadow and the live MARIA
+  register, and <em>every</em> area transition runs it. A lit area then ramps back up over
+  about 60 frames. The cave does not.</p></div>
+  <div class="scroll"><pre><span class="c">; entering a lit area (frames 9180-9240)</span>
+    00 00 00 00  ->  00 01 11 11  ->  00 02 13 11
+
+<span class="c">; entering the cave without the lantern (frame 10560 onward)</span>
+    00 00 00 00  ->  00 00 00 00  ->  00 00 00 00   <span class="k">...indefinitely</span></pre></div>
+  <div class="col"><p>So there is no separate dark-rendering path. The character map,
+  display lists and collision all keep running &mdash; the player moves normally and
+  enemies still reach and kill them &mdash; but every colour register is black, so nothing
+  reaches the screen. The cave is area type <code>$09</code>; type <code>$08</code> areas
+  ramp up as usual.</p>
+  <p class="note">Still open: the routine that ramps the palette back up, and the lantern
+  check that must gate it for type <code>$09</code>.</p></div>
+</div></section>
+
+<section id="enemies"><div class="wrap">
+  <div class="col"><h2>Enemies</h2><h3>Three damage models, and a weapon that does nothing</h3>
+  <p>Every hit adds <code>weapon_level</code> to a counter, but the counter, the
+  threshold and the meaning differ by target:</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>target</th><th>counter</th><th>dies at</th><th>weapon level</th></tr></thead><tbody>
+    <tr><td>ordinary actors</td><td class="m">actor_mode</td><td class="m">$A0</td><td>is the damage</td></tr>
+    <tr><td>special actors</td><td class="m">sactor_damage</td><td>8-bit overflow</td><td>is the damage</td></tr>
+    <tr><td>bosses</td><td class="m">boss_health</td><td class="m">0 (counts down)</td><td>gate only</td></tr>
+    </tbody></table></div>
+  <div class="col"><p>The knife is <strong>weapon level 0</strong>. It adds nothing anywhere,
+  so it can only kill things already past their threshold &mdash; crows, bats, wolves and
+  enemy projectiles. Against anything with health it registers the hit, plays the flash,
+  and does zero. Against a boss it is refused outright.</p>
+  <p>Against bosses the weapon level is only a gate, so axe, blaster and mega blaster all
+  remove exactly one point per hit. Measured over a recorded fight: 64 hits, one point
+  each. The mega blaster is better solely because its cooldown is <code>$0A</code> against
+  the axe's <code>$1E</code>.</p>
+
+  <h4>The AI is twenty instructions</h4>
+  <p><code>SetActorVelocity</code> homes at the player on both axes, then a random two-bit
+  value masks one axis to zero:</p></div>
+  <div class="scroll"><pre>vel_long  = (pos_long  &lt; target) ? +1 : -1
+vel_cross = (pos_cross &lt; target) ? +1 : -1
+Y = Random &amp; 3
+vel_cross &amp;= [$FF $FF $FF $00][Y]
+vel_long  &amp;= [$FF $FF $00 $FF][Y]</pre></div>
+  <div class="col"><p>Half the time both axes survive and the enemy charges diagonally; a
+  quarter it moves only across, a quarter only along. The direction is <em>never</em> away
+  from the player, so the randomness chooses how directly an enemy converges, never
+  whether it does. That is the whole shamble &mdash; no state machine, no pathfinding, and
+  nothing to lose a pursuer with.</p>
+
+  <h4>Unless you are carrying the cross</h4>
+  <p>Which is where the cross comes in. It is normally described as a defensive item, and
+  it is: contact blood loss is halved, or waived entirely while it is the selected item,
+  and every source of health damage is halved. But four of its eight effects act on the
+  enemies rather than on the player, and one of them reaches into the routine above.</p>
+  <p>The homing target is not read directly. A short preamble sets it to the player's
+  position, then checks the inventory &mdash; and if the cross is held, three times in four
+  it overwrites that target with a random point on the map:</p></div>
+  <div class="scroll"><pre>    LDA  itm_cross
+    BEQ  SetActorVelocity    <span class="c">; no cross -> target stays the player</span>
+    JSR  Random / AND #$03
+    BEQ  SetActorVelocity    <span class="c">; 1 in 4 -> still the player</span>
+    <span class="k">JSR  Random / AND #$3F / ADC #$20 / STA target_cross</span>
+    <span class="k">JSR  Random / AND #$7F / ADC #$14 / STA target_long</span></pre></div>
+  <div class="col"><p>The AI underneath is untouched &mdash; it still converges on its
+  target as relentlessly as ever. The cross simply lies to it about where you are. So the
+  same code that cannot be shaken produces a room full of wandering enemies, and the one
+  update in four that does target you is what keeps them from being harmless.</p>
+  <p><strong>Spawning is throttled too.</strong> An area's actor definition byte packs an
+  amount in the high nibble and a rate mask in the low one. Areas that carry the marker
+  <code>$EF</code> resolve it by inventory: <code>$FF</code> without the cross, which is
+  unbounded and spawns every frame, and <code>$22</code> with it &mdash; at most two, one
+  chance in 64. Counted on the machine, three rooms that hold eight live actors hold
+  <em>none</em> with the cross. The effect is authored per area, so only rooms carrying the
+  marker respond at all.</p>
+  <p>One path is exempt: an actor's velocity at the moment it spawns is set without the
+  inventory check, so everything launches straight at you and can only be scattered
+  afterwards.</p></div>
+</div></section>
+
+<section id="bosses"><div class="wrap">
+  <div class="col"><h2>Bosses</h2><h3>Three hand-written fights, and no arena</h3>
+  <p>A boss fight loads no room. <code>BossSetup</code> reads a 32-byte record and
+  blits a single large picture straight into the character map at <code>$2400</code>
+  &mdash; and the picture is the boss itself. That is why the area loader is bypassed
+  and why the room map has 76 entries and no arenas: there is nothing to describe but
+  a portrait and the fight running over it.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>boss</th><th>room</th><th>health</th><th>touch</th><th>portrait</th></tr></thead><tbody>
+    <tr><td>Skull</td><td class="m">$1E</td><td class="m">64</td><td class="m">10</td><td class="m">9&times;9 chars</td></tr>
+    <tr><td>Ram</td><td class="m">$15</td><td class="m">40</td><td class="m">5</td><td class="m">16&times;9</td></tr>
+    <tr><td>Dr Evil</td><td class="m">$3C</td><td class="m">160</td><td class="m">9 + purity</td><td class="m">20&times;10</td></tr>
+    </tbody></table></div>
+  <div class="col"><p><strong>They escalate.</strong> A stage counter climbs one step
+  roughly every 17 seconds and indexes a mask; the attack fires only when
+  <code>Random AND mask</code> is zero, so the mask is the reciprocal of the rate. It
+  starts at one shot in 64 and reaches <code>$00</code> &mdash; every frame. Being hit
+  advances the index by five while the flash is on, so striking a boss makes it
+  retaliate harder.</p>
+  <p><strong>Dr Evil alternates his weak spot.</strong> Bit 7 of a frame counter picks
+  one of two ten-unit windows 56 apart, and only the exposed one can be damaged. The
+  same flag places his shot, so the projectile always leaves the ear you can currently
+  hit. Rendered, the two windows land exactly on the pointed ears of his portrait.</p>
+  <p>All three move on <code>dat_DD00</code>, the same sine table that drives the zombie
+  head bob and the flying actors' drift.</p></div>
+</div></section>
+
+<section id="player"><div class="wrap">
+  <div class="col"><h2>Player</h2><h3>Two bars, and two ways to lose</h3>
+  <p>Health and blood purity start at <strong>39</strong> and <strong>100</strong>. They
+  have independent consumers and <strong>either reaching zero kills you</strong>, but the
+  two deaths are not the same.</p>
+  <p><strong>Blood is terminal.</strong> Purity at zero sets <code>undead_flag</code> and
+  ends the run; there is no resurrection from it. <strong>Health can be survived</strong>
+  &mdash; but only if <code>hp_max</code> has reached <code>$30</code>, and the diamond is
+  the only thing that raises it, by 8 from a base of <code>$27</code>.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>diamonds</th><th>hp_max</th><th>revivable</th></tr></thead><tbody>
+    <tr><td class="m">0</td><td class="m">39</td><td>no</td></tr>
+    <tr><td class="m">1</td><td class="m">47</td><td><strong>no</strong></td></tr>
+    <tr><td class="m">2</td><td class="m">55</td><td>yes</td></tr>
+    </tbody></table></div>
+  <div class="col"><p>So the diamond is not a health pickup at all &mdash; nothing ever
+  reads its inventory slot. It is the gate on a second life, and it takes two.</p>
+  <p><strong>The cross changes what you become.</strong> Dying of blood loss sets
+  <code>undead_flag</code> to <code>$FF</code> holding the cross and <code>$FE</code>
+  without. Same message, same finality &mdash; but without it the player's sprite is
+  drawn from the creature page using the bat's own cells. Drained of blood, you become
+  the thing that drained you.</p></div>
+</div></section>
+
+<section id="sound"><div class="wrap">
+  <div class="col"><h2>Sound</h2><h3>Two engines, one channel each</h3>
+  <p>Effects are a byte-stream interpreter in bank 0 driving channel 0. Music is a
+  separate <strong>two-voice tracker</strong> in the fixed bank with its own five-stage
+  ADSR. It addresses TIA indexed by voice &mdash; <code>STA AUDF0,X</code> &mdash; so it
+  never names <code>AUDF1</code> and does not appear in a search for it.</p>
+  <p>Data is three levels deep: a song table of track pointers, tracks of pattern
+  pointers, patterns of two-byte notes. A track's terminator says whether to loop, stop,
+  or chain to another song &mdash; the main theme is two songs chained to each other,
+  so it never ends.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>song</th><th>where</th></tr></thead><tbody>
+    <tr><td class="m">0, 6</td><td>intro, two cues</td></tr>
+    <tr><td class="m">1 &harr; 2</td><td>the main theme, chained</td></tr>
+    <tr><td class="m">3</td><td>Grampa's screen</td></tr>
+    <tr><td class="m">4</td><td>title</td></tr>
+    <tr><td class="m">5</td><td>boss fight</td></tr>
+    <tr><td class="m">7</td><td>boss defeated</td></tr>
+    <tr><td class="m">8, 9</td><td>the caves</td></tr>
+    <tr><td class="m">10</td><td>the funeral dirge</td></tr>
+    </tbody></table></div>
+  <div class="col"><p><strong>One byte carries both timbre and pitch.</strong>
+  <code>AUDF</code> is a five-bit register; the player writes the whole byte and the chip
+  keeps the low five, then shifts the same byte right by five and uses the three bits the
+  chip discarded to pick the waveform.</p>
+  <p><strong>The area's graphics page picks its music.</strong> The byte that selects a
+  room's artwork indexes the song table too, so rooms that look alike sound alike. Death
+  is modelled as entering an area: the dirge is simply the tune of area type
+  <code>$0A</code>.</p></div>
+</div></section>
+
+<section id="maps"><div class="wrap">
+  <div class="col"><h2>Maps</h2><h3>Terrain is a table copy, and it regenerates offline</h3>
+  <p>The grid at <code>$2400</code> is not built from the area record stream. The real
+  writer is <code>f7:$F243</code>, a plain copy out of the paged area bank &mdash; the
+  room is assembled from pre-drawn 200-byte slices, ten bands of twenty, selected per
+  scroll segment.</p></div>
+  <div class="scroll"><pre>n   = $1EC6                 <span class="c">slice count, from the area header</span>
+sel = $1EC7 + x             <span class="c">per-slice source selector</span>
+src = tbl_F2B4[sel] | tbl_F2E8[sel] &lt;&lt; 8
+dst = $2400 + tbl_F31D[x]
+
+for slice x &lt; n:
+    for band in 0..9:
+        copy 20 bytes src -&gt; dst
+        src += $14 ; dst += $64</pre></div>
+  <div class="col"><p>Reproducing that offline regenerates any room from the cartridge with
+  no emulator involved. Resolving the area header for the character set, the paged bank and
+  the palette block on top of it renders <strong>all 76 rooms in colour</strong> &mdash;
+  every room picture in this teardown is drawn from ROM, not captured.</p>
+  <p>That also measures the area banks. The <code>$8000</code>-<code>$BFFF</code> window
+  holds two 128-character sets and <strong>39 terrain slices</strong>: 15,992 of 16,384
+  bytes claimed by known readers, the remainder a slice of zeroes.</p></div>
+
+  <div class="col"><h4>How rooms connect</h4>
+  <p>Rooms have real exits, and they live in the area header. North and south are per
+  scroll segment; east and west are one destination for the whole room. Each vertical
+  edge takes <em>two</em> arrays &mdash; a destination and the arrival point &mdash;
+  which is why the header holds <strong>five</strong> arrays, not four.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>edge</th><th>header</th><th>read at</th><th>taken when</th></tr></thead><tbody>
+    <tr><td>north</td><td class="m">arrays 2 + 3</td><td class="m">f6:$57E2</td><td>cross position drops below <code>$0A</code></td></tr>
+    <tr><td>south</td><td class="m">arrays 4 + 5</td><td class="m">f6:$57F9</td><td>cross position reaches <code>$A0</code></td></tr>
+    <tr><td>west</td><td class="m">+5</td><td class="m">f6:$591E</td><td>world position falls below <code>$1D</code></td></tr>
+    <tr><td>east</td><td class="m">+6</td><td class="m">f6:$5935</td><td>world position reaches <code>map_limit</code></td></tr>
+    </tbody></table></div>
+  <div class="col"><p>A destination of <code>$00</code> means that edge is a wall. The two
+  vertical tables are told apart by where they drop you: north arrivals set the bottom of
+  the new room, south arrivals the top.</p>
+  <p>East and west are how the caves and the woods thread together &mdash; 43 rooms have
+  one. Four of them, <code>$2C</code>, <code>$2D</code>, <code>$31</code> and
+  <code>$38</code>, name <em>themselves</em> on both sides, so walking either way returns
+  you where you started. Nothing else in the exit data does that.</p>
+  <p>The other connections are scripted terrain: cells with bit 7 set are doors and warps
+  rather than ground, and the three boss doors are gated on <code>boss_flags</code>, so a
+  door stops working once its boss is dead.</p></div>
+</div></section>
+
+<section id="credits"><div class="wrap">
+  <div class="col"><h2>Credits</h2><h3>Who made it, per the ROM itself</h3>
+  <p>A credits run sits at <code>f6:$73F7</code>, shown across the screens before the
+  final boss. It uses a <em>second</em> text framing &mdash;
+  <code>&lt;$FE|$FF&gt; &lt;p1&gt; &lt;p2&gt;</code> then text, running to the next
+  <code>$FE</code>/<code>$FF</code>, with no <code>@</code> introducer and no
+  <code>#</code> terminator. That is why the first extraction pass, which looked only
+  for the Grampa message shape, missed it entirely.</p></div>
+  <div class="scroll"><pre>    PRODUCED BY <span class="k">RADIOACTIVE SOFTWARE</span>
+    COPYRIGHT 1990 ATARI CORP  /  ALL RIGHTS RESERVED
+    PROGRAM AND DESIGN BY <span class="k">PETER ADAMS</span>
+    STORIES BY <span class="k">TAMMY MOORE</span>
+    MUSIC AND SOUND BY <span class="k">PAUL WEBB</span>
+    ART BY <span class="k">LES PARDUE</span>
+    SPECIAL THANKS TO ADAM CLAYTON AND RICH ROBBINS</pre></div>
+  <div class="col"><p>Teaching the extractor the second framing took the script from 48
+  records to <strong>113</strong> &mdash; the cutscene lines, item pickup messages, the
+  locked-door prompts and the boss taunts were all in the pool it had been skipping.</p>
+  <p>One of Grampa's lines is an in-joke at the programmer's expense: <em>"IT'S A WONDER
+  PETER EVER GOT THIS PROGRAM BEDUGGED!"</em> &mdash; Peter Adams being the credited
+  programmer.</p></div>
+</div></section>
+
+<section id="debug"><div class="wrap">
+  <div class="col"><h2>Debug hook</h2><h3>A cheat that resets your console instead</h3>
+  <p><code>DbgPauseHook</code> at <code>b0:$BDC2</code> is called from <code>$A31F</code>
+  only while the console <strong>PAUSE</strong> switch is held. It reads the controller
+  buttons directly &mdash; bit 7 set means pressed, confirmed against how the game polls
+  them in normal play &mdash; and steps a counter, <code>dbg_step</code>
+  (<code>$1FDC</code>).</p></div>
+  <div class="scroll"><pre>DbgPauseHook:
+    LDA  dbg_step
+    BEQ  read_buttons     <span class="c">; step 0 -> read</span>
+    CMP  #$01 / BEQ $BDFA <span class="c">; step 1 -> broken path</span>
+    CMP  #$02 / BEQ $BDFA <span class="c">; step 2 -> broken path</span>
+    CMP  #$03 / BEQ read_buttons
+    <span class="k">LDA #$64 / STA blood_purity    ; step >= 4: the payout</span>
+    <span class="k">LDA hp_max / ADC #$08 / STA hp_max / STA hp_cur</span>
+    LDA  #$00 / STA dbg_step
+
+read_buttons:
+    LDA  INPT0 / ORA INPT2 / ORA INPT3
+    BMI  $BE0E            <span class="c">; any other button held -> sound data</span>
+    LDA  INPT1
+    BPL  $BE13            <span class="c">; INPT1 not held -> sound data</span>
+    INC  dbg_step
+    LDA  INPT1 / BMI *-2  <span class="c">; debounce: wait for release</span>
+    RTS</pre></div>
+  <div class="col">
+  <p>So the intended input is narrow: <strong>hold PAUSE, hold INPT1 alone</strong>, with
+  the other three button lines released. Each clean press advances the counter by one,
+  and at four it grants +8 maximum health and refills blood purity to 100.</p>
+  <p>It can never get there. Steps 0 and 3 reach the button reader, but steps 1 and 2
+  branch unconditionally to <code>$BDFA</code>, which falls off the end of the routine
+  into <code>$BE00</code>. That address is sound-effect data, and so are the two
+  wrong-button targets <code>$BE0E</code> and <code>$BE13</code>. All three reach a
+  <code>BRK</code> within a few bytes:</p></div>
+  <div class="scroll"><pre>  BE00: 08        PHP
+  BE01: BE FF 00  LDX $00FF,Y
+  BE04: 4D BE FF  EOR $FFBE
+  BE07: 00        BRK        <span class="c">; IRQ vector is $FF00 -- the reset entry</span></pre></div>
+  <div class="col"><p>Because the IRQ vector points at <code>RESET</code>, the failure
+  mode is a soft reset rather than a hang. The counter can be advanced exactly once
+  before the next invocation reboots the game, so the bonus is unreachable in any
+  build of the ROM as shipped.</p></div>
+</div></section>
+
+<section id="tools"><div class="wrap">
+  <div class="col"><h2>Toolchain</h2><h3>34 tools, and why one of them is an assembler</h3>
+  <p>A disassembler alone produces something plausible. Pairing it with an assembler that
+  speaks the same dialect turns the output into a claim that can fail: reassemble, compare,
+  and any mistake in instruction decoding or code/data classification shows up immediately
+  as a mismatch.</p>
+  <p>It has already earned its keep &mdash; the round trip caught a stale bank in the
+  tracer, a label swallowed by a data block, and a call being attributed to the wrong bank
+  entirely.</p>
+  <h4>And an emulator, for when reading stalls</h4>
+  <p>Some questions are cheaper to observe than to derive. <code>tools/mame/</code> drives
+  the cartridge headless in MAME at about 4500% speed, so a 45-second in-game run costs
+  roughly a second. <code>watch.lua</code> samples all of RAM at chosen frames, which finds
+  timers and slow state by diffing rather than by reading code.</p>
+  <p>This is what finally settled the character-map question after three failed static
+  explanations, and it independently confirmed both the bank mapping and the zero-page
+  RAM mirroring. One caveat worth recording: MARIA's registers are write-only, so dumping
+  <code>DPPH</code> or <code>CTRL</code> from Lua tells you nothing.</p></div>
+  <div class="scroll"><table>
+    <thead><tr><th>tool</th><th>what it does</th></tr></thead>
+    <tbody><tr><td class='m'>tools/disasm.py</td><td>Bank-aware recursive-descent disassembler. Follows control flow from the vectors, tracks A/X/Y constants to resolve bank switches, auto-discovers the DLI chain, applies annotations.json.</td></tr>
+<tr><td class='m'>tools/asm.py</td><td>A 6502 assembler for exactly the dialect disasm.py emits. Exists so the disassembly can be checked rather than trusted.</td></tr>
+<tr><td class='m'>tools/verify.py</td><td>Reassembles every listing and compares it against the original bank. The correctness backstop.</td></tr>
+<tr><td class='m'>tools/build.py</td><td>Assembles all eight banks into a complete .a78 and diffs it against the reference ROM.</td></tr>
+<tr><td class='m'>tools/map.py</td><td>Generates MEMORY_MAP.md.</td></tr>
+<tr><td class='m'>tools/rammap.py</td><td>Generates RAM_MAP.md.</td></tr>
+<tr><td class='m'>tools/text.py</td><td>Finds and decodes the text records; can emit data blocks to feed back into annotations.json.</td></tr>
+<tr><td class='m'>tools/gfx.py</td><td>Renders character sets to PNG from the line-planar layout.</td></tr>
+<tr><td class='m'>tools/recon.py</td><td>First-look tool: a78 header, per-bank entropy, vectors.</td></tr>
+<tr><td class='m'>tools/mkpage.py</td><td>Generates this page.</td></tr>
+<tr><td class='m'>tools/mame/run.lua</td><td>MAME Lua harness: drives the cart headless and dumps display and player state at chosen frames.</td></tr>
+<tr><td class='m'>tools/mame/watch.lua</td><td>Samples all of RAM at intervals so slowly-changing state can be found by diffing snapshots.</td></tr></tbody></table></div>
+</div></section>
+
+<section id="pages"><div class="wrap">
+  <div class="col"><h2>Pages</h2><h3>The rest of the teardown, in pictures</h3>
+  <p>Everything below is rendered from the cartridge rather than captured from an
+  emulator: the terrain grids, character sets, palettes and sprite composites are all
+  read out of ROM and drawn.</p>
+  <ul class="pages">
+    <li><a href="rooms.html">Rooms</a>
+        &mdash; all 76, with items placed, spawns named, exits and doors marked</li>
+    <li><a href="bestiary.html">Bestiary</a>
+        &mdash; every creature, animated, with stats and spawn rooms</li>
+    <li><a href="bosses.html">Bosses</a>
+        &mdash; portraits, weak points, projectiles and the escalation rules</li>
+    <li><a href="items.html">Items</a>
+        &mdash; every slot, its icon, where it is and what reads it</li>
+    <li><a href="sprites.html">Sprite sheet</a>
+        &mdash; every actor cell, identified</li>
+    <li><a href="editor.html">Editor manual</a>
+        &mdash; the tool that edits the cartridge, and what it refuses to do</li>
+    <li><a href="versions.html">NTSC and PAL</a>
+        &mdash; how the two releases differ, and why almost none of it is the game</li>
+  </ul></div>
+</div></section>
+
+<section id="method"><div class="wrap"><div class="col">
+  <h2>Method</h2><h3>How much of this is actually known</h3>
+  <p>The listings reassemble into a byte-identical cartridge, so instruction decoding and
+  the code/data split are not in question. The interpretation on top of that varies, and
+  the reference marks which is which. Three kinds of statement are kept apart throughout,
+  and the distinction is load-bearing: <strong>traced</strong>, read from instructions with
+  the address given; <strong>measured</strong>, observed on a running machine with the
+  method given; <strong>observed</strong>, taken from play and marked as such.</p>
+  <ul class="body">
+    <li><strong>Proven.</strong> Banking and boot, the DLI chain, the text format and the
+    character-set layout, all 76 rooms and their four kinds of exit, the doors and their
+    gates, every inventory slot and what reads it, actor spawning and the damage rules,
+    the bosses, the player's two bars and both endings, and the sound engine with all
+    eleven songs &mdash; each read off code that rebuilds.</li>
+    <li><strong>Assumed, and recorded as such.</strong> A handful of bank-switch sites
+    where the bank comes from a table or a shadow variable, pinned by hand in
+    <code>annotations.json</code> under <code>banksw</code> and <code>bankat</code>.</li>
+    <li><strong>Guessed.</strong> Content labels in the page-level memory map for regions
+    the tracer never reached &mdash; the classifier calls some data "CODE?" and it is
+    wrong about it.</li>
+  </ul>
+  <p>Traced-as-code coverage is 54.2% of the engine bank and 11.0% of the
+  cartridge. That is not a gap: the rest is tables and artwork. The largest block of it is
+  now measured rather than assumed &mdash; an area bank's window is 98% claimed by two
+  known readers.</p>
+  <h4>Still open</h4>
+  <p>Nothing structural. What remains is soft. All seven referenced instruments are
+  characterised by role, range, note length and waveform and each is rendered playing its
+  own notes, but nobody has sat with the audio and named the timbres; whether the nine
+  unused instrument rows are abandoned drafts or an unused library is not something the
+  data settles. Two hitbox marks on the boss page are placed from play rather than derived,
+  because a portrait narrower than the screen leaves its window origin underdetermined.
+  And three sites pass a song number in a register that is not traced to a constant, though
+  all three are accounted for by the area-type mechanism.</p>
+  <p>The rebuild is byte-identical to the cartridge, which bounds all of it: no claim here
+  can be hiding a misread instruction, only a misread intention.</p>
+</div></div></section>
+
+<footer><div class="wrap"><div class="col">
+  <p>Generated by <code>tools/mkpage.py</code>. Every figure on this page is read from the
+  generated files at build time, so the page cannot drift from the reference.</p>
+</div></div></footer>

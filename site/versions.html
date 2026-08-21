@@ -1,0 +1,339 @@
+<title>Midnight Mutants Releases</title>
+<style>
+:root{
+  --bg:#EFEBE3; --ink:#1B1916; --mut:#6B6358; --faint:#8C8477;
+  --rule:#D3CBBD; --card:#F7F4EE; --sunk:#E5E0D6;
+  --ntsc:#A8641A; --ntsc-soft:#F0E3D2;
+  --pal:#2F6C99; --pal-soft:#DEE9F2;
+  --mono:ui-monospace,"Cascadia Mono","SFMono-Regular","JetBrains Mono",Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#100F0D; --ink:#E7E2D8; --mut:#948B80; --faint:#736B61;
+  --rule:#292520; --card:#181614; --sunk:#141210;
+  --ntsc:#D98E2B; --ntsc-soft:#2E2317;
+  --pal:#6FA8D4; --pal-soft:#16222C;
+}}
+:root[data-theme="dark"]{
+  --bg:#100F0D; --ink:#E7E2D8; --mut:#948B80; --faint:#736B61;
+  --rule:#292520; --card:#181614; --sunk:#141210;
+  --ntsc:#D98E2B; --ntsc-soft:#2E2317;
+  --pal:#6FA8D4; --pal-soft:#16222C;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:830px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--rule);padding:56px 0 32px;margin-bottom:40px}
+.eyebrow{font:12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:14px}
+.eyebrow b{color:var(--ntsc);font-weight:600}
+.eyebrow i{color:var(--pal);font-style:normal;font-weight:600}
+h1{margin:0 0 12px;font-size:clamp(32px,5.2vw,48px);line-height:1.05;
+  letter-spacing:-.022em;font-weight:680;text-wrap:balance}
+.standfirst{margin:0;max-width:62ch;font-size:17.5px;color:var(--mut)}
+
+.headline{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;
+  overflow:hidden;margin:30px 0 0}
+.hl{background:var(--card);padding:14px 16px}
+.hl .n{font:22px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hl .k{font-size:12.5px;color:var(--mut);margin-top:3px}
+.hl.ntsc .n{color:var(--ntsc)} .hl.pal .n{color:var(--pal)}
+
+section{margin-bottom:50px;scroll-margin-top:20px}
+h2{margin:0 0 6px;font-size:25px;letter-spacing:-.016em;font-weight:660;text-wrap:balance}
+h2 + .sub{margin:0 0 18px;color:var(--mut);font-size:15.5px;max-width:62ch}
+h3{margin:28px 0 8px;font-size:16.5px;font-weight:640}
+p{margin:0 0 14px;max-width:66ch}
+ul{margin:0 0 14px;padding-left:20px;max-width:66ch}
+li{margin-bottom:7px}
+code{font:.88em var(--mono);background:var(--sunk);padding:1px 5px;border-radius:3px}
+strong{font-weight:640}
+.nt{color:var(--ntsc);font-weight:640}
+.pl{color:var(--pal);font-weight:640}
+
+.scroll{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;
+  font-variant-numeric:tabular-nums}
+th{text-align:left;font:11px var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--rule);padding:0 14px 7px 0;
+  white-space:nowrap}
+th.n{color:var(--ntsc)} th.p{color:var(--pal)}
+td{padding:8px 14px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.m{font-family:var(--mono);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+figure{margin:0 0 20px}
+figure svg{display:block;width:100%;height:auto;max-width:100%}
+figcaption{font-size:13.5px;color:var(--mut);margin-top:9px;max-width:66ch}
+
+.note{border-left:3px solid var(--ntsc);background:var(--ntsc-soft);
+  padding:13px 16px;border-radius:0 4px 4px 0;margin:0 0 18px;max-width:66ch}
+.note.cool{border-left-color:var(--pal);background:var(--pal-soft)}
+.note p:last-child{margin-bottom:0}
+.note .lead{font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mut);display:block;margin-bottom:5px}
+
+footer{border-top:1px solid var(--rule);padding:26px 0 60px;color:var(--faint);
+  font-size:13.5px}
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Midnight Mutants &middot; <b>NTSC</b> against <i>Europe</i></div>
+    <h1>Two cartridges, one game</h1>
+    <p class="standfirst">The European release differs from the American one in
+      12.6% of its bytes. Almost none of that is the game.</p>
+    <div class="headline">
+      <div class="hl"><div class="n">16,467</div><div class="k">bytes differing</div></div>
+      <div class="hl"><div class="n">19</div><div class="k">that are not relocation, in bank 6</div></div>
+      <div class="hl ntsc"><div class="n">235</div><div class="k">NTSC scanlines</div></div>
+      <div class="hl pal"><div class="n">292</div><div class="k">PAL scanlines</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section>
+    <h2>Nothing about the game changed</h2>
+    <p class="sub">Before the differences, the sameness &mdash; because it is
+      almost total.</p>
+    <ul>
+      <li><strong>Banks 1, 2 and 4 are byte-identical.</strong> Every character
+        set and all 39 terrain slices: the whole of the artwork rooms are built
+        from.</li>
+      <li><strong>All 76 area headers are byte-identical.</strong> Every room's
+        graphics page, darkness, map limit, exits on four edges, item, spawn
+        budgets and slice list.</li>
+      <li><strong>Every gameplay constant matches</strong> once read at its
+        relocated address &mdash; toughness seeds, weapon fire rates, the
+        diamond and ghost effects on maximum health, contact damage, the
+        creature-kind table, spawn amounts and rates, all three boss records and
+        the victory reward, the terrain property tables.</li>
+    </ul>
+    <p>So the two play the same. What differs is display timing and colour,
+      which is what a PAL conversion is.</p>
+  </section>
+
+  <section>
+    <h2>The screen is taller</h2>
+    <p class="sub">PAL gives 312 scanlines against NTSC's 262, and the
+      conversion spends them in the display list.</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th class="n">NTSC</th><th class="p">Europe</th></tr></thead>
+      <tbody>
+        <tr><td>zones in the main display list</td><td class="m">22</td><td class="m">23</td></tr>
+        <tr><td>scanlines</td><td class="m">235</td><td class="m">292</td></tr>
+        <tr><td>first three zone heights</td><td class="m">8, 8, 4</td><td class="m">16, 16, 13</td></tr>
+      </tbody>
+    </table></div>
+    <p>All of the added height goes to the <strong>top border</strong>, above
+      the playfield, so the ten bands of a room are untouched. The message
+      screen's display list gets the same treatment, and three more entries are
+      added in bank 7.</p>
+  </section>
+
+  <section>
+    <h2>Which is why almost everything moved</h2>
+    <p class="sub">Those inserted entries sit in the middle of a bank, so
+      everything after them slides along.</p>
+
+    <figure>
+      <svg viewBox="0 0 700 200" role="img"
+           aria-label="Bank 6 in the NTSC cartridge runs unbroken; in the European cartridge a three-byte display-list entry is inserted at $42B7, shifting all code after it three bytes later, and the tail padding absorbs the difference.">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+        <g font-family="ui-monospace, Consolas, monospace" font-size="12">
+          <!-- NTSC strip -->
+          <text x="0" y="34" fill="currentColor" opacity=".75">NTSC</text>
+          <rect x="60" y="20" width="120" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".45"/>
+          <rect x="180" y="20" width="420" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".45"/>
+          <rect x="600" y="20" width="60" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".2"/>
+          <text x="70" y="37" fill="currentColor" opacity=".7">$4000</text>
+          <text x="330" y="37" fill="currentColor" opacity=".7">engine code and data</text>
+          <text x="606" y="37" fill="currentColor" opacity=".35">padding</text>
+
+          <!-- the insertion point -->
+          <line x1="180" y1="14" x2="180" y2="152" stroke="currentColor"
+                stroke-opacity=".3" stroke-dasharray="3 3"/>
+          <text x="186" y="12" fill="currentColor" opacity=".6">$42B7</text>
+
+          <!-- PAL strip -->
+          <text x="0" y="120" fill="currentColor" opacity=".75">Europe</text>
+          <rect x="60" y="106" width="120" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".45"/>
+          <rect x="180" y="106" width="24" height="26" fill="currentColor"
+                fill-opacity=".18" stroke="currentColor" stroke-opacity=".55"/>
+          <rect x="204" y="106" width="420" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".45"/>
+          <rect x="624" y="106" width="36" height="26" fill="none"
+                stroke="currentColor" stroke-opacity=".2"/>
+          <text x="70" y="123" fill="currentColor" opacity=".7">$4000</text>
+          <text x="354" y="123" fill="currentColor" opacity=".7">the same code, three bytes later</text>
+
+          <!-- the shift arrow -->
+          <line x1="300" y1="60" x2="300" y2="98" stroke="currentColor"
+                stroke-opacity=".55" marker-end="url(#ar)"/>
+          <text x="308" y="84" fill="currentColor" opacity=".8">+3</text>
+
+          <!-- callout for the inserted entry -->
+          <line x1="192" y1="150" x2="192" y2="136" stroke="currentColor"
+                stroke-opacity=".55" marker-end="url(#ar)"/>
+          <text x="150" y="168" fill="currentColor" opacity=".8">one extra display-list zone</text>
+          <text x="150" y="184" fill="currentColor" opacity=".5">3 bytes, for the taller screen</text>
+        </g>
+      </svg>
+      <figcaption>One inserted display-list entry is the whole story of bank 6.
+        The tail padding absorbs the three bytes, so the bank stays 16K and the
+        cartridge stays 128K.</figcaption>
+    </figure>
+
+    <div class="scroll"><table>
+      <thead><tr><th>bank</th><th>shift</th><th>cause</th></tr></thead>
+      <tbody>
+        <tr><td class="m">6</td><td class="m">+3 from <code>$42B7</code></td>
+            <td>one extra display-list entry</td></tr>
+        <tr><td class="m">7</td><td class="m">+9 across <code>$D200</code>&ndash;<code>$D600</code></td>
+            <td>three more entries</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>Bank 6 is the clean case to measure. Of its <strong>14,720</strong>
+      differing bytes, <strong>564 are relocation fixups</strong> &mdash; an
+      address operand adjusted by exactly three &mdash; and only
+      <strong>19 bytes are genuinely different</strong>: one loop bound in the
+      display-list copier, and a run of palette values.</p>
+    <p>The jump table at the head of the bank shows it plainly. Every target
+      moves three bytes: <code>JMP $4A2A</code> becomes
+      <code>JMP $4A2D</code>.</p>
+  </section>
+
+  <section>
+    <h2>Colour is remapped, brightness is not</h2>
+    <p class="sub">PAL's colour burst differs, so hues shift and luminance is
+      left exactly alone.</p>
+    <div class="scroll"><table>
+      <thead><tr><th class="n">NTSC hue</th><th class="p">Europe hue</th><th>bytes</th></tr></thead>
+      <tbody>
+        <tr><td class="m">$1</td><td class="m">$2</td><td class="m">35</td></tr>
+        <tr><td class="m">$2</td><td class="m">$3</td><td class="m">13</td></tr>
+        <tr><td class="m">$9</td><td class="m">$B</td><td class="m">2</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Luminance is preserved in all fifty</strong> &mdash; only the
+      high nibble moves.</p>
+
+    <h3>And it was done by eye, not by rule</h3>
+    <p>Auditing the block of eight palettes that is live during play, the shift
+      is selective. Hue 1 is remapped twice and left alone four times; hue 2 is
+      remapped three times and left alone three.</p>
+    <p>The giveaway is the byte <code>$24</code>: kept as <code>$24</code> in
+      one palette and moved to <code>$34</code> in another. The same value,
+      treated differently depending on where it sits &mdash; so each palette was
+      judged on a PAL set rather than run through a formula.</p>
+    <div class="note">
+      <span class="lead">Visible on the first screen</span>
+      <p>The heart draws from palette 4: <code>$1A&nbsp;$22&nbsp;$0D</code> on
+        NTSC and <code>$1A&nbsp;$32&nbsp;$0D</code> in Europe. Only the body
+        colour moves, hue 2 to hue 3, and it reads noticeably pinker. That
+        palette is shared by the crypt key, necklace, knife, axe, blaster and
+        mega blaster, so all of them shift with it.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The music was never retimed</h2>
+    <p class="sub">Which is the one difference you can hear.</p>
+    <p>The duration and instrument tables are byte-identical, and the song table
+      differs only by two relocated pointer bytes. A note's duration is a count
+      of <em>frames</em> and the engine ticks once per frame, so tempo follows
+      the machine.</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th class="n">NTSC</th><th class="p">Europe</th></tr></thead>
+      <tbody>
+        <tr><td>refresh</td><td class="m">59.96 Hz</td><td class="m">49.92 Hz</td></tr>
+        <tr><td>a 16-frame note</td><td class="m">267 ms</td><td class="m">321 ms</td></tr>
+      </tbody>
+    </table></div>
+    <p>Everything plays at <strong>83.3% speed</strong> &mdash; a sixth slower,
+      uncompensated. The editor can correct it, either by rescaling the sixteen
+      duration entries or by a 16-byte shim that runs one extra music tick
+      every fifth frame (18 bytes with the two that repoint the vector at it).</p>
+  </section>
+
+  <section>
+    <h2>The signature block is gone</h2>
+    <p class="sub">And the header metadata differs, in ways that say who dumped
+      it rather than what the cartridge is.</p>
+    <p><code>$FF80</code>&ndash;<code>$FFF8</code> holds 121 bytes of
+      high-entropy data in the NTSC image and is filled with <code>$FF</code> in
+      the European one. <strong>No code references it</strong> &mdash; the only
+      references into that page anywhere in the listings are the reset and IRQ
+      vectors, which are identical in both. That is consistent with the console
+      signature block, which the European image does not carry.</p>
+    <p>The <code>.a78</code> header differs in seven bytes: the title text, the
+      TV-type flag, and the cart-type flags. The NTSC header declares bank 6
+      mapped at <code>$4000</code> and the European one does not, though the
+      code is laid out the same way &mdash; which looked like less careful
+      curator metadata rather than a difference in the cartridge.</p>
+    <div class="note">
+      <span class="lead">Since confirmed</span>
+      <p>It was exactly that. Trebor's PAL release carries the same cartridge
+        data &mdash; 0 differing bytes in all 131,072, CRC32
+        <code>7CA6D521</code> either way &mdash; with the cart type corrected
+        from <code>$0002</code> to <code>$0012</code>, adding the
+        <code>bank6@$4000</code> bit; their changelog lists it as a deliberate
+        fix. The NTSC pair differ only in header version and two v4 bytes.</p>
+      <p>MAME loads both through the same <code>a78_sg</code> handler and they
+        are indistinguishable in play &mdash; same RAM hash, same frame &mdash;
+        but an emulator or flash cart that honours the header may not be. It is
+        also why this project's patches now exclude the header, so one patch
+        fits either file.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Both are fully supported</h2>
+    <p class="sub">One address map covers the whole difference, so every tool in
+      the project works on either.</p>
+    <p>A cartridge is identified by reading three constants that sit after a
+      seam at both candidate addresses; whichever placement reads the expected
+      bytes names the release. Checked against 22 landmarks, every hardcoded
+      table and gate lands on identical bytes once mapped.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>the same edit</th><th class="n">NTSC offset</th><th class="p">Europe offset</th></tr></thead>
+      <tbody>
+        <tr><td>debug hook repair</td><td class="m">$03DCA</td><td class="m">$03DCA</td></tr>
+        <tr><td>axe fire rate</td><td class="m">$190EE</td><td class="m">$190F1</td></tr>
+        <tr><td>creature toughness</td><td class="m">$1A43D</td><td class="m">$1A440</td></tr>
+        <tr><td>halve-health gate</td><td class="m">$1D404</td><td class="m">$1D40D</td></tr>
+      </tbody>
+    </table></div>
+    <p>Bank 0 does not move, bank 6 moves three, bank 7 moves nine &mdash;
+      exactly as the map predicts.</p>
+    <div class="note cool">
+      <span class="lead">Listings for both</span>
+      <p>Both releases have a full disassembly that reassembles byte-identically
+        to its own cartridge, carrying the same labels and comments at their own
+        addresses &mdash; 176 annotated addresses were relocated to produce the
+        European set.</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    Measured against both cartridge images, not recalled. Every figure here
+    comes from comparing the two files directly or from the listings that
+    rebuild them.
+  </div>
+</footer>

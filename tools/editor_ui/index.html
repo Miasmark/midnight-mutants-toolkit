@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Midnight Mutants Editor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Midnight&nbsp;Mutants <span class="sub">cartridge editor</span></h1>
+  <div class="file" id="file">loading&hellip;</div>
+  <div class="ver" id="ver" title="Which release this cartridge is. It decides where every address lands."></div>
+  <div class="spacer"></div>
+  <div class="diffbox" id="diffbox" title="bytes changed since the file on disk">
+    <b id="diffcount">0</b> bytes changed
+  </div>
+  <button id="disasm" class="ghost">Disassemble</button>
+  <button id="revert" class="ghost" disabled>Revert</button>
+  <button id="save" class="primary" disabled>Save as&hellip;</button>
+</header>
+
+<main>
+  <!-- ------------------------------------------------------------ rooms -->
+  <nav id="roomlist" aria-label="Rooms">
+    <div class="search"><input id="filter" placeholder="filter rooms" autocomplete="off"></div>
+    <div id="rooms"></div>
+  </nav>
+
+  <!-- ----------------------------------------------------------- canvas -->
+  <section id="stage">
+    <div class="toolbar">
+      <div class="tools" role="radiogroup" aria-label="Tool">
+        <button class="tool on" data-tool="paint" title="Paint the selected tile (drag to draw)">Paint</button>
+        <button class="tool" data-tool="pick" title="Pick up the tile under the cursor">Pick</button>
+        <button class="tool" data-tool="item" title="Drag the room's item to a new spot">Item</button>
+      </div>
+      <label class="zoom">Zoom
+        <input type="range" id="zoom" min="1" max="6" step="1" value="3">
+        <output id="zoomval">3&times;</output>
+      </label>
+      <label class="chk"><input type="checkbox" id="showgrid"> grid</label>
+      <label class="chk"><input type="checkbox" id="showseg" checked> segments</label>
+      <label class="chk"><input type="checkbox" id="showitem"> item marker</label>
+      <label class="chk"><input type="checkbox" id="showcol"> collision</label>
+      <label class="chk"><input type="checkbox" id="showwater"> water</label>
+      <label class="chk"><input type="checkbox" id="showexits"> exits</label>
+      <span class="legend" id="collegend" hidden>
+        <i class="sw solid"></i>solid
+        <i class="sw half"></i>half
+        <i class="sw evt"></i>event
+        <i class="sw wet"></i>water
+        <i class="sw exit"></i>exit
+      </span>
+      <label class="chk" id="darkwrap" hidden title="Show the room as a player without the lantern sees it"><input type="checkbox" id="asplayed"> as played (dark)</label>
+      <div class="spacer"></div>
+      <div class="hint" id="hint">&nbsp;</div>
+    </div>
+    <div class="canvaswrap">
+      <canvas id="view" width="800" height="160"></canvas>
+      <div id="empty" class="empty">Pick a room from the list.</div>
+    </div>
+    <div id="warn" class="warn" hidden></div>
+  </section>
+
+  <!-- ------------------------------------------------------------ panel -->
+  <aside id="panel">
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="tiles">Tiles</button>
+      <button class="tab" data-tab="room">Room</button>
+      <button class="tab" data-tab="exits">Exits</button>
+      <button class="tab" data-tab="actors">Actors</button>
+      <button class="tab" data-tab="items">Items</button>
+      <button class="tab" data-tab="bosses">Bosses</button>
+      <button class="tab" data-tab="text">Text</button>
+      <button class="tab" data-tab="music">Music</button>
+      <button class="tab" data-tab="pixels">Draw</button>
+      <button class="tab" data-tab="colours">Colour</button>
+      <button class="tab" data-tab="diff">Changes</button>
+    </div>
+
+    <div class="tabbody on" data-body="tiles">
+      <p class="note">The character set for this room's area bank. Characters are
+        two bytes wide, so only even numbers are real tiles.</p>
+      <div class="selected">selected <b id="selchar">$00</b></div>
+      <canvas id="tiles" width="264" height="600"></canvas>
+    </div>
+
+    <div class="tabbody" data-body="room">
+      <div id="roomprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="exits">
+      <div id="exitprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="actors">
+      <div id="actorprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="items">
+      <div id="itemprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="bosses">
+      <div id="bossprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="text">
+      <div class="search"><input id="textfilter" placeholder="search the script" autocomplete="off"></div>
+      <div id="textprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="music">
+      <div id="musicprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="pixels">
+      <div id="pixelprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="colours">
+      <div id="colourprops"></div>
+    </div>
+
+    <div class="tabbody" data-body="diff">
+      <p class="note">Every byte that differs from the file on disk.</p>
+      <div id="difflist" class="difflist"></div>
+    </div>
+  </aside>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

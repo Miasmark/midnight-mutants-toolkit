@@ -1,0 +1,1375 @@
+{
+ "_about": [
+  "Annotation database for Midnight Mutants (Europe).",
+  "Generated from annotations.json by remapping addresses through",
+  "tools/reloc.py: bank 6 +3 from $42B7, bank 7 +9 across",
+  "$D1D4-$D7F7. See VERSIONS.md."
+ ],
+ "entries": [
+  "f6:4000",
+  "f6:4003",
+  "f6:4006",
+  "f6:4009",
+  "f6:400C",
+  "f6:400F",
+  "f6:4104",
+  "b0:A000",
+  "b0:A003",
+  "b0:A006",
+  "b3:8000",
+  "b5:B000",
+  "f6:416F",
+  "f7:D000",
+  "f7:D003",
+  "f7:D006",
+  "f7:D009",
+  "f7:D00C",
+  "f7:D00F",
+  "f7:D012",
+  "f7:D015",
+  "f7:D018",
+  "f7:D01B",
+  "f7:D01E",
+  "f7:D021",
+  "f7:D024",
+  "f7:D027",
+  "f7:D02A",
+  "f7:D02D",
+  "f7:D030",
+  "f7:D033",
+  "f7:D036",
+  "f7:D039",
+  "f7:D03C",
+  "f7:D03F",
+  "f7:D042",
+  "f6:75A0",
+  "f6:75D2",
+  "f6:75FE",
+  "f6:760D",
+  "f6:762D",
+  "b5:B006",
+  "b5:B009",
+  "b5:B00C",
+  "b5:B45C",
+  "b5:B4B8",
+  "b5:B962"
+ ],
+ "labels": {
+  "f6:4000": "ENTRY_ColdStart",
+  "f6:4003": "ENTRY_Vec1",
+  "f6:4006": "MusicPlay",
+  "f6:4009": "MusicTick",
+  "f6:400C": "NMI_Dispatch",
+  "f6:400F": "DLI_Handler_A",
+  "f6:4104": "DLI_Handler_B",
+  "f7:FF00": "RESET",
+  "f7:FEB5": "tbl_AreaPage",
+  "f7:FEBE": "tbl_AreaBank",
+  "f7:FEC7": "tbl_AreaPtrLo",
+  "f7:FED0": "tbl_AreaPtrHi",
+  "f7:FED9": "tbl_AreaType",
+  "f6:416F": "DLI_Sync_Tick",
+  "b0:A2AC": "TxtIsBreakChar",
+  "b0:A2C6": "TxtNewline",
+  "b0:A2C2": "TxtNewPage",
+  "f6:4A49": "MainLoop",
+  "f6:4A4F": "MainLoop_Body",
+  "f6:4D1E": "tbl_StartupPalette",
+  "b0:A22F": "TxtDrawString",
+  "b0:A009": "SfxSilence",
+  "b0:A018": "SfxUpdate",
+  "b0:A05C": "tbl_SfxSeq",
+  "b0:A19E": "ShowMessageScreen",
+  "b0:A32B": "GrampaPickMessage",
+  "b0:A608": "tbl_MsgPtrLo",
+  "b0:A63A": "tbl_MsgPtrHi",
+  "b0:BDC2": "DbgPauseHook",
+  "f6:4E73": "CheckDeathCondition",
+  "f6:4E91": "StatusTick",
+  "f6:51EC": "CollectItem",
+  "f6:5883": "DrainMaxHealth",
+  "b5:B637": "BossSequenceReward",
+  "f6:506F": "UseSelectedItem",
+  "f6:5166": "DrawItemIcon",
+  "f6:5198": "tbl_ItemIconCol",
+  "f6:51A8": "tbl_ItemIconPal",
+  "f6:5779": "TerrainDispatch",
+  "f6:57AA": "Terrain_HealingWell",
+  "f7:D243": "MapTileAt",
+  "f7:D28A": "tbl_MapStripLo",
+  "f7:D297": "tbl_MapStripHi",
+  "f6:55E6": "CheckTerrainUnderPlayer",
+  "f6:5681": "HandlePendingTerrain",
+  "b3:8000": "BuildArea",
+  "b3:81C5": "tbl_BuildDst",
+  "f6:73FA": "txt_Credits",
+  "b3:829C": "tbl_ScreenStream",
+  "b3:8124": "BuildWalkStream",
+  "b0:BDE6": "DbgReadButtons",
+  "f7:DA00": "tbl_AreaTerrain0",
+  "b3:8222": "tbl_RowDLLOffset",
+  "f7:D800": "tbl_MsgScreenDLL",
+  "b3:8276": "FlipDisplayBuffer",
+  "b3:8265": "InitBothDLLs",
+  "b3:81E9": "tbl_DLLTemplate",
+  "f6:7690": "MusicStartSong",
+  "f6:7F68": "SongTable",
+  "b3:85FC": "FadeToBlack",
+  "b5:B683": "tbl_BossBit",
+  "f6:56E1": "Terrain_GatedEvents",
+  "f6:5859": "CheckGhostTouch",
+  "f7:F00C": "LoadAreaHeader",
+  "f7:F12B": "InstallAreaPalette",
+  "f6:6043": "ActorMoveAndAnimate",
+  "f6:5F8D": "ActorTouchesPlayer",
+  "f7:D423": "DrainBloodPurity",
+  "f6:5BCF": "ActorDispatch",
+  "f6:5BC1": "ClearAllActors",
+  "f6:5CE9": "tbl_DeathFrames",
+  "b0:A4D4": "DrawInventoryMenu",
+  "f6:4FE5": "FireWeapon",
+  "f6:4FD5": "tbl_ProjGfx",
+  "f6:5067": "tbl_ProjSpawnLong",
+  "f6:506B": "tbl_ProjSpawnCross",
+  "f6:5D5F": "ProjectileVsActors",
+  "f6:6088": "TryThrowProjectile",
+  "f6:60A1": "SpawnEnemyProjectile",
+  "f6:65EA": "RelocateSpecialActor",
+  "f6:6607": "FindValidPlacement",
+  "f7:D018": "Random",
+  "f7:D01B": "IsPlaceable",
+  "f6:6657": "ProjectileVsSpecialActors",
+  "f7:F280": "ExpandAreaDef",
+  "f7:F296": "tbl_DefAmount",
+  "f7:F2A5": "tbl_DefRateMask",
+  "f6:6436": "tbl_SactorToughness",
+  "f6:6744": "PickSactorKind",
+  "b5:B4D7": "BossVsProjectiles",
+  "f7:D40B": "DamageHealth",
+  "f6:5D22": "SetActorVelocity",
+  "f6:6756": "tbl_ScreenKind",
+  "f7:D304": "AddScore",
+  "f6:4B6D": "ScreenIndexToWorldPos",
+  "f6:579B": "Terrain_HurtingGround",
+  "f6:5813": "BossDoorGate",
+  "f6:7715": "MusicTickAll",
+  "f6:7632": "MusicTickVoice",
+  "f6:7641": "MusicNextNote",
+  "f6:752F": "MusicNoteOn",
+  "f6:757B": "MusicEnvelope",
+  "f6:7701": "MusicAdvSeq",
+  "f6:7708": "MusicAdvNote",
+  "f6:7737": "NoteDurTable",
+  "f6:76F9": "WaveByPitch",
+  "f6:7747": "InstrTable",
+  "f6:7596": "EnvHandlerLo",
+  "f6:759B": "EnvHandlerHi",
+  "f6:76F6": "VoiceMask",
+  "f6:75A0": "Env0_Attack",
+  "f6:75D2": "Env1",
+  "f6:75FE": "Env2",
+  "f6:760D": "Env3",
+  "f6:762D": "Env4_Done",
+  "b5:B013": "BossSetup",
+  "b5:B28B": "BossUpdate",
+  "b5:B2A7": "BossUpdate1",
+  "b5:B351": "BossUpdate2",
+  "b5:B3D4": "BossUpdate3",
+  "b5:B9EF": "BossFire",
+  "b5:B141": "ArenaBlit",
+  "b5:B19F": "tbl_BossSetupLo",
+  "b5:B1A0": "tbl_BossSetupHi",
+  "b5:B3C0": "tbl_BossFireMask",
+  "b5:BA3C": "tbl_BossShotSpread",
+  "b5:B195": "tbl_ArenaRowLo",
+  "b5:B19A": "tbl_ArenaRowHi",
+  "b5:B531": "BossFlashPalette",
+  "b5:B127": "BossRestorePalette",
+  "b5:BA9D": "DrEvilFire",
+  "b5:BA44": "Boss2Fire",
+  "b5:B44C": "tbl_DrEvilFireMask",
+  "b5:BB38": "tbl_DrEvilShotSpread",
+  "b5:B9A4": "BossActorMove",
+  "b5:B55C": "BossDeath",
+  "b5:BB90": "BossActorVsPlayer",
+  "b5:BBA7": "BossContactTest",
+  "b5:BBFD": "tbl_BossContactDamage",
+  "b5:BC00": "tbl_BossKnockCross",
+  "b5:BC0C": "tbl_BossKnockLong",
+  "f7:D8E8": "tbl_MsgScreenDLL2"
+ },
+ "ram": {
+  "BF": "cur_bank",
+  "C0": "area_ptr_lo",
+  "C1": "area_ptr_hi",
+  "53": "dli_index",
+  "1FCF": "area_page",
+  "1FD4": "music_next_song",
+  "2135": "nmi_vec_lo",
+  "2136": "nmi_vec_hi",
+  "42": "src_ptr_lo",
+  "43": "src_ptr_hi",
+  "63": "txt_dst_lo",
+  "64": "txt_dst_hi",
+  "65": "txt_col",
+  "66": "txt_pal",
+  "1E68": "dli_sync_ctr",
+  "1E9D": "mode_flag",
+  "1ECC": "zone_pal_shadow",
+  "44": "frame_ctr",
+  "8B": "death_state",
+  "C2": "cur_msg",
+  "C4": "blood_purity",
+  "C5": "hp_cur",
+  "C6": "hp_max",
+  "CD": "sfx_ptr_lo",
+  "CE": "sfx_ptr_hi",
+  "1AF8": "sfx_request",
+  "1E80": "item_type",
+  "1F3D": "inventory",
+  "1F9E": "forced_msg",
+  "1FCD": "win_flag",
+  "1FD3": "revive_ok",
+  "1FD5": "undead_flag",
+  "1FD6": "revive_timer",
+  "1FDC": "dbg_step",
+  "CC": "sel_item",
+  "C7": "terrain_timer",
+  "1F43": "itm_potion_purity",
+  "1F44": "itm_potion_health",
+  "1F45": "cnt_diamond",
+  "4D": "build_dst_lo",
+  "4E": "build_dst_hi",
+  "5B": "player_x_lo",
+  "5C": "player_x_hi",
+  "5D": "player_y",
+  "72": "map_limit_lo",
+  "73": "map_limit_hi",
+  "CB": "pending_terrain",
+  "90": "build_pass",
+  "46": "tick_fast",
+  "56": "screen_idx",
+  "4F": "terrain_byte",
+  "50": "cell_half",
+  "51": "sub_x",
+  "1FDD": "noclip",
+  "47": "tick_slow",
+  "D1": "music_seq_ptr",
+  "D2": "trk1_ptr_hi",
+  "D3": "trk2_ptr_lo",
+  "D4": "trk2_ptr_hi",
+  "1FAE": "music_song",
+  "1FBC": "boss_flags",
+  "1EAD": "ghost0_x",
+  "1EAE": "ghost1_x",
+  "1EAF": "ghost0_y",
+  "1EB0": "ghost1_y",
+  "1EB3": "ghost0_active",
+  "1EB4": "ghost1_active",
+  "1F46": "cnt_lantern",
+  "1EC5": "area_is_dark",
+  "1EF8": "pal_target",
+  "8F": "actor_pos_long",
+  "97": "actor_pos_cross",
+  "9F": "actor_vel_long",
+  "A7": "actor_vel_cross",
+  "AF": "actor_mode",
+  "B7": "actor_field_B7",
+  "8E": "world_drift",
+  "1FDE": "actor_slot_to_disp",
+  "1DF8": "disp_active",
+  "1E08": "disp_pos_long",
+  "1E18": "disp_pos_cross",
+  "1E28": "disp_gfx",
+  "58": "player_pos_long",
+  "59": "player_pos_cross",
+  "1F3E": "itm_cross",
+  "1F41": "itm_heart",
+  "86": "weapon_level",
+  "1F3F": "itm_crypt_key",
+  "1F40": "itm_necklace",
+  "1F42": "itm_pumpkin",
+  "88": "weapon_cooldown",
+  "87": "fire_timer",
+  "74": "proj_pos_long",
+  "77": "proj_pos_cross",
+  "7A": "proj_type",
+  "7D": "proj_field_7D",
+  "83": "proj_gfx",
+  "80": "proj_field_80",
+  "1FE6": "actor_flash_timer",
+  "DD": "sactor_pos_long",
+  "E1": "sactor_pos_cross",
+  "8D": "throw_rate_mask",
+  "1FCC": "throw_enable",
+  "1E8D": "sactor_facing",
+  "1E6A": "sactor_def0",
+  "1E6C": "sactor_def1",
+  "1E6E": "sactor_def2",
+  "1E70": "sactor_def3",
+  "1E72": "sactor_def4",
+  "1E74": "sactor_def5",
+  "C3": "place_retries",
+  "1E81": "sactor_damage",
+  "1E99": "sactor_flash",
+  "1E91": "sactor_kind",
+  "1E9E": "boss_pos",
+  "1EA3": "boss_health",
+  "1EA4": "boss_box_lo",
+  "1EA5": "boss_box_hi",
+  "1EA6": "boss_box_cross_lo",
+  "1EA7": "boss_box_cross_hi",
+  "1EA8": "boss_flash",
+  "1EA9": "boss_fire_dir",
+  "8A": "screen_kind_idx",
+  "27E8": "score_digits",
+  "57": "world_pos_hi",
+  "D5": "music_note_ptr",
+  "D9": "music_note_count",
+  "1FAA": "music_note_b0",
+  "1FAB": "music_note_pitch",
+  "1FAC": "music_env_vec",
+  "1FAF": "music_voices",
+  "1FB0": "music_env_state",
+  "1FB2": "music_dur",
+  "1FB4": "music_instr",
+  "1FB6": "music_env_p",
+  "1FB8": "music_vol",
+  "1EA0": "boss_move_phase",
+  "1EA2": "boss_pal_set",
+  "1EAA": "boss_stage",
+  "1EAB": "boss_stage_sub",
+  "1EAC": "boss_gfx_page"
+ },
+ "headers": {
+  "f6:4000": "----------------------------------------------------------------\nBANK 6 ENTRY VECTOR TABLE\nBank 6 is permanently mapped at $4000-$7FFF (a78 cart type bit 4),\nso these five slots are the only stable entry points into the engine.\nCode running out of the paged $8000-$BFFF window calls them by address.\n----------------------------------------------------------------",
+  "f6:400F": "DLI (display list interrupt) handler.\nMARIA raises NMI at the end of a zone whose DL header has the DLI bit\nset.  $400C jumps through the RAM vector at $2135/$2136 so the engine\ncan chain a different handler per zone.",
+  "f7:FF00": "----------------------------------------------------------------\nRESET -- power-on / console-reset entry (vector $FFFC)\n----------------------------------------------------------------",
+  "f7:FEB5": "----------------------------------------------------------------\nPER-AREA DESCRIPTOR TABLES  (9 entries, index 0 unused)\n  $FEB5 tbl_AreaPage   -> high byte ($80/$A0) of the area's data in the\n                          $8000-$BFFF window; stored over area_page\n  $FEBE tbl_AreaBank   -> ROM bank to page into $8000 for this area\n  $FEC7/$FED0 tbl_AreaPtrLo/Hi -> pointer into $DA00-$DCFF (bank 7)\n  $FED9 tbl_AreaType   -> area/level type code\n----------------------------------------------------------------",
+  "f6:404A": "dli_index has run past the last zone: end of the visible\nfield.  Re-arm the vector for the next frame, page in bank 0 for\nthe per-frame work, then restore the game's bank.",
+  "f7:D000": "----------------------------------------------------------------\nBANK 7 SERVICE JUMP TABLE ($D000-$D044, 23 slots)\nBank 7 is fixed at $C000-$FFFF, so like the bank 6 table at $4000\nthese slots are callable from any bank.\n----------------------------------------------------------------",
+  "b0:A22F": "----------------------------------------------------------------\nTEXT RENDERER\nWalks a string record and blits one glyph per character.\n  $A2AC  classify: C=1 for space/'|'/'*'/'&'/$80+ (a break), C=0 for a glyph\n  $A2C6  newline: destination pointer += $16 (22 columns per row)\n  $A2C2  new page: reset column then newline\n----------------------------------------------------------------",
+  "f6:4A49": "----------------------------------------------------------------\nMAIN LOOP -- JSR the body, JMP back, forever.\n----------------------------------------------------------------",
+  "f6:4D1E": "Startup palette: 24 bytes copied to MARIA $28-$3F at $4A68,\nskipping every 4th register (those are MSTAT/DPPH/DPPL/CHARBASE/\nOFFSET/CTRL, not colours).  So this fills P2C1..P7C3.",
+  "b0:A32B": "----------------------------------------------------------------\nGrampaPickMessage -- returns X = message number for the table at\ntbl_MsgPtrLo/Hi.  First match wins:\n    forced_msg  != 0 -> (forced_msg & $7F) | $20\n    undead_flag != 0 -> $0C  \"YOU'RE ONE OF THE UNDEAD\"\n    win_flag     > 0 -> $0D  \"OH WHAT A RELIEF! YOU SAVED ME!\"\n    death_state != 0 and revive_ok == 0 -> $0B  \"HIT RESET TO RESTART\"\n    death_state != 0 and revive_ok != 0 -> $0F  resurrection (below)\n    otherwise -> the hint pool\nConfirmed by replaying a recorded session in MAME:\n  hp_max $4F, died -> revive_ok latched -> revived with hp_max $27,\n  which is exactly ((old >> 1) & $F8) | $07.\n  Died again at hp_max $27 (below the $30 threshold): revive_ok never\n  latched, no resurrection, the run ended.\n----------------------------------------------------------------",
+  "b0:A608": "Message pointer table, 50 entries, low bytes then high bytes.\nEach pointer aims at the record's two header bytes: p1 -> txt_pal,\np2 -> index into the indent table at $A4B2.  The text itself starts\nat the following '@'.  Slot $0E duplicates $0F and is never loaded.",
+  "b0:A05C": "Sound-effect sequence pointers, indexed by sfx_request*2.\nA sequence is a byte stream read by SfxUpdate: values < $10 go to\nAUDC0, values >= $10 go to AUDF0 with the high nibble as AUDV0,\nand $00 ends the sequence.",
+  "f6:4E73": "CheckDeathCondition -- sets death_state to $FF when either\nhp_cur or blood_purity reaches 0, and switches area_type to $0A\n(the death scene).",
+  "f6:4E91": "StatusTick -- runs every 8th frame (frame_ctr & 7 == 0).\nWhile alive it latches revive_ok = $FF when blood_purity != 0,\nhp_max >= $30 and mode_flag == 0.  If blood_purity has hit 0 it\nsets undead_flag instead, which is why a blood death can never be\nresurrected -- \"I CAN'T PURIFY YOUR BLOOD\".",
+  "f6:51EC": "CollectItem -- item_type indexes the inventory counters at\n$1F3D.  Item $08 (diamond) raises hp_max by 8 and refills hp_cur.\nItem $06 (potion) restores 50 blood_purity, capped at 100, but\nonly once two have been collected.",
+  "b0:BDC2": "DbgPauseHook -- reached from $A31F only while the console\nPAUSE switch is held (SWCHB bit 3 clear).  Steps dbg_step on a\nbutton press and, once past 3, grants +8 hp_max and full\nblood_purity.  Left-over debug code: the intermediate states branch\nto $BE0E/$BE13, which are inside the sound data below, so the\nbonus cannot actually be reached without crashing first.",
+  "f6:506F": "----------------------------------------------------------------\nUseSelectedItem -- sel_item ($CC) is the slot chosen on the Grampa\nmenu.  Only the two potions do anything here:\n    $06 red potion   blood_purity += 50, capped at 100\n    $07 blue potion  hp_cur = hp_max, and the item is consumed\nItem numbers index the inventory counters at $1F3D (16 slots,\nslot 0 unused) and the icon tables at $5195/$51A5.\n----------------------------------------------------------------",
+  "f6:5779": "----------------------------------------------------------------\nTerrainDispatch -- A holds the terrain/object code under Jimmy.\n    $A0        healing well: +1 hp_cur per tick (see below)\n    $8C/$8E/$8F  other terrain handlers\n    $EF        destroyed with sel_item $05 -> sets win_flag\n    >= $F0     handled by $5810\nReturns carry set when the terrain consumed the step.\n----------------------------------------------------------------",
+  "f6:57AA": "Terrain_HealingWell -- the well.  Adds a single point of health\nper call, clamped to hp_max, and re-triggers sound $0A.  It never\ntouches hp_max, which is why standing at the well refills the bar\nbut does not extend it -- only diamonds do that.",
+  "f7:D243": "----------------------------------------------------------------\nMapTileAt -- look up the terrain under a world position.\n  in:  Y = cross-axis position, X = long-axis low, A = long-axis high\n  out: A = terrain code (0 when out of bounds)\n\n    strip   = tbl_MapStrip[Y >> 4]     ten 100-byte bands\n    cell    = strip[longaxis >> 3]\n    terrain = area_ptr[cell >> 1]\n\nThe ten bands live at $2400, $2464 ... $2784.  Confirmed in MAME:\nthose same addresses are the data pointers of the live display list\nat $2200, whose 5-byte MARIA headers have the indirect bit set --\n\n    00 60 24 2B 00   -> data $2400, indirect, palette 1, width 21\n    64 60 24 0B 00   -> data $2464, indirect, palette 0, width 21\n\nso MARIA reads this memory as a character map while the CPU reads it\nas terrain.  One byte per cell does both jobs: the byte is the\ncharacter number MARIA draws, and byte >> 1 indexes the per-area\nterrain table.  That is why the cartridge holds no separate map.\n\nObserved live grid bytes are all even and all below $80, exactly the\ndoubled indices this routine expects.\n----------------------------------------------------------------",
+  "f6:55E6": "CheckTerrainUnderPlayer -- converts the player position\n(player_x + $0C, player_y - $18) into world coordinates and calls\nMapTileAt.  Terrain 0 is empty; anything with bit 7 set is latched\ninto pending_terrain for HandlePendingTerrain to act on.",
+  "f6:5681": "HandlePendingTerrain -- runs the terrain code latched in\npending_terrain by CheckTerrainUnderPlayer.  Codes $81-$8F trigger\nscripted events; $A0 is the healing well; $EF is the final target;\n$F0 and above are handled at $5810.",
+  "b3:8000": "----------------------------------------------------------------\nBuildArea -- unpacks the current area.  Called once with bank 3\npaged in ($4A9D-$4AA4).\n\nWalks a record stream through src_ptr, five bytes per record:\n    $80        the next two bytes are a new src_ptr (follow it)\n    $FE        clear the $93 flag\n    $FF        end of stream\n    otherwise  the lead byte is the row the record belongs to; it is\n               compared with build_row and the record skipped unless\n               they match.  The remaining four bytes are a MARIA\n               4-byte display list header, copied to build_dst.\n\nbuild_pass ($90) selects which of two parallel display structures is\nbeing built:\n    pass 0 -> list data at $2200, pointers into the DLL-format table\n              at $1800\n    pass 1 -> list data at $2400, pointers into the table at $1B00\ntbl_RowDLLOffset ($8222) gives each row's offset into those tables,\nin steps of 3 -- MARIA display list list entry size.\n\nThe $2400 buffer's character maps are also the terrain grid that\nMapTileAt reads -- the display list points at them in indirect mode,\nso one set of bytes is both what MARIA draws and what the player\ncollides with.\n----------------------------------------------------------------",
+  "f6:73FA": "----------------------------------------------------------------\nCREDITS -- shown on the run of screens before the final boss.\nSecond text framing: <$FE|$FF> <p1> <p2> then the text, running to\nthe next $FE/$FF.  No '@' introducer and no '#' terminator, unlike\nthe Grampa message records in bank 0.\n  PRODUCED BY RADIOACTIVE SOFTWARE\n  COPYRIGHT 1990 ATARI CORP, ALL RIGHTS RESERVED\n  PROGRAM AND DESIGN BY PETER ADAMS\n  STORIES BY TAMMY MOORE\n  MUSIC AND SOUND BY PAUL WEBB\n  SPECIAL THANKS TO ADAM CLAYTON AND RICH ROBBINS\n  ART BY LES PARDUE\n----------------------------------------------------------------",
+  "b3:8124": "----------------------------------------------------------------\nBuildWalkStream -- the area record stream, five bytes per record:\n\n    <row> <gfx_lo> <pal|width> <gfx_hi> <hpos>\n\nThe lead byte is the row the record belongs to; it is compared with\nbuild_row ($46) and the record is skipped unless they match.  The\nremaining four bytes are copied verbatim to build_dst and are a\nstandard MARIA 4-byte display list header:\n    gfx_lo/gfx_hi  graphics address\n    pal|width      palette in bits 7-5, width in bits 4-0 as a\n                   5-bit two's complement count\n    hpos           horizontal position\n\nLead bytes $80, $FE and $FF are escapes rather than rows: $80 means\nthe next two bytes are a new src_ptr to follow, $FE clears the $93\nflag, $FF ends the stream.\n\nExample, from the stream at $8377:\n    08 1A 7A B0 55  -> row 8, gfx $B01A, palette 3, width 6, x $55\n    0A 5C 7C B0 5D  -> row 10, gfx $B05C, palette 3, width 4, x $5D\n----------------------------------------------------------------",
+  "b3:829C": "Per-screen stream pointers, indexed by screen_idx*2.",
+  "b0:BDE6": "DbgReadButtons -- the only safe path through DbgPauseHook.\nRequires INPT1 held (bit 7 set = pressed) and INPT0, INPT2 and INPT3\nall released; anything else branches to $BE0E or $BE13, which are\ninside the sound data and reach a BRK within a few bytes.  The IRQ\nvector is $FF00, the reset entry, so a wrong button resets the\nconsole rather than hanging.",
+  "f7:DA00": "----------------------------------------------------------------\nPER-AREA TERRAIN PROPERTY TABLES -- six tables of 128 entries.\narea_ptr ($C0/$C1) selects one; MapTileAt indexes it with the grid\ncell byte shifted right one place, so a cell selects one of these\nentries and the entry is the terrain code.\n\nLow codes are collision classes in bits 0-1 (see $561C):\n    0  open\n    1  blocks in the lower-right half of the cell\n    2  blocks in the upper-left half of the cell\n    3  solid\nClasses 1 and 2 are the two halves of a diagonal, which is how the\nangled paths and walls are built.  Bits 2 and above are further\nflags carried in terrain_byte; values $05, $06, $07 and $0B occur.\n\nCodes with bit 7 set are events, latched into pending_terrain:\n$81-$8F scripted triggers, $A0 the healing well, $A1, $EF the final\ntarget, and $F1-$F3.  $DA80 -- shared by areas 2, 5 and 6 -- is the\none holding both $A0 entries and the single $EF.\n----------------------------------------------------------------",
+  "f6:561D": "Collision test.  cell_half ($50) is 1 or 2 depending on which\nside of the cell diagonal the player stands: sub_x + 2*sub_y < $10\nputs them in the upper-left half.  A terrain class equal to\ncell_half blocks, as does class 3; class 0 never blocks.\nnoclip ($1FDD) suppresses blocking entirely.",
+  "b3:80E6": "Store this row's list pointer into the DLL-format table for the\ncurrent pass: $1800 for pass 0, $1B00 for pass 1.  Entries are three\nbytes, so the offsets in tbl_RowDLLOffset step by 3.",
+  "f7:D800": "Display list list for the message/Grampa screen, copied to $2600.\n3 bytes per zone. Zones 6-21 are 16 message rows of 8 scanlines; each\nrow's list is at $2663 + row*15 and reads the character map at\n$2400 + row*22, giving 16 rows of 22 characters. Two overlaid 16-byte\nart runs at x $00 draw the portrait from b0:$9000-$9FFF in palettes 7\nand 1.",
+  "b3:8276": "----------------------------------------------------------------\nFlipDisplayBuffer -- the game is double buffered.\n\nWaits on MSTAT for the end of the visible field, then points MARIA at\nwhichever buffer was just finished and switches build_pass so the\nnext BuildArea pass fills the other one:\n\n    buffer A   DLL at $1800   display lists from $2200\n    buffer B   DLL at $1B00   display lists from $2400\n\nInitBothDLLs ($8265) seeds both DLLs from tbl_DLLTemplate, 58 bytes\n= 19 three-byte entries.\n----------------------------------------------------------------",
+  "f6:4D42": "tick_slow ($47) round-robins the heavy subsystems: its low two\nbits select which of four update routines runs this pass, so each\nruns once every four ticks.  Other readers use it for animation\nphase ($6040) and to halve its rate again ($5AEF).  Measured in MAME\nit advances about once every 240 frames.",
+  "f6:7690": "Start song A: copy the two voice track pointers out of SongTable,\nbuild the voice-enable mask, prime both voices.",
+  "b3:85FC": "----------------------------------------------------------------\nFadeToBlack -- ramp every zone palette down to colour $00.\n\nWalks MARIA's colour registers (skipping every fourth, which are\ncontrol registers), subtracts from the luma nibble of each entry,\nand writes both zone_pal_shadow and the live register.  $41 counts\nhow many entries still changed; the routine repeats, with a delay\nloop at $8633, until everything reads zero.\n\nDARKNESS, measured across three recorded playthroughs:\ncounting non-zero bytes in the 44-byte zone palette block,\n    lit outdoor area          34 of 44\n    cave without the lantern   4 of 44   (zone 10 only -- the status\n                                          bar; zones 0-9 all $00)\n    cave carrying the lantern 34 of 44\nThe lantern is inventory item $09.  A run that entered the cave with\nit and with boss_flags still $00 lit normally, so the gate is the\nitem and not boss progress.\n\nThere is no separate dark render path: the character map, display\nlists and collision keep running, so the player moves and enemies\nstill kill them.  Every play-area colour is simply black.\n----------------------------------------------------------------",
+  "b5:B637": "BossSequenceReward -- confirmed in MAME.  mode_flag went 0 -> 2 on\nentering the boss fight and 2 -> 0 on completion, and on that exact\nframe hp_max rose $37 -> $47, the +$10 this routine applies, with\nblood_purity restored to $64.",
+  "b5:B651": "On completing a boss the sequence ORs that boss's bit from\ntbl_BossBit into boss_flags ($1FBC), then clears mode_flag to hand\ncontrol back.  boss_flags is the game's progression bitfield: it is\ncleared at startup ($4ABC) and only ever gains bits here.",
+  "f6:56E1": "----------------------------------------------------------------\nTerrain events gated on boss progress.\n\n  terrain $85: with sel_item $02 -> forced_msg $81 (story $21)\n               otherwise requires boss_flags bit 0; if clear, just\n               draws glyph $38 and refuses\n  terrain $86: requires boss_flags bit 0; if clear, draws glyph $39\n               and refuses.  When open -> forced_msg $82 (story $22)\n\nforced_msg feeds GrampaPickMessage, which turns it into message\nindex (forced_msg & $7F) | $20 -- so these are the story screens.\n\nThis is the ordering mechanism: a boss must be beaten before these\nterrain squares will do anything.  Reported from play: entering the\nmansion basement the back way skipped the trigger and the blaster\nwould not spawn; re-entering through the gated square fired story\n$22 and the sequence then ran normally.\n----------------------------------------------------------------",
+  "f6:5859": "----------------------------------------------------------------\nCheckGhostTouch -- the only thing in the game that reduces hp_max.\n\nTwo dedicated actor slots, each with its own position pair and an\nactive flag tested through bit 7.  If either is active and the\ncollision test at $5A2F reports a hit, DrainMaxHealth runs:\n\n    terrain_timer = $28        40-frame cooldown, so it drains at\n                               most once every 40 frames of contact\n    if hp_max < $11: do nothing        floor of 17 -- the drain can\n                                       never take you below it\n    blank one health-bar cell at $23E7 + (hp_max >> 3)\n    hp_max -= 8\n    if hp_cur > hp_max: hp_cur = hp_max\n\nTwo slots rather than the general enemy array, which fits these\nbeing the ghosts: the in-game hint at $BA6D warns that they drain\nlife, and they appear in only a couple of places.  Every other\nsource moves hp_max upward (diamonds +8, boss reward +$10); this is\nthe sole counterweight.\n----------------------------------------------------------------",
+  "f7:F00C": "----------------------------------------------------------------\nLoadAreaHeader -- reads the area's header fields from the stream at\nsrc_ptr: page, the darkness flag, map limits and the first object.\n\n  $F01C  area_is_dark ($1EC5) <- the area's darkness byte\n  $F021  if cnt_lantern ($1F46) is non-zero, force area_is_dark = 0\n\nThat is the whole lantern check.  Carrying item $09 clears the\narea's darkness flag as the area loads; nothing else is involved.\n----------------------------------------------------------------",
+  "f7:F12B": "----------------------------------------------------------------\nInstallAreaPalette -- copies 40 palette bytes from the area\ndescriptor into pal_target ($1EF8), which the ramp then walks the\nlive shadow ($1ECC) toward.\n\nIf area_is_dark is set, every byte is passed through\n    AND #$08 : LSR : LSR\nso a colour becomes $02 when bit 3 was set and $00 otherwise -- black\nor near-black across the whole play area.  The status bar sits in\nzone 10 and is written elsewhere, which is why it stays readable\nwhile the game area is invisible.\n\nMeasured across recorded runs: 34 of 44 palette bytes non-zero in a\nlit area, 4 of 44 in the cave without the lantern, 34 of 44 with it.\n----------------------------------------------------------------",
+  "f6:6043": "----------------------------------------------------------------\nActorMoveAndAnimate -- per-actor motion, animation and despawn.\nX is the actor slot.\n\nActors live in six parallel zero-page arrays of 8 entries each,\nstride 8, so eight slots:\n    $8F  position, long axis      $9F  velocity, long axis\n    $97  position, cross axis     $A7  velocity, cross axis\n    $AF  active flag              $B7  (not yet identified)\n\nactor_slot_to_disp ($1FDE,X) maps a slot to its display index Y,\nwhich selects into a second set of arrays the display builder reads:\n    $1DF8 active   $1E08 pos long   $1E18 pos cross   $1E28 graphic\n\nEach call:\n  - animation frame = tbl at $6081 indexed by tick_slow & 3, giving\n    the four-frame cycle $80/$82/$84/$86\n  - position += world_drift ($8E) + this actor's velocity, so the\n    scroll is folded into actor motion rather than applied separately\n  - despawn (clear actor_active and disp_active) once the position\n    passes $C0 or the derived screen row leaves the visible range\n\nThis is the movement substrate.  What chooses each actor's velocity\n-- the actual behaviour -- has not been traced yet.\n----------------------------------------------------------------",
+  "f6:5F8D": "----------------------------------------------------------------\nContact damage from actor X -- blood purity, not health.\n\nA bounding-box overlap test against the player (+/-$1C long axis,\n+/-$0C cross axis), then:\n\n    if sel_item == $01        -> no loss at all\n    otherwise                 -> DrainBloodPurity once\n    if cnt_cross ($1F3E) == 0 -> DrainBloodPurity a second time\n\nItem $01 has two tiers: SELECTED blocks the hit outright, merely\nOWNED halves the loss.  That is the cross, and it explains why bats,\ncrows and crabs -- the blood drainers -- are harmless while it is\nheld.  Item $04 (the Heart) blocks the loss further down, inside\nDrainBloodPurity itself.\n\nA $14 cooldown in terrain_timer rate-limits repeat contact.\n----------------------------------------------------------------",
+  "f7:D423": "----------------------------------------------------------------\nDrainBloodPurity -- reached through the bank 7 vector $D039.\nCosts one point of blood_purity, with two ways out:\n\n    death_state != 0   -> nothing (already dying)\n    cnt_heart ($1F41)  -> nothing at all; item $04 grants outright\n                          immunity to blood loss, which matches the\n                          Heart's described role of permanently\n                          purifying the blood\n    blood_purity == 0  -> nothing (already at zero)\n\nThis is the ONLY thing this primitive does, so every caller of $D039\nis a blood-purity source, not a health source.  Health damage runs\nthrough a different path.\n----------------------------------------------------------------",
+  "f6:5BCF": "----------------------------------------------------------------\nActorDispatch -- runs all 8 slots.  actor_mode ($AF,X) is a mode\nfield, NOT a hit-point count:\n\n    $00        empty slot\n    $01-$7F    death animation countdown.  The value indexes\n               tbl_DeathFrames for this frame's graphic, then is\n               decremented; on reaching 0 the actor is removed from\n               the display.\n    $80-$FF    live actor; the value selects its behaviour --\n               $FF -> $5C13,  $FE -> $5DBD,  $FD -> ActorMoveAndAnimate\n\nSo there is no health value anywhere in the actor structure.  An\nenemy is \"killed\" by writing a small positive number into\nactor_mode, which flips it out of its behaviour and into an N-frame\ndeath animation.  Nothing subtracts damage, so every kill is a one\nhit kill by construction -- which matches play: the knife despatches\ncrows, bats and wolves instantly, while enemies it cannot kill only\nflash and keep going, because their behaviour was never replaced.\n\nLeaving the play area is a separate path: ActorMoveAndAnimate clears\nactor_mode and disp_active directly at $607B, bypassing the death\nanimation entirely.  An enemy that wanders off screen is gone\nwithout ever having been killed.\nReplaying axe and blaster sessions showed kills arriving as a\nsingle write of $08 into actor_mode from $FF, with no counter moving\nin the $80/$83 arrays for that slot.  That is NOT sufficient to\nconclude there are no hit points: play reports 20-30 hits to kill\nthese zombies, and only two kills were detected in a three-minute\naxe run, so the sampled slot and window may simply not cover the\nengagement being described.  A hit counter dedicated to the zombie\ntype remains the most likely explanation and has not been ruled out.\n----------------------------------------------------------------",
+  "b0:A4D4": "----------------------------------------------------------------\nDrawInventoryMenu -- the Grampa item screen.\n\nThe weapon is drawn FIRST and separately, from weapon_level ($86)\nindexed into dat0_A552; a negative value means no weapon yet.  The\nweapon is a single upgrading slot, not an inventory entry:\n    none -> knife -> axe -> blaster -> mega blaster\n\nThen a loop walks inventory slots 7 down to 1 -- LDX #$07 with BNE,\nso slot 0 and everything from $08 up are never displayed.  The\ncursor wraps with AND #$07 at $A537, confirming eight positions.\n\nConfirmed against play, the seven selectable slots are:\n    $01 cross            $05 plasmic pumpkin\n    $02 crypt key        $06 purity potion (red)\n    $03 necklace         $07 health potion (blue)\n    $04 heart\n\nEach agrees with a separately derived mechanism: $01 blocks contact\nblood loss, $04 makes DrainBloodPurity a no-op, $05 is the item\ntested against terrain $EF that sets win_flag, $02 is tested against\nterrain $85, and $06/$07 are the two potions in UseSelectedItem.\n\nCounters at $08 and above are not menu items -- diamonds, the\nlantern and other tallies live there.\n----------------------------------------------------------------",
+  "f6:50C7": "----------------------------------------------------------------\nApplies a weapon's properties after weapon_level ($86) changes.\nClears sel_item, then sets weapon_cooldown ($88) from the table at\n$50ED indexed by level:\n\n    0 knife $28   1 axe $1E   2 blaster $14   3 mega blaster $0A\n\nLower is faster, so the weapon progression is partly a fire-rate\nupgrade.  Level 2 additionally sets $1E72.\n\nThe pickup path reaches this from $5208: item_type $0C-$0F becomes\nweapon_level via SBC #$0C, so $0C knife, $0D axe, $0E blaster,\n$0F mega blaster.  Those are pickup type codes, a different\nnamespace from the seven inventory menu slots.\n----------------------------------------------------------------",
+  "f6:4FE5": "----------------------------------------------------------------\nFireWeapon -- the attack, driven by the debounced fire button\n($1FC0).  Bails out if dead, if an item is selected (that path runs\nUseSelectedItem instead), if weapon_level is negative (no weapon),\nor if fire_timer ($87) is still counting.\n\nProjectiles live in THREE slots, indexed by X = 2..0, in their own\nparallel arrays -- a separate structure from the 8-slot actor arrays:\n    $74 position long    $7A type      $83 graphic\n    $77 position cross   $7D unknown   $80 unknown\n\nA free slot is one whose proj_type has bit 7 set.  On firing:\n\n    proj_type  = weapon_level * 4 + direction\n    proj_gfx   = tbl_ProjGfx[proj_type]\n    position   = player position + per-weapon offset from\n                 tbl_ProjSpawnLong / tbl_ProjSpawnCross\n    fire_timer = weapon_cooldown        <- the rate limit\n    sfx        = weapon_level + 1\n\nSo every attack spawns a projectile carrying the weapon's own icon,\nand weapon_level reaches the enemy only through that projectile.\n\nNOTE: $80 and $83 belong to this projectile structure, NOT to the\nactor arrays.  An earlier search for enemy hit points read them as\nif they were 8-slot actor fields, which they are not; that search\nwas invalid and proved nothing.\n\nDIRECTION LOCK DURING BOSS FIGHTS ($5015):\n\n    LDY mode_flag\n    BEQ normal                  ; ordinary play: direction comes from\n                                ; the player's facing, via $54BB\n    LDA weapon_level\n    ASL A : ASL A\n    ADC boss_fire_dir ($1EA9)   ; boss fight: direction is FIXED, from\n  normal:                       ; a per-boss constant set in bank 5\n    STA proj_type,X\n\nSo in a boss fight the player does not aim.  proj_type is built from\nweapon_level * 4 plus a constant the boss sequence writes to\nboss_fire_dir at b5:$B076, which is why each boss pins the player to\none firing direction -- upward for some, left for another -- and why\nthe boss's own projectiles travel along the matching axis.\n----------------------------------------------------------------",
+  "f6:5D5F": "----------------------------------------------------------------\nProjectileVsActors -- every projectile against every actor, and the\nplace a kill is decided.  On a bounding-box overlap:\n\n    JSR sub_4F6C            despawn the projectile\n    LDA actor_mode,X\n    CMP #$A0\n    BCS kill                already at or past $A0 -> dies now\n    ADC weapon_level        <-- THE DAMAGE MODEL\n    STA actor_mode,X\n    CMP #$A0\n    BCS kill                crossed $A0 -> dies\n    sfx $13, actor_flash_timer = $1E     hit, but still alive\n  kill:\n    actor_mode = $08        death countdown, sfx $12\n\nactor_mode is BOTH the behaviour selector and the toughness counter.\nA hit adds weapon_level to it and death is reaching $A0.  So:\n\n    knife  level 0  adds NOTHING -- can never kill anything that\n                    starts below $A0, however long you hit it\n    axe    level 1  +1 per hit\n    blaster        +2 per hit\n    mega blaster   +3 per hit\n\nEnemies already at $A0 or above -- crows, bats, wolves at mode $FE\nor $FF -- skip the addition entirely and die to any hit, including\nthe knife's zero-damage one.  An enemy starting at $80 needs $20 (32)\npoints: 32 axe hits, 16 blaster hits, and never with the knife.\n\nThe flash on a non-fatal hit is actor_flash_timer, $1E frames.  That\nis why an enemy the knife cannot kill still flickers on every hit --\nthe hit registers, the flash fires, and the counter gains zero.\n\nSPAWN VALUES, and therefore enemy toughness.  Toughness is simply\n$A0 minus the value an actor is spawned with, so the spawn constant\nIS the enemy's health:\n\n    $5C77  mode $FF   already past $A0 -> dies to any hit\n    $5E37  mode $FE   likewise\n    $60C6  mode $FD   likewise, uses ActorMoveAndAnimate\n    $5ED6  mode $98   needs 8 points: 8 axe hits, 4 blaster hits,\n                      never with the knife\n\nSo \"tougher\" enemies are literally spawned with a lower number.  The\nthree high values are the one-hit kills (crows, bats, wolves); $98 is\nthe first genuinely tough spawn found.\n----------------------------------------------------------------",
+  "f6:6088": "----------------------------------------------------------------\nTryThrowProjectile -- in: X = thrower position long, Y = cross.\n\nThrows only when the player is OUTSIDE a box around the thrower:\n    |dx| >= $40 (measured via +$20 / CMP #$40), or\n    |dy| >= $30 (via +$18 / CMP #$30)\nInside that box it returns without throwing, so a projectile enemy\nstops shooting once you close the distance.\n\nOtherwise it falls into SpawnEnemyProjectile, which takes the first\nfree slot of the eight-slot actor array, seeds position from the\nthrower, computes a velocity via $5CEE, and sets actor_mode to $FD\n-- the straight-line ActorMoveAndAnimate behaviour.\n\n$FD is above $A0, so any player shot destroys a projectile in one\nhit.  That is why player and enemy projectiles annihilate: it needs\nno special case, just the ordinary damage model.\n----------------------------------------------------------------",
+  "f6:6328": "The throw is gated by throw_enable ($1FCC) and a rate mask\n($8D); the thrower's position comes from sactor_pos_long ($DD,X)\nand sactor_pos_cross ($E1,X).\n\nThose arrays are the SPECIAL ACTOR structure -- enemies that are not\nin the eight-slot actor array.  The projectile-throwing cave zombies\nlive here, as do the pumpkin-headed throwers, alongside sactor_facing\n($1E8D,X).  This is the system that also holds the ghosts, and it is\nwhy searching the eight-slot arrays never found the tough enemies.",
+  "f7:F057": "----------------------------------------------------------------\nArea header, continued -- this is where region-specific content is\ndefined.  Every field comes from the area's own record stream, so\neach area gets its own cast:\n\n  item_type ($1E80)   the item that appears in this area\n  $EF special case    if the byte is $EF the value becomes $22 when\n                      the player already holds the cross, else $FF\n  six values expanded through $F280 into pairs:\n      $1E6A/$1E6B  $1E6C/$1E6D  $1E6E/$1E6F\n      $1E70/$1E71  $1E72/$1E73  $1E74/$1E75\n                      the per-area SPECIAL ACTOR definitions -- the\n                      four-slot cast that holds ghosts, the throwing\n                      cave zombies and the pumpkin-headed throwers\n  throw_enable ($1FCC) whether this area's enemies throw projectiles\n                      at all; TryThrowProjectile checks it first\n  $1E76, $1E77, $1E7D, $1E7E  further per-area fields\n\nSo \"only spawns in the caves\" is not spawn logic at all: the area\nheader simply lists a different cast, and throw_enable decides\nwhether they can throw.  Nothing is chosen at run time.\n\nNote $52A4 ORs sactor_def3/4/5 together and only proceeds when all\nare zero -- the area's item appears once those slots are clear.  It\ntests the slots, not kills, which is why an enemy that wanders off\nscreen releases the item just as a killed one does.\n----------------------------------------------------------------",
+  "f6:65EA": "----------------------------------------------------------------\nRelocateSpecialActor -- puts special actor X back on screen at a\nRANDOM position rather than wrapping it around.\n\n    sactor_pos_long  = random & $3F + $48     ->  $48-$87\n    sactor_pos_cross = random & $3F + $44     ->  $44-$83\n\nThen FindValidPlacement checks the spot with $D01B and, if it is not\nplaceable, nudges both axes by a random amount in -$10..+$0F and\ntries again.  place_retries ($C3) allows four attempts, or none at\nall when $1E73 is non-zero; running out returns with carry clear.\n\nThis is why an enemy that leaves the screen, or is carried off by the\nview scrolling, reappears somewhere unrelated -- often on the\nopposite side.  It is not wrap-around; the actor is simply dropped at\na fresh random walkable spot inside a fixed band.\n----------------------------------------------------------------",
+  "f6:6657": "----------------------------------------------------------------\nProjectileVsSpecialActors -- the three projectile slots against the\nfour special actors.  This is the damage model the tough enemies\nuse, and it is NOT the $A0 one.\n\nOverlap test: +/-$08 on the long axis, a variable box on the cross\naxis taken from $40/$41.  On a hit:\n\n    sfx $10, sactor_flash ($1E99,X) = $0A\n    JSR sub_4F6C                    despawn the projectile\n    if weapon_level != 0: JSR $D030\n    LDA sactor_damage ($1E81,X)\n    CLC\n    ADC weapon_level\n    BCC still_alive                 no carry -> store and continue\n      JSR $D030\n      sactor_damage = $0C           carry out of bit 7 -> DEAD\n  still_alive:\n    sactor_damage = A\n\nSo damage ACCUMULATES in sactor_damage and death is an 8-bit\noverflow -- reaching $100 -- rather than crossing $A0.  An actor\nseeded with S needs 256-S points, so these are far tougher than\nanything in the eight-slot array: with the blaster at +2 a value\naround $80 costs roughly 64 hits.\n\nweapon_level is added here exactly as it is for ordinary actors, so\nthe knife (level 0) adds nothing and can never kill a special actor\neither, however long it is used.\n\n$529E ORs sactor_damage across all four slots and only releases the\narea's item when every one is zero.\n----------------------------------------------------------------",
+  "f7:F280": "----------------------------------------------------------------\nExpandAreaDef -- unpacks one area-header byte into a pair.\n\n    high nibble -> A, via tbl_DefAmount\n        $00 $01 $02 $04 $08 $0C $10 $14 $1E $28 $32 $3C $46 $7F $FF\n    low nibble  -> X, via tbl_DefRateMask\n        $FF $7F $3F $1F $0F $07 $03 $01 $01 $01 ...\n\nThe caller stores A and X into consecutive slots, so each of the six\nper-area definitions at $1E6A-$1E75 is an (amount, rate mask) pair\npacked into a single header byte.\n\nThe mask table is the classic descending AND-mask ladder used to gate\nperiodic behaviour -- the same shape as the throw rate mask at $8D --\nso the low nibble sets how often something happens and the high\nnibble how much or how many.\n----------------------------------------------------------------",
+  "f6:6436": "----------------------------------------------------------------\ntbl_SactorToughness -- the seed written into sactor_damage when a\nspecial actor is created, indexed by sactor_kind ($1E91,X).\n\nBecause death is an 8-bit overflow of sactor_damage, an entry S\ncosts 256-S points, and each hit adds weapon_level:\n\n  kind  seed  points   axe(+1)  blaster(+2)  mega(+3)\n    0   $FC      4        4         2           2\n    1   $FE      2        2         1           1\n    2   $F9      7        7         4           3\n    3   $F4     12       12         6           4\n    4   $F8      8        8         4           3\n    5   $F7      9        9         5           3\n    6   $F1     15       15         8           5\n    8   $C4     60       60        30          20\n    9   $C4     60       60        30          20\n   12   $EC     20       20        10           7\n   13   $B0     80       80        40          27\n   14   $B0     80       80        40          27\n   15   $B4     76       76        38          26\n\nThe knife is weapon_level 0 and adds nothing, so it cannot kill any\nof these however long it is used.\n\nsactor_kind ($1E91,X) is the enemy-kind field: PickSactorKind\n($6741) returns it, it is stored alongside the actor, and it selects\nthis seed.  Creation also decrements sactor_def4 ($1E72), so the\narea's definition slots act as a remaining-population count.\n----------------------------------------------------------------",
+  "b5:B4D7": "Hit test: long against boss_pos+box_lo..box_hi, cross against\nbox_cross_lo..hi. For Dr. Evil the long box is the moving ear.",
+  "f7:D40B": "----------------------------------------------------------------\nDamageHealth -- reached through the bank 7 vector $D036.  A holds\nthe amount of health to remove.\n\n    PHA\n    LDA itm_cross ($1F3E)\n    BEQ full\n      PLA : LSR A : PHA      <-- carrying the CROSS halves the damage\n  full:\n    PLA : EOR #$FF : SEC : ADC hp_cur     ; hp_cur - amount\n    CMP #$DC : BCC store                  ; underflow guard\n    LDA #$00                              ; clamp at zero\n  store:\n    STA hp_cur\n\nSo the cross is the game's damage-reduction item and it applies to\nEVERY health source, not just one kind of enemy.  Combined with its\ntwo effects in the contact handler at $5FA7 -- selected, it blocks\nblood loss outright; merely owned, it halves it -- the cross does\nthree separate jobs:\n\n    selected : immune to contact blood loss\n    owned    : contact blood loss halved\n    owned    : ALL health damage halved\n\nNote the underflow guard uses $DC rather than a simple carry test,\nso a hit larger than current health clamps to zero rather than\nwrapping.\n----------------------------------------------------------------",
+  "f6:5D22": "----------------------------------------------------------------\nSetActorVelocity -- the whole of the ordinary enemy AI.\n\nTwo steps.  First, home in on the target coordinates in $40/$41:\n\n    vel_long  = (pos_long  < target) ? +1 : -1\n    vel_cross = (pos_cross < target) ? +1 : -1\n\nThat alone would make every enemy walk straight at the player.  The\nsecond step randomises it by masking one axis away:\n\n    Y = Random & 3\n    vel_cross &= dat_5D52[Y]     ; $FF $FF $FF $00\n    vel_long  &= dat_5D56[Y]     ; $FF $FF $00 $FF\n\nSo per update:\n    Y=0,1   both axes kept   -> diagonal, straight at the player\n    Y=2     long axis zeroed -> moves only across\n    Y=3     cross axis zeroed-> moves only along\n\nHalf the time it charges diagonally, a quarter it slides one way, a\nquarter the other.  The direction is never away from the player, so\nan enemy always converges -- the randomness only chooses how\ndirectly.  That is what produces the shambling-but-inevitable\napproach, with no state machine and no pathfinding: eight bytes of\ntable and one random number.\n----------------------------------------------------------------",
+  "f6:6744": "----------------------------------------------------------------\nPickSactorKind -- decides which kind of special actor a screen gets.\n\n    LDY screen_kind_idx ($8A)\n    LDA tbl_ScreenKind,Y\n    BPL done                  ; positive -> that IS the kind, fixed\n    AND #$07                  ; negative -> low 3 bits are a mask\n    JSR Random\n    AND mask                  ; kind = Random & mask\n  done:\n\nSo each screen either pins one enemy kind or draws randomly from a\nrange.  The 80-entry table holds fixed kinds ($01, $06, $07, $08,\n$09, $0A, $0C) and random specs ($F3 -> kinds 0-3, $F7 and $FF ->\nkinds 0-7).\n\nThis is where regional enemy variety comes from: the area header\nsays how many and how often, this table says which kind, and\ntbl_SactorToughness turns the kind into hit points.\n----------------------------------------------------------------",
+  "f7:D304": "----------------------------------------------------------------\nAddScore -- reached through the bank 7 vector $D030.  A holds the\npoints to award.\n\nThe score is seven UNPACKED DECIMAL DIGITS at score_digits ($27E8),\none digit per byte, most significant first.  The routine adds A to\nthe lowest digit and propagates carries by repeated subtraction:\n\n    LDX #$06\n  digit:\n    ADC score_digits,X\n    while result >= 10: subtract 10 and INC the digit above\n    store, carry 0 into the next digit, DEX\n\nCallers pass small constants -- $02, $08, $0A, $14, $32, $50 -- at\nkills and pickups.\n\nNote the address: the terrain grid occupies $2400-$27E7, so the\nscore sits immediately above it.  That is an independent confirmation\nof the grid's extent derived from MapTileAt's strip table.\n----------------------------------------------------------------",
+  "f6:4B6D": "----------------------------------------------------------------\nScreenIndexToWorldPos -- how rooms connect.\n\nThere is no exit table and no adjacency graph, because screens are\nnot nodes.  screen_idx ($56) with world_pos_hi ($57) is a 16-BIT\nWORLD POSITION along the long axis, and a screen number is just an\narithmetic slice of it:\n\n    positive index:  pos = (index * 8) + $20      ($4B99)\n    negative index:  pos = map_limit - offset     ($4B87)\n                     offset $01 normally, $4A when the index is $FE\n\nThe wrap case is the map's far edge: walking off one end sets the\nposition to map_limit minus a small offset, putting the player at\nthe opposite extreme.\n\nAnd at $53C3 the relationship runs the other way -- screen_idx is\noverwritten straight from the player's own coordinates:\n\n    screen_idx    = player_x_lo\n    world_pos_hi  = player_x_hi\n\nSo \"which room am I in\" is not stored or looked up; it is read off\nthe player's position every step.  Adjacency is implicit in the\ncoordinate system, which is why no link table exists to be found.\n----------------------------------------------------------------",
+  "f6:579B": "Terrain_HurtingGround -- terrain $A1, the counterpart to the well.\nCalls DamageHealth with 2, sets terrain_timer to $0A so it can only\nbite once every ten frames, and plays sound $11.  Confirmed in play\nas damaging ground; it appears in the mansion basement.\n\n    $A0  well of health   +1 hp per tick, clamped to hp_max\n    $A1  hurting ground   -2 hp per tick, halved to -1 by the cross",
+  "b5:B683": "----------------------------------------------------------------\ntbl_BossBit -- FOUR entries, indexed by mode_flag, not eight.  Only\nthree progression bits exist, one per boss:\n\n    mode_flag $00  ->  $00   not a boss fight\n    mode_flag $01  ->  $02   skull boss    -> bit 1\n    mode_flag $02  ->  $01   ram boss      -> bit 0\n    mode_flag $03  ->  $04   Dr. Evil      -> bit 2\n\nEvery test of boss_flags in the ROM masks with $01, $02 or $04 and\nnothing else, so bits 3-7 are unused.  The bytes following this table\nare not masks; an earlier reading of it as eight entries was reading\npast the end.\n\nWhat each bit unlocks:\n    bit 0 (ram)      terrain $85 and $86 -- the mansion squares that\n                     otherwise refuse and draw glyph $38/$39\n    bit 1 (skull)    tested at f6:$5815 and b0:$A44D\n    bit 2 (Dr Evil)  f7:$F231 -- with the pumpkin not yet held, sets\n                     item_type $05 so the plasmic pumpkin appears.\n                     That is the drop on Dr. Evil's death.\n----------------------------------------------------------------",
+  "f6:5813": "----------------------------------------------------------------\nBossDoorGate -- terrain codes $F0 and above: the boss arena doors.\n\nThe gate is a LOCK-OUT, not a lock-in.  $89 holds the pending screen\nkind (read at $4B63 into screen_kind_idx), so storing to it is what\nperforms the transition; the bare RTS at $5839 does nothing.\n\n    $F1   bit 1 (skull)    SET -> RTS, door dead\n                         CLEAR -> transition\n    $F2   bit 0 (ram)      SET -> RTS, door dead\n                         CLEAR -> transition\n    else  bit 2 (Dr Evil)  SET -> RTS, door dead\n                         CLEAR -> transition\n\nSo each boss door works until that boss is beaten, then stops\nresponding.  It prevents re-entering an arena you have already\ncleared, rather than requiring the kill to get in.\n\nConfirmed from play: the $F2 square on the layout shared by the\nscreens using property table $DB00 is the door to the ram boss.\n----------------------------------------------------------------",
+  "f6:5166": "DrawItemIcon -- skips when item_type is zero or has bit 7 set.\nBit 7 marks the item as PENDING: it exists, with its authored\nposition from the area header, but is not yet drawn or collectable.\n$51B5 routes a pending item to the release check at $529C, and\n$52B0 clears the bit with AND #$7F once the condition passes.\n\nSo $8E is a pending blaster, $82 a pending crypt key, $88 a pending\ndiamond.  There is no separate class of high-bit item -- it is the\nsame item waiting to appear.",
+  "f6:4006": "MusicPlay(A = song number) -- trampoline callable from any bank.",
+  "f6:4009": "MusicTick() -- call once per frame.",
+  "f6:752F": "Note-on for voice X. Note byte 0 = instrument<<4 | duration index,\nbyte 1 = AUDF pitch (0 = rest).",
+  "f6:757B": "Per-voice envelope step -- dispatches through JMP (music_env_vec)\nto one of five handlers. Indirect, so these are declared entries.",
+  "f6:7F68": "Song table: 4 bytes per song = voice 0 track pointer, voice 1 track\npointer. Pointers into $8000-$BFFF are resolved against whatever bank\nis mapped when the song is started, so each bank carries its own music.",
+  "b5:B013": "BossSetup(A = boss 1-3): read a 32-byte record via tbl_BossSetupLo.\nFields +6..+9 are skipped when $1F9D is set -- the re-entry path.",
+  "b5:B28B": "Per-frame boss update. Three-way dispatch on mode_flag; each boss\nis its own hand-written routine, not a shared engine.",
+  "b5:B9EF": "BossFire(A = mask). Fires only when Random AND mask == 0, so the\nmask is the reciprocal of the rate. It shrinks as boss_stage climbs.",
+  "b5:B3C0": "Fire-rate mask by boss_stage: 1-in-64 at the start, $00 (every\nframe) by stage 13. Index +5 while boss_flash is set.",
+  "b5:B3D4": "Dr. Evil. Bit 7 of $45 selects one of two hitboxes on the long axis\n($2E-$38 or $66-$70), swapping about every 4.3 seconds. Only the\ncurrent side can be hit, and $5B records which -- the fire routine\nreads it back so the shot leaves the ear that is currently weak.",
+  "b5:BAEB": "Spawn point follows the weak spot: $5B == 0 -> boss_pos+$34,\notherwise boss_pos+$66.",
+  "b5:BB90": "Walk all eight actor slots and test each against the player. This is\nwhat makes Dr. Evil's crawling bug (slot 7) hurt on contact like a shot.",
+  "b5:BAA9": "Dr. Evil's crawling bug: slot 7, vel_cross = 0 so it travels dead\nlevel, vel_long +/-1 so it crawls. Enters at the player's cross\nposition; side comes from boss_stage & 1. Takes priority over the\near shot -- spawning one skips the shot that frame."
+ },
+ "comments": {
+  "f7:FF00": "INPTCTRL: 7800 mode, MARIA enabled, BIOS ROM out",
+  "f7:FF08": "MARIA CTRL: DMA off while we initialise",
+  "f7:FF0F": "select ROM bank 0 into the $8000 window",
+  "f7:FF12": "...and shadow it in cur_bank",
+  "f7:FF14": "MARIA OFFSET = 0",
+  "f7:FF1C": "clear zero page $40-$FF (RAM; $00-$3F is TIA/MARIA)",
+  "f7:FF21": "enter the engine through the bank-6 vector table",
+  "f6:4BC7": "point the RAM NMI vector at DLI_Handler_B ($4104)",
+  "f6:4BD8": "MARIA DPPL/DPPH: display list list at $0140",
+  "f6:4BE0": "MARIA CTRL = $50: DMA on, 1-byte chars, 160x2/160x4 read mode",
+  "f6:4BEA": "spin until both console switches are released",
+  "f6:4150": "stash the shadowed bank, then wait for DLI_Sync_Tick",
+  "f6:416F": "one-instruction DLI: bumps $1E68 so the foreground busy-wait at $4152 knows the raster has passed the zone",
+  "f7:F17E": "tbl_AreaBank[area] -> ROM bank holding this area's data",
+  "f6:4CFF": "bank 5 is paged in here (selected at $4B32 when $1E9D is set)",
+  "f6:4A6E": "skip X&3==0: those slots are control registers, not colours",
+  "b0:A2C9": "+= $16: the text window is 22 columns wide",
+  "f6:5212": "diamond (item $08): +8 hp_max -- observed three times in MAME, $27->$2F->$37 and $47->$4F",
+  "f6:5893": "ghost touch: maximum health -8",
+  "b5:B637": "end-of-sequence reward: +$10 hp_max, blood_purity back to 100",
+  "b0:A371": "message $0F -- Grampa resurrects you",
+  "b0:A35D": "halve hp_max, round to a multiple of 8, then set hp_cur = hp_max",
+  "b0:A318": "console PAUSE switch (SWCHB bit 3) gates the debug hook",
+  "f6:4ECF": "latch: Grampa may resurrect you next time you die",
+  "f6:4EBC": "blood ran out -> undead ending, not a resurrection",
+  "f6:5767": "the win: win_flag = $FF when the pumpkin is used on terrain $EF",
+  "f6:5229": "red potion picked up while already holding one -> auto-use",
+  "f6:524E": "blue potion picked up while already holding one -> auto-use",
+  "f6:5257": "blue potion: observed restoring hp_cur to hp_max ($4F/$4F) when used",
+  "f6:507B": "consume the blue potion",
+  "f6:5198": "per-item icon column, 16 slots indexed by item_type",
+  "f7:D26C": "strip base for this column (worldX >> 4)",
+  "f7:D27F": "the packed cell: an index, doubled, into the area property table",
+  "f7:D283": "...dereferenced through area_ptr to the terrain code",
+  "f6:561B": "bit 7 set -> a special terrain, latch it for later",
+  "b3:80D3": "destination: $2200 for display lists, $2400 for the terrain grid",
+  "b3:813F": "skip the record unless its row is the one being built",
+  "b3:8146": "copy the 4-byte MARIA display list header to build_dst",
+  "b0:BDEC": "any other button held -> $BE0E, which is sound data ending in BRK",
+  "b0:BDF0": "INPT1 not held -> $BE13, likewise sound data ending in BRK",
+  "b0:BDF5": "debounce: wait for the button to be released",
+  "f6:561F": "bits 0-1 of the terrain byte are the collision class",
+  "f6:5621": "class 3 blocks everywhere",
+  "f6:5625": "class 1 or 2 blocks only on its half of the cell diagonal",
+  "f6:5662": "noclip set -> walk through anything",
+  "b0:A1C3": "copy the message-screen display template from ROM into $2600-$27E7",
+  "b0:A1DE": "point MARIA at the copy: DLL now at $2600",
+  "b3:8286": "show buffer A; next build fills buffer B",
+  "b3:8293": "show buffer B; next build fills buffer A",
+  "b3:827A": "sync the flip to the end of the visible field",
+  "f6:4CED": "advance the slow tick (gated on $1FBF and $1FC5)",
+  "f6:6045": "low bits pick the animation phase",
+  "f6:769C": "copy this area's two track pointers into $D1-$D4",
+  "b3:8610": "entry already at zero: clamp and move on",
+  "b3:8626": "subtract from the luma nibble, toward black",
+  "b3:863F": "repeat until no entry changed",
+  "f6:56EB": "gate: boss_flags bit 0 must be set",
+  "f6:5710": "same gate for terrain $86",
+  "f6:5721": "gate closed -- draw the refusal glyph and do nothing",
+  "b5:B658": "OR in this boss's progression bit",
+  "f6:585B": "cooldown still running -- no drain this frame",
+  "f6:587D": "40-frame cooldown before another drain can land",
+  "f6:5883": "floor: hp_max never drops below $11",
+  "f6:588D": "erase the health-bar segment this drain removes",
+  "f7:F021": "the lantern check: item $09 in inventory clears the darkness flag",
+  "f7:F134": "dark: collapse every colour to $00 or $02",
+  "f6:5FAA": "cross selected -> immune to this contact",
+  "f6:5FB3": "cross merely owned -> half damage instead of full",
+  "f6:5FBB": "20-frame contact cooldown",
+  "f6:4FFD": "fire_timer still running -- the weapon cooldown, this is the fire rate",
+  "f6:5003": "find a free projectile slot (bit 7 set = free)",
+  "f6:5027": "projectile graphic = the weapon's own icon",
+  "f6:5042": "arm the cooldown from weapon_cooldown",
+  "f7:F0B6": "per-area projectile enable -- why only some areas have throwers",
+  "f7:F05A": "the item this area yields",
+  "f6:65F1": "random long-axis placement in $48-$87",
+  "f6:65FA": "random cross-axis placement in $44-$83",
+  "f6:6622": "placement rejected -- nudge both axes randomly and retry",
+  "f6:6691": "accumulate weapon_level into the special actor's damage",
+  "f6:6693": "no carry -> still alive",
+  "f6:669C": "overflow past $FF -> dead, state $0C",
+  "f6:6680": "hit flash, 10 frames",
+  "f6:65DA": "seed this actor's toughness from its kind",
+  "f6:65DD": "one fewer of this kind left to place in the area",
+  "f6:5018": "boss fight: ignore the player's facing and use boss_fire_dir",
+  "f7:D40C": "the cross halves every source of health damage",
+  "f7:D41A": "underflow guard -- clamp to zero instead of wrapping",
+  "f6:5D26": "compare against the target coordinate -- always home toward it",
+  "f6:5D40": "randomly drop one axis so the approach is not a straight line",
+  "f6:4B9C": "screen number -> world position: index * 8 + $20",
+  "f6:4B91": "walked off the end -> wrap to the far edge of the map",
+  "f6:53C6": "screen index IS the player's world position",
+  "f6:579B": "terrain $A1: 2 points of health damage per tick",
+  "b5:B644": "mode_flag selects which boss, and so which progression bit",
+  "f7:F231": "Dr. Evil down and pumpkin not held -> spawn the plasmic pumpkin",
+  "f6:5818": "skull bit SET -> door no longer works",
+  "f6:582E": "ram bit CLEAR -> door still works",
+  "f6:581F": "perform the transition: $89 is the pending screen kind",
+  "f6:516B": "bit 7 set: item pending, do not draw it",
+  "f6:52B6": "release: clear the pending bit and the item becomes real"
+ },
+ "notes": {
+  "f6": "Main game engine.  Permanently mapped, holds the vector table, the\nDLI handlers, the main loop and most game logic.",
+  "f7": "Fixed high bank.  $C000-$CFFF is graphics data, $D000-$FFFF is code\n(support routines, the per-area descriptor tables and RESET).",
+  "b0": "$8000-$9FFF is empty ($00 fill).  Code lives at $A000-$A6xx behind a\nsmall JMP table at $A000; $A2xx is the text renderer.  From ~$A6A3 to the\nend of the bank is the game's dialogue/story script (see TEXT.md).",
+  "b1": "Area/map graphics data (no code reached).",
+  "b2": "Area/map graphics data (no code reached).",
+  "b3": "Code at $8000 (entered via JSR $8000 after selecting bank 3).",
+  "b4": "Area/map graphics data (no code reached).",
+  "b5": "Data plus a code block entered at $B000.",
+  "b7": "Bank 7 seen through the $8000 window (rarely, if ever, used)."
+ },
+ "banksw": {
+  "f6:407D": "keep",
+  "f6:4157": "keep",
+  "f7:F181": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ "blocks": [
+  {
+   "loc": "b0:A6A3",
+   "end": "b0:A6E3",
+   "type": "text",
+   "name": "txt0_A6A3"
+  },
+  {
+   "loc": "b0:A6E3",
+   "end": "b0:A709",
+   "type": "text",
+   "name": "txt0_A6E3"
+  },
+  {
+   "loc": "b0:A709",
+   "end": "b0:A733",
+   "type": "text",
+   "name": "txt0_A709"
+  },
+  {
+   "loc": "b0:A733",
+   "end": "b0:A757",
+   "type": "text",
+   "name": "txt0_A733"
+  },
+  {
+   "loc": "b0:A757",
+   "end": "b0:A77C",
+   "type": "text",
+   "name": "txt0_A757"
+  },
+  {
+   "loc": "b0:A77C",
+   "end": "b0:A7D8",
+   "type": "text",
+   "name": "txt0_A77C"
+  },
+  {
+   "loc": "b0:A7D8",
+   "end": "b0:A814",
+   "type": "text",
+   "name": "txt0_A7D8"
+  },
+  {
+   "loc": "b0:A814",
+   "end": "b0:A85B",
+   "type": "text",
+   "name": "txt0_A814"
+  },
+  {
+   "loc": "b0:A85B",
+   "end": "b0:A896",
+   "type": "text",
+   "name": "txt0_A85B"
+  },
+  {
+   "loc": "b0:A896",
+   "end": "b0:A8D3",
+   "type": "text",
+   "name": "txt0_A896"
+  },
+  {
+   "loc": "b0:A8D3",
+   "end": "b0:A90A",
+   "type": "text",
+   "name": "txt0_A8D3"
+  },
+  {
+   "loc": "b0:A90A",
+   "end": "b0:A948",
+   "type": "text",
+   "name": "txt0_A90A"
+  },
+  {
+   "loc": "b0:A948",
+   "end": "b0:A9F9",
+   "type": "text",
+   "name": "txt0_A948"
+  },
+  {
+   "loc": "b0:A9F9",
+   "end": "b0:AA7F",
+   "type": "text",
+   "name": "txt0_A9F9"
+  },
+  {
+   "loc": "b0:AA7F",
+   "end": "b0:AAFD",
+   "type": "text",
+   "name": "txt0_AA7F"
+  },
+  {
+   "loc": "b0:AAFD",
+   "end": "b0:ABB1",
+   "type": "text",
+   "name": "txt0_AAFD"
+  },
+  {
+   "loc": "b0:ABB1",
+   "end": "b0:AC08",
+   "type": "text",
+   "name": "txt0_ABB1"
+  },
+  {
+   "loc": "b0:AC08",
+   "end": "b0:AD03",
+   "type": "text",
+   "name": "txt0_AC08"
+  },
+  {
+   "loc": "b0:AD03",
+   "end": "b0:AD51",
+   "type": "text",
+   "name": "txt0_AD03"
+  },
+  {
+   "loc": "b0:AD51",
+   "end": "b0:AD97",
+   "type": "text",
+   "name": "txt0_AD51"
+  },
+  {
+   "loc": "b0:AD97",
+   "end": "b0:ADBF",
+   "type": "text",
+   "name": "txt0_AD97"
+  },
+  {
+   "loc": "b0:ADBF",
+   "end": "b0:AE07",
+   "type": "text",
+   "name": "txt0_ADBF"
+  },
+  {
+   "loc": "b0:AE07",
+   "end": "b0:AE53",
+   "type": "text",
+   "name": "txt0_AE07"
+  },
+  {
+   "loc": "b0:AE53",
+   "end": "b0:AE9C",
+   "type": "text",
+   "name": "txt0_AE53"
+  },
+  {
+   "loc": "b0:AE9C",
+   "end": "b0:AEEA",
+   "type": "text",
+   "name": "txt0_AE9C"
+  },
+  {
+   "loc": "b0:AEEA",
+   "end": "b0:AF55",
+   "type": "text",
+   "name": "txt0_AEEA"
+  },
+  {
+   "loc": "b0:AF55",
+   "end": "b0:AF8B",
+   "type": "text",
+   "name": "txt0_AF55"
+  },
+  {
+   "loc": "b0:AF8B",
+   "end": "b0:AFB5",
+   "type": "text",
+   "name": "txt0_AF8B"
+  },
+  {
+   "loc": "b0:AFB5",
+   "end": "b0:AFEF",
+   "type": "text",
+   "name": "txt0_AFB5"
+  },
+  {
+   "loc": "b0:AFEF",
+   "end": "b0:B20A",
+   "type": "text",
+   "name": "txt0_AFEF"
+  },
+  {
+   "loc": "b0:B20A",
+   "end": "b0:B481",
+   "type": "text",
+   "name": "txt0_B20A"
+  },
+  {
+   "loc": "b0:B481",
+   "end": "b0:B755",
+   "type": "text",
+   "name": "txt0_B481"
+  },
+  {
+   "loc": "b0:B8A3",
+   "end": "b0:B8D6",
+   "type": "text",
+   "name": "txt0_B8A3"
+  },
+  {
+   "loc": "b0:B8D6",
+   "end": "b0:B92F",
+   "type": "text",
+   "name": "txt0_B8D6"
+  },
+  {
+   "loc": "b0:B92F",
+   "end": "b0:B96B",
+   "type": "text",
+   "name": "txt0_B92F"
+  },
+  {
+   "loc": "b0:B96B",
+   "end": "b0:B9C1",
+   "type": "text",
+   "name": "txt0_B96B"
+  },
+  {
+   "loc": "b0:B9C1",
+   "end": "b0:B9DF",
+   "type": "text",
+   "name": "txt0_B9C1"
+  },
+  {
+   "loc": "b0:B9DF",
+   "end": "b0:BA13",
+   "type": "text",
+   "name": "txt0_B9DF"
+  },
+  {
+   "loc": "b0:BA13",
+   "end": "b0:BA46",
+   "type": "text",
+   "name": "txt0_BA13"
+  },
+  {
+   "loc": "b0:BA46",
+   "end": "b0:BA6D",
+   "type": "text",
+   "name": "txt0_BA46"
+  },
+  {
+   "loc": "b0:BA6D",
+   "end": "b0:BA97",
+   "type": "text",
+   "name": "txt0_BA6D"
+  },
+  {
+   "loc": "b0:BBD2",
+   "end": "b0:BC04",
+   "type": "text",
+   "name": "txt0_BBD2"
+  },
+  {
+   "loc": "b0:BC04",
+   "end": "b0:BC26",
+   "type": "text",
+   "name": "txt0_BC04"
+  },
+  {
+   "loc": "f6:6BBF",
+   "end": "f6:6BDE",
+   "type": "text",
+   "name": "txt6_6BBF"
+  },
+  {
+   "loc": "f6:6C32",
+   "end": "f6:6C67",
+   "type": "text",
+   "name": "txt6_6C32"
+  },
+  {
+   "loc": "f6:6C67",
+   "end": "f6:6C9F",
+   "type": "text",
+   "name": "txt6_6C67"
+  },
+  {
+   "loc": "f6:6C9F",
+   "end": "f6:6CD1",
+   "type": "text",
+   "name": "txt6_6C9F"
+  },
+  {
+   "loc": "f6:6CD1",
+   "end": "f6:6CF8",
+   "type": "text",
+   "name": "txt6_6CD1"
+  },
+  {
+   "loc": "b0:BE00",
+   "end": "b0:C000",
+   "type": "bytes",
+   "name": "dat0_BE00"
+  },
+  {
+   "loc": "b0:A05C",
+   "end": "b0:A084",
+   "type": "words",
+   "name": "tbl_SfxSeq"
+  },
+  {
+   "loc": "b0:A608",
+   "end": "b0:A63A",
+   "type": "bytes",
+   "name": "tbl_MsgPtrLo"
+  },
+  {
+   "loc": "b0:A63A",
+   "end": "b0:A66C",
+   "type": "bytes",
+   "name": "tbl_MsgPtrHi"
+  },
+  {
+   "loc": "b0:BC26",
+   "end": "b0:BDC2",
+   "type": "text",
+   "name": "txt_TauntPool"
+  },
+  {
+   "loc": "f6:5195",
+   "end": "f6:51A5",
+   "type": "bytes",
+   "name": "tbl_ItemIconCol"
+  },
+  {
+   "loc": "f6:51A5",
+   "end": "f6:51B5",
+   "type": "bytes",
+   "name": "tbl_ItemIconPal"
+  },
+  {
+   "loc": "f7:D281",
+   "end": "f7:D28E",
+   "type": "bytes",
+   "name": "tbl_MapStripLo"
+  },
+  {
+   "loc": "f7:D28E",
+   "end": "f7:D29B",
+   "type": "bytes",
+   "name": "tbl_MapStripHi"
+  },
+  {
+   "loc": "b3:81C5",
+   "end": "b3:81C9",
+   "type": "bytes",
+   "name": "tbl_BuildDst"
+  },
+  {
+   "loc": "b0:B755",
+   "end": "b0:B8A3",
+   "type": "text",
+   "name": "txt0_B755"
+  },
+  {
+   "loc": "b0:BA97",
+   "end": "b0:BBD2",
+   "type": "text",
+   "name": "txt0_BA97"
+  },
+  {
+   "loc": "f6:6A39",
+   "end": "f6:6A6C",
+   "type": "text",
+   "name": "txt6_6A39"
+  },
+  {
+   "loc": "f6:6ABE",
+   "end": "f6:6ADF",
+   "type": "text",
+   "name": "txt6_6ABE"
+  },
+  {
+   "loc": "f6:6ADF",
+   "end": "f6:6B01",
+   "type": "text",
+   "name": "txt6_6ADF"
+  },
+  {
+   "loc": "f6:6B01",
+   "end": "f6:6B1A",
+   "type": "text",
+   "name": "txt6_6B01"
+  },
+  {
+   "loc": "f6:6B1A",
+   "end": "f6:6B36",
+   "type": "text",
+   "name": "txt6_6B1A"
+  },
+  {
+   "loc": "f6:6B36",
+   "end": "f6:6B65",
+   "type": "text",
+   "name": "txt6_6B36"
+  },
+  {
+   "loc": "f6:6B65",
+   "end": "f6:6B87",
+   "type": "text",
+   "name": "txt6_6B65"
+  },
+  {
+   "loc": "f6:6B87",
+   "end": "f6:6B9D",
+   "type": "text",
+   "name": "txt6_6B87"
+  },
+  {
+   "loc": "f6:6B9D",
+   "end": "f6:6BBF",
+   "type": "text",
+   "name": "txt6_6B9D"
+  },
+  {
+   "loc": "f6:6BDE",
+   "end": "f6:6C0E",
+   "type": "text",
+   "name": "txt6_6BDE"
+  },
+  {
+   "loc": "f6:6C0E",
+   "end": "f6:6C32",
+   "type": "text",
+   "name": "txt6_6C0E"
+  },
+  {
+   "loc": "f6:6CF8",
+   "end": "f6:6D13",
+   "type": "text",
+   "name": "txt6_6CF8"
+  },
+  {
+   "loc": "f6:6D13",
+   "end": "f6:6D4B",
+   "type": "text",
+   "name": "txt6_6D13"
+  },
+  {
+   "loc": "f6:6D4B",
+   "end": "f6:6D74",
+   "type": "text",
+   "name": "txt6_6D4B"
+  },
+  {
+   "loc": "f6:6D74",
+   "end": "f6:6D9F",
+   "type": "text",
+   "name": "txt6_6D74"
+  },
+  {
+   "loc": "f6:6D9F",
+   "end": "f6:6DC2",
+   "type": "text",
+   "name": "txt6_6D9F"
+  },
+  {
+   "loc": "f6:6DC2",
+   "end": "f6:6DF2",
+   "type": "text",
+   "name": "txt6_6DC2"
+  },
+  {
+   "loc": "f6:6DF2",
+   "end": "f6:6E1A",
+   "type": "text",
+   "name": "txt6_6DF2"
+  },
+  {
+   "loc": "f6:6E1A",
+   "end": "f6:6E47",
+   "type": "text",
+   "name": "txt6_6E1A"
+  },
+  {
+   "loc": "f6:6E47",
+   "end": "f6:6E6C",
+   "type": "text",
+   "name": "txt6_6E47"
+  },
+  {
+   "loc": "f6:6E6C",
+   "end": "f6:6E90",
+   "type": "text",
+   "name": "txt6_6E6C"
+  },
+  {
+   "loc": "f6:6E90",
+   "end": "f6:6EB7",
+   "type": "text",
+   "name": "txt6_6E90"
+  },
+  {
+   "loc": "f6:6EB7",
+   "end": "f6:6EE2",
+   "type": "text",
+   "name": "txt6_6EB7"
+  },
+  {
+   "loc": "f6:6EE2",
+   "end": "f6:6F1D",
+   "type": "text",
+   "name": "txt6_6EE2"
+  },
+  {
+   "loc": "f6:6F1D",
+   "end": "f6:6F43",
+   "type": "text",
+   "name": "txt6_6F1D"
+  },
+  {
+   "loc": "f6:6F43",
+   "end": "f6:6F71",
+   "type": "text",
+   "name": "txt6_6F43"
+  },
+  {
+   "loc": "f6:6F71",
+   "end": "f6:6F87",
+   "type": "text",
+   "name": "txt6_6F71"
+  },
+  {
+   "loc": "f6:6F87",
+   "end": "f6:6FA7",
+   "type": "text",
+   "name": "txt6_6F87"
+  },
+  {
+   "loc": "f6:6FA7",
+   "end": "f6:6FE3",
+   "type": "text",
+   "name": "txt6_6FA7"
+  },
+  {
+   "loc": "f6:6FE3",
+   "end": "f6:700D",
+   "type": "text",
+   "name": "txt6_6FE3"
+  },
+  {
+   "loc": "f6:700D",
+   "end": "f6:7029",
+   "type": "text",
+   "name": "txt6_700D"
+  },
+  {
+   "loc": "f6:7029",
+   "end": "f6:703D",
+   "type": "text",
+   "name": "txt6_7029"
+  },
+  {
+   "loc": "f6:703D",
+   "end": "f6:7067",
+   "type": "text",
+   "name": "txt6_703D"
+  },
+  {
+   "loc": "f6:7067",
+   "end": "f6:708B",
+   "type": "text",
+   "name": "txt6_7067"
+  },
+  {
+   "loc": "f6:708B",
+   "end": "f6:70AF",
+   "type": "text",
+   "name": "txt6_708B"
+  },
+  {
+   "loc": "f6:70AF",
+   "end": "f6:70E4",
+   "type": "text",
+   "name": "txt6_70AF"
+  },
+  {
+   "loc": "f6:70E4",
+   "end": "f6:711F",
+   "type": "text",
+   "name": "txt6_70E4"
+  },
+  {
+   "loc": "f6:711F",
+   "end": "f6:7137",
+   "type": "text",
+   "name": "txt6_711F"
+  },
+  {
+   "loc": "f6:7137",
+   "end": "f6:717E",
+   "type": "text",
+   "name": "txt6_7137"
+  },
+  {
+   "loc": "f6:717F",
+   "end": "f6:71BB",
+   "type": "text",
+   "name": "txt6_717F"
+  },
+  {
+   "loc": "f6:71BB",
+   "end": "f6:71F9",
+   "type": "text",
+   "name": "txt6_71BB"
+  },
+  {
+   "loc": "f6:71F9",
+   "end": "f6:7236",
+   "type": "text",
+   "name": "txt6_71F9"
+  },
+  {
+   "loc": "f6:7236",
+   "end": "f6:7252",
+   "type": "text",
+   "name": "txt6_7236"
+  },
+  {
+   "loc": "f6:7252",
+   "end": "f6:7269",
+   "type": "text",
+   "name": "txt6_7252"
+  },
+  {
+   "loc": "f6:7269",
+   "end": "f6:728D",
+   "type": "text",
+   "name": "txt6_7269"
+  },
+  {
+   "loc": "f6:728D",
+   "end": "f6:72CB",
+   "type": "text",
+   "name": "txt6_728D"
+  },
+  {
+   "loc": "f6:72CB",
+   "end": "f6:72FA",
+   "type": "text",
+   "name": "txt6_72CB"
+  },
+  {
+   "loc": "f6:72FA",
+   "end": "f6:7323",
+   "type": "text",
+   "name": "txt6_72FA"
+  },
+  {
+   "loc": "f6:7323",
+   "end": "f6:7344",
+   "type": "text",
+   "name": "txt6_7323"
+  },
+  {
+   "loc": "f6:7344",
+   "end": "f6:7363",
+   "type": "text",
+   "name": "txt6_7344"
+  },
+  {
+   "loc": "f6:7363",
+   "end": "f6:737F",
+   "type": "text",
+   "name": "txt6_7363"
+  },
+  {
+   "loc": "f6:737F",
+   "end": "f6:73A3",
+   "type": "text",
+   "name": "txt6_737F"
+  },
+  {
+   "loc": "f6:73A3",
+   "end": "f6:73D4",
+   "type": "text",
+   "name": "txt6_73A3"
+  },
+  {
+   "loc": "f6:73D4",
+   "end": "f6:73F7",
+   "type": "text",
+   "name": "txt6_73D4"
+  },
+  {
+   "loc": "f6:73F7",
+   "end": "f6:741A",
+   "type": "text",
+   "name": "txt6_73F7"
+  },
+  {
+   "loc": "f6:741A",
+   "end": "f6:744A",
+   "type": "text",
+   "name": "txt6_741A"
+  },
+  {
+   "loc": "f6:744A",
+   "end": "f6:746E",
+   "type": "text",
+   "name": "txt6_744A"
+  },
+  {
+   "loc": "f6:746E",
+   "end": "f6:7487",
+   "type": "text",
+   "name": "txt6_746E"
+  },
+  {
+   "loc": "f6:7487",
+   "end": "f6:74A6",
+   "type": "text",
+   "name": "txt6_7487"
+  },
+  {
+   "loc": "f6:74A6",
+   "end": "f6:74D8",
+   "type": "text",
+   "name": "txt6_74A6"
+  },
+  {
+   "loc": "f6:74D8",
+   "end": "f6:74EC",
+   "type": "text",
+   "name": "txt6_74D8"
+  },
+  {
+   "loc": "f6:74EC",
+   "end": "f6:7508",
+   "type": "text",
+   "name": "txt6_74EC"
+  },
+  {
+   "loc": "f6:7508",
+   "end": "f6:752B",
+   "type": "text",
+   "name": "txt6_7508"
+  },
+  {
+   "loc": "f7:DA00",
+   "end": "f7:DA80",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain0"
+  },
+  {
+   "loc": "f7:DA80",
+   "end": "f7:DB00",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain1"
+  },
+  {
+   "loc": "f7:DB00",
+   "end": "f7:DB80",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain2"
+  },
+  {
+   "loc": "f7:DB80",
+   "end": "f7:DC00",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain3"
+  },
+  {
+   "loc": "f7:DC00",
+   "end": "f7:DC80",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain4"
+  },
+  {
+   "loc": "f7:DC80",
+   "end": "f7:DD00",
+   "type": "bytes",
+   "name": "tbl_AreaTerrain5"
+  },
+  {
+   "loc": "f7:D800",
+   "end": "f7:D9E8",
+   "type": "bytes",
+   "name": "tbl_MsgScreenDLL"
+  },
+  {
+   "loc": "b3:81E9",
+   "end": "b3:8223",
+   "type": "bytes",
+   "name": "tbl_DLLTemplate"
+  },
+  {
+   "loc": "f6:7F65",
+   "end": "f6:7FD5",
+   "type": "bytes",
+   "name": "tbl_AreaTracks"
+  },
+  {
+   "loc": "f7:F296",
+   "end": "f7:F2A5",
+   "type": "bytes",
+   "name": "tbl_DefAmount"
+  },
+  {
+   "loc": "f7:F2A5",
+   "end": "f7:F2B4",
+   "type": "bytes",
+   "name": "tbl_DefRateMask"
+  },
+  {
+   "loc": "f6:6433",
+   "end": "f6:6453",
+   "type": "bytes",
+   "name": "tbl_SactorToughness"
+  },
+  {
+   "loc": "f6:6753",
+   "end": "f6:67A3",
+   "type": "bytes",
+   "name": "tbl_ScreenKind"
+  },
+  {
+   "loc": "b5:B683",
+   "end": "b5:B687",
+   "type": "bytes",
+   "name": "tbl_BossBit"
+  }
+ ],
+ "bankat": {
+  "f6:4CFF": 5
+ }
+}

@@ -1,0 +1,645 @@
+<title>Midnight Mutants Editor</title>
+<style>
+:root{
+  --bg:#EFEBE3; --ink:#1B1916; --mut:#6B6358; --faint:#8C8477;
+  --rule:#D3CBBD; --card:#F7F4EE; --sunk:#E5E0D6;
+  --accent:#A8641A; --accent-soft:#F0E3D2;
+  --cool:#2F6C99; --cool-soft:#DDE8F1;
+  --warn:#8A4B12;
+  --mono:ui-monospace,"Cascadia Mono","SFMono-Regular","JetBrains Mono",Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#100F0D; --ink:#E7E2D8; --mut:#948B80; --faint:#736B61;
+  --rule:#292520; --card:#181614; --sunk:#141210;
+  --accent:#D98E2B; --accent-soft:#2E2317;
+  --cool:#6FA8D4; --cool-soft:#16222C;
+  --warn:#E0A054;
+}}
+:root[data-theme="dark"]{
+  --bg:#100F0D; --ink:#E7E2D8; --mut:#948B80; --faint:#736B61;
+  --rule:#292520; --card:#181614; --sunk:#141210;
+  --accent:#D98E2B; --accent-soft:#2E2317;
+  --cool:#6FA8D4; --cool-soft:#16222C;
+  --warn:#E0A054;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.62 var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ---------------------------------------------------------------- masthead */
+header{border-bottom:1px solid var(--rule);padding:56px 0 30px;margin-bottom:36px}
+.eyebrow{font:12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:14px}
+h1{margin:0 0 10px;font-size:clamp(32px,5vw,46px);line-height:1.06;
+  letter-spacing:-.022em;font-weight:680;text-wrap:balance}
+.standfirst{margin:0;max-width:62ch;font-size:17px;color:var(--mut)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.fact{font:12px var(--mono);padding:5px 10px;border-radius:3px;
+  background:var(--sunk);border:1px solid var(--rule);color:var(--mut)}
+.fact b{color:var(--ink);font-weight:600}
+
+/* ------------------------------------------------------------------ layout */
+.cols{display:grid;grid-template-columns:196px minmax(0,1fr);gap:44px;
+  align-items:start;padding-bottom:80px}
+nav{position:sticky;top:20px}
+nav p{font:11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 10px}
+nav a{display:block;padding:5px 0;color:var(--mut);text-decoration:none;
+  font-size:14px;border-left:2px solid transparent;padding-left:11px}
+nav a:hover{color:var(--accent);border-left-color:var(--accent)}
+nav a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+section{margin-bottom:52px;scroll-margin-top:20px}
+h2{margin:0 0 6px;font-size:24px;letter-spacing:-.015em;font-weight:660;text-wrap:balance}
+h2 + .sub{margin:0 0 18px;color:var(--mut);font-size:15px;max-width:62ch}
+h3{margin:30px 0 8px;font-size:16.5px;font-weight:640;letter-spacing:-.008em}
+p{margin:0 0 14px;max-width:66ch}
+ul{margin:0 0 14px;padding-left:20px;max-width:66ch}
+li{margin-bottom:7px}
+code{font:.88em var(--mono);background:var(--sunk);padding:1px 5px;border-radius:3px}
+strong{font-weight:640}
+a{color:var(--accent)}
+
+/* ------------------------------------------------------------------ blocks */
+pre{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 16px;overflow-x:auto;font:13px/1.6 var(--mono);margin:0 0 16px}
+.scroll{overflow-x:auto;margin:0 0 18px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;
+  font-variant-numeric:tabular-nums}
+th{text-align:left;font:11px var(--mono);letter-spacing:.11em;text-transform:uppercase;
+  color:var(--faint);border-bottom:1px solid var(--rule);padding:0 14px 7px 0;
+  white-space:nowrap}
+td{padding:8px 14px 8px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.m,th.m{font-family:var(--mono);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:13px 16px;border-radius:0 4px 4px 0;margin:0 0 18px;max-width:66ch}
+.note p:last-child{margin-bottom:0}
+.note .lead{font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--warn);display:block;margin-bottom:5px}
+
+/* panel list ---------------------------------------------------------------- */
+.panel{border-top:1px solid var(--rule);padding:16px 0;display:grid;
+  grid-template-columns:112px minmax(0,1fr);gap:20px;align-items:start}
+.panel:last-of-type{border-bottom:1px solid var(--rule)}
+.panel .tab{font:12px var(--mono);letter-spacing:.06em;color:var(--accent);
+  background:var(--accent-soft);padding:4px 9px;border-radius:3px;
+  justify-self:start;white-space:nowrap}
+.panel p{margin:0 0 8px}
+.panel p:last-child{margin-bottom:0}
+.shared{font-size:13.5px;color:var(--mut)}
+.shared b{color:var(--ink);font-weight:600}
+
+footer{border-top:1px solid var(--rule);padding:26px 0 60px;color:var(--faint);
+  font-size:13.5px}
+footer a{color:var(--mut)}
+
+@media (max-width:820px){
+  .cols{grid-template-columns:1fr;gap:0}
+  nav{position:static;margin-bottom:34px;border-bottom:1px solid var(--rule);
+    padding-bottom:16px}
+  nav a{display:inline-block;border-left:0;padding:4px 12px 4px 0}
+  .panel{grid-template-columns:1fr;gap:8px}
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Midnight Mutants &middot; Atari 7800 &middot; 1990</div>
+    <h1>The cartridge editor</h1>
+    <p class="standfirst">A manual for the tool that edits the game itself &mdash;
+      rooms, terrain, sprites, palettes, text, music, and the rules underneath
+      them &mdash; and writes a cartridge you can run.</p>
+    <div class="facts">
+      <span class="fact">needs <b>Python 3</b> and a browser</span>
+      <span class="fact"><b>11</b> panels</span>
+      <span class="fact"><b>76</b> rooms</span>
+      <span class="fact"><b>1,599</b> notes</span>
+      <span class="fact"><b>114</b> script records</span>
+      <span class="fact">NTSC and PAL</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap cols">
+  <nav aria-label="Sections">
+    <p>Contents</p>
+    <a href="#start">Starting it</a>
+    <a href="#header">The header</a>
+    <a href="#panels">The panels</a>
+    <a href="#shared">What is shared</a>
+    <a href="#refuses">What it refuses</a>
+    <a href="#patches">Patch files</a>
+    <a href="#releases">Both releases</a>
+    <a href="#fixes">The repairs</a>
+  </nav>
+
+  <main>
+    <section id="start">
+      <h2>Starting it</h2>
+      <p class="sub">Nothing to install beyond Python. The interface is plain
+        HTML and JavaScript served from your own machine &mdash; no framework,
+        no build step, no network.</p>
+      <pre>python tools/editor.py "Midnight Mutants (NTSC) (Atari) (1990).a78"
+   -&gt; http://127.0.0.1:7800</pre>
+      <p><strong>Disassemble</strong> sits beside Save. It runs the project's own
+        disassembler over the edited image &mdash; unsaved changes included
+        &mdash; and writes nine listings next to the cartridge, in under a
+        second. The annotations describe the stock layout, so code added through
+        the editor comes out as <code>.byte</code> rather than instructions.</p>
+      <p>On Windows, <code>Edit Cartridge.bat</code> and
+        <code>Edit PAL Cartridge.bat</code> do the same thing by double-click.
+        Either accepts a test-build name or a path.</p>
+      <p><strong>It does not need the disassembly.</strong> Every table, header
+        and pointer is resolved from the cartridge at load, so the listings, the
+        annotations and the rebuild are no part of running it &mdash; a copy
+        holding nothing but the tools and a <code>.a78</code> works completely.
+        Two optional files in <code>build/</code> add names rather than
+        function: without them rooms read "Unassigned" and sprite cells show
+        offsets instead of identifications.</p>
+      <div class="note">
+        <span class="lead">Before you begin</span>
+        <p>The cartridge you open is <strong>never written to</strong>. Everything
+          happens to a copy in memory, and Save always asks where to put the
+          result. The flip side: <strong>closing the window discards unsaved
+          edits</strong>, because nothing is written until you ask.</p>
+      </div>
+    </section>
+
+    <section id="header">
+      <h2>The header</h2>
+      <p class="sub">Four things sit along the top, and they answer the
+        questions you ask most often.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>what</th><th>it tells you</th></tr></thead>
+        <tbody>
+          <tr><td class="m">filename</td><td>which cartridge is loaded</td></tr>
+          <tr><td class="m">NTSC / PAL</td>
+              <td>which release the editor detected. Orange for NTSC, blue for
+                  PAL. It decides where every address lands, so it is worth a
+                  glance before you start.</td></tr>
+          <tr><td class="m">bytes changed</td>
+              <td>how far the image in memory has drifted from the file on disk.
+                  Zero means you have changed nothing.</td></tr>
+          <tr><td class="m">Save / Revert</td>
+              <td>write the result somewhere new, or throw the changes away.
+                  Both are disabled while nothing has changed.</td></tr>
+        </tbody>
+      </table></div>
+      <p>The byte count is the honest measure of an edit. Moving an item is
+        three bytes; repairing the debug cheat is four; recolouring a palette is
+        one. If a change you thought was small reports hundreds, something
+        larger happened than you intended.</p>
+    </section>
+
+    <section id="panels">
+      <h2>The panels</h2>
+      <p class="sub">Eleven tabs down the right-hand side. The room picture in
+        the middle stays put; the panels change what you are editing about it.</p>
+
+      <div class="panel">
+        <span class="tab">Tiles</span>
+        <div><p>The area bank's character set, as a picker. Choose a tile here,
+          then paint with it on the room. Characters are two bytes wide, so only
+          even numbers are real tiles &mdash; the picker shows the 128 that
+          exist.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Room</span>
+        <div><p>The room's own header: which graphics bank and character set it
+          draws from, whether it is dark, which palette block it uses, and the
+          terrain slice each scroll segment points at. Also <b>how many segments
+          it has</b> &mdash; the room's width &mdash; and the map limit that
+          decides where it ends. The canvas above will overlay <b>collision</b>,
+          <b>water</b> and <b>exits</b> on request &mdash; the last labelling
+          every scripted tile with where it leads, resolving the three events
+          that defer to the room's own tables.</p>
+          <p>Also the <strong>terrain properties</strong> &mdash; what each tile
+          <em>does</em>, as opposed to how it looks. Bits 0&ndash;1 are the
+          collision class: 3 blocks everywhere, 1 and 2 block one half of the
+          cell diagonal, 0 is open ground. Bit 7 makes the square scripted
+          instead: a door, the healing well, the hurting ground, the win.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Exits</span>
+        <div><p>Where the room leads. North and south are per scroll segment;
+          east and west are one destination each for the whole room. A
+          destination of <code>$00</code> means that edge is a wall.</p>
+          <p>Below them, the scripted doors and the conditions on them &mdash;
+          the crypt key must be <em>selected</em>, not merely carried; one door
+          wants the Ram beaten, a weapon in hand and nothing selected. Plus the
+          <b>doors that live in the terrain</b> rather than at an edge, listed
+          with what they demand of you and where they come out.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Actors</span>
+        <div><p>Six placement budgets per room &mdash; crow, bat, wolf, ghost,
+          spider and the special actor &mdash; each one byte holding an amount
+          and a rate mask. The mask is the reciprocal of the rate:
+          <code>$00</code> fires every frame, <code>$FF</code> is rare.</p>
+          <p>Then the global tables: how tough each creature kind is, the
+          contact damage and stun constants, and the throw rate.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Items</span>
+        <div><p>Every instruction in the cartridge that names an inventory slot
+          &mdash; twenty-nine of them &mdash; grouped by the item they name, so
+          you can point any effect at a different item. The health ceiling, the
+          weapon fire rates, what a new game starts with, the cost in blood
+          purity of every kind of hit, and the repairs described further
+          down.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Bosses</span>
+        <div><p>Each fight's setup record: health, contact damage, palette set,
+          the player's starting position, and the stage counter that decides how
+          angry the fight begins. Plus what winning is worth, the four bytes
+          that are the <b>weak spot</b>, Dr Evil's two alternating windows, and
+          the portraits themselves &mdash; which, since a fight draws no arena,
+          are the whole of a boss's appearance.</p>
+          <p>The portraits are <b>painted, not typed</b>. Each is drawn from its
+          own character set and palette with a cell grid over it, beside a tray
+          of every character in that set: pick one, then click or drag on the
+          picture; right-click erases. Colour follows the destination band
+          rather than the portrait row, so Dr Evil &mdash; ten rows tall &mdash;
+          changes colour down his length, exactly as the blit makes him.</p>
+          </div>
+      </div>
+      <div class="panel">
+        <span class="tab">Text</span>
+        <div><p>All 114 script records, searchable. Grampa's advice, the
+          endings, the message screen, the status bar. Each record also carries
+          two bytes worth editing: how long the banner <b>holds</b>, and whether
+          its text <b>shimmers</b>.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Music</span>
+        <div><p>Songs, their two voice tracks, the patterns underneath and the
+          individual notes &mdash; with a rendered preview of the edited image
+          rather than the original. Below it, <b>sound effects</b>: the 17 sites
+          that ask for one, listed by what fires them, and all 15 streams in the
+          block with which ids play each. Three of those streams nothing plays
+          at all.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Draw</span>
+        <div><p>Pixel editing, for both kinds of artwork: the room's character
+          set, and the sprite pages holding the player, the creatures, the item
+          icons and Grampa. A pixel is two bits, so it is transparent or one of
+          three colours &mdash; and which three depends on where it is drawn.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Colour</span>
+        <div><p>Every palette block in the cartridge, against the whole 7800
+          space: sixteen hues across, sixteen luminances down. The terrain
+          block, the sprite block that is live during play, the intro block and
+          the three boss sets.</p></div>
+      </div>
+      <div class="panel">
+        <span class="tab">Changes</span>
+        <div><p>Every byte that differs from the file on disk, as
+          <code>rom+offset  from &rarr; to</code>. Patch files are written and
+          read from here.</p></div>
+      </div>
+    </section>
+
+    <section id="shared">
+      <h2>What is shared</h2>
+      <p class="sub">The single most useful thing to know about this cartridge:
+        very little of it belongs to one room.</p>
+      <p>128K is not much for a game this size, and the authors reused
+        everything. A change that looks local usually is not, so each panel says
+        who else it affects <em>before</em> you commit.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>editing this</th><th class="m">also changes</th></tr></thead>
+        <tbody>
+          <tr><td>a terrain tile</td>
+              <td class="m">every room drawing that slice &mdash; <b>17</b> rooms
+                  share <code>b1</code> slice <code>$2A</code></td></tr>
+          <tr><td>a character</td>
+              <td class="m">every room in that bank with the same character set
+                  &mdash; up to <b>19</b></td></tr>
+          <tr><td>a terrain property</td>
+              <td class="m">the other rooms on that property table, and the
+                  <em>paired</em> character, since two share one entry</td></tr>
+          <tr><td>a room palette</td>
+              <td class="m">every room with the same stream &mdash; up to
+                  <b>11</b></td></tr>
+          <tr><td>a sprite</td>
+              <td class="m">everywhere it appears; sprite pages are global</td></tr>
+          <tr><td>a creature's toughness</td>
+              <td class="m">every room that places that kind</td></tr>
+          <tr><td>an item icon palette</td>
+              <td class="m">the six other items sharing it</td></tr>
+        </tbody>
+      </table></div>
+      <p>Where a room needs to differ alone, the lever is usually to point it at
+        <em>different</em> shared data rather than to edit what it currently
+        uses &mdash; give the segment another terrain slice, or the room another
+        palette stream.</p>
+    </section>
+
+    <section id="refuses">
+      <h2>What it refuses</h2>
+      <p class="sub">The ROM is a fixed 128K with no slack, so the editor writes
+        in place and declines anything that would move data.</p>
+      <ul>
+        <li><strong>Nothing may change size.</strong> A terrain slice is exactly
+          200 bytes. Replacement text may be shorter but never longer, and is
+          padded rather than shifted. A pattern's note count is fixed.</li>
+        <li><strong>Structural fields are not editable.</strong> A room's segment
+          count sets the length of five parallel arrays that follow it; changing
+          it would run into the next room's header.</li>
+        <li><strong>Code edits are anchored.</strong> Every constant that lives
+          inside an instruction records the opcode that must precede it. If that
+          opcode is not there, the write is refused rather than scribbling into
+          code that has moved.</li>
+        <li><strong>Save is blocked</strong> if any of the 76 rooms stops
+          parsing, so a bad header edit cannot reach a file.</li>
+        <li><strong>Unknown cartridges are refused</strong> outright rather than
+          edited blind.</li>
+      </ul>
+      <p>Values are bounded too: a pixel is two bits, a pitch is five, a colour
+        slot is 1&ndash;3 because 0 is transparent, and a boss is 1&ndash;3
+        because slot 0 is a null pointer.</p>
+    </section>
+
+    <section id="patches">
+      <h2>Patch files</h2>
+      <p class="sub">Share an edit as the handful of bytes that changed, rather
+        than as a 128K cartridge.</p>
+      <p>The <strong>Changes</strong> tab writes and reads <strong>BPS</strong>
+        patches. Eight changed bytes come out as an 82-byte file. The format is
+        the one Floating IPS, RomPatcher.js and beat all speak, so a patch from
+        here works with them and theirs works here.</p>
+      <h3>Why BPS and not IPS</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>format</th><th>verifies</th></tr></thead>
+        <tbody>
+          <tr><td class="m">IPS</td><td><strong>nothing</strong> &mdash; offsets
+            and data only. Applied to the wrong ROM it corrupts it silently.</td></tr>
+          <tr><td class="m">UPS</td><td>CRC32 of source, target and patch; less
+            widely supported now.</td></tr>
+          <tr><td class="m">BPS</td><td>CRC32 of source, target and the patch
+            itself &mdash; and it is what current tools default to.</td></tr>
+        </tbody>
+      </table></div>
+      <p>All three checksums are used: the patch's own on load, so a corrupt
+        file is caught before it touches anything; the source checksum before
+        applying, with both values shown if they disagree; and the result
+        afterwards.</p>
+      <div class="note">
+        <span class="lead">Worth knowing</span>
+        <p>Loading a patch applies it over the cartridge <strong>as it is on
+          disk</strong>, replacing unsaved edits. That keeps every patch
+          relative to the stock image &mdash; otherwise two patches applied in
+          sequence would describe something neither of them says.</p>
+      </div>
+    </section>
+
+    <section id="releases">
+      <h2>Both releases</h2>
+      <p class="sub">The European cartridge is the same game at different
+        addresses, and the editor handles it without you doing anything.</p>
+      <p>Its display list carries extra zones for PAL's taller screen, and those
+        insertions push the code after them along: <strong>bank 6 by three
+        bytes, part of bank 7 by nine</strong>. The editor identifies the
+        cartridge on load, relocates its address tables to match, and shows the
+        result on the badge. Every panel then works identically.</p>
+      <p>Addresses shown in the interface are the loaded image's own, so they
+        line up with that version's listings. The full comparison &mdash; what
+        moved, what did not, and what actually differs between the two &mdash;
+        is on its own page.</p>
+    </section>
+
+    <section id="fixes">
+      <h2>The repairs</h2>
+      <p class="sub">Nine things in the cartridge are broken, or missing, in ways
+        the editor can put right. Every one is a toggle, and every one reverts
+        byte-exactly.</p>
+
+      <h3>The debug cheat that reboots your console</h3>
+      <p>Holding <strong>PAUSE</strong> and pressing the first button four times
+        was meant to refill blood purity and grant eight maximum health. It can
+        never get there: two of the four counter states branch into data, and so
+        do both wrong-button exits. Since the IRQ vector is the reset entry,
+        each is a soft reboot &mdash; the counter can be advanced exactly once
+        before the game restarts.</p>
+      <p>The repair is <strong>four branch operands</strong> and nothing else.
+        No instruction moves.</p>
+
+      <h3>Music that runs a sixth too slow</h3>
+      <p>A note's duration is a count of frames and the engine ticks once per
+        frame, so tempo follows the machine. The European release was never
+        retimed &mdash; its duration table is byte-identical to the NTSC one
+        &mdash; so at 49.92&nbsp;Hz against 59.96 everything plays at
+        <strong>83.3% speed</strong>.</p>
+      <p>Two fixes. <strong>Rescaling</strong> multiplies the sixteen duration
+        entries by 5/6: data only, but eight of them round, and the melody's
+        clean 2:1 becomes 13:7. The <strong>extra tick</strong> installs an
+        16-byte shim on the music entry vector that runs one extra tick every
+        fifth frame &mdash; 18 bytes in all, counting the two that repoint the
+        vector at it. 0.1% out, every note ratio preserved, and confirmed by ear
+        on the PAL machine.</p>
+      <h3>A targeting bracket for a leg</h3>
+      <p>The last frame of a special actor's death draws four eight-pixel
+        fragments, and the fourth names gfx <span class="m">$EE</span> &mdash;
+        the same eight pixels the Grampa screen uses for its item-select
+        reticle. A bracket appears briefly as the corpse's right leg.</p>
+      <p>The artwork has no fourth fragment to reach for:
+        <span class="m">$EC</span> and <span class="m">$EE</span> are the two
+        halves of one sixteen-pixel cell, and the right half <em>is</em> the
+        reticle. The repair points the fourth fragment at
+        <span class="m">$EC</span> as well, so the corpse gets two of the same
+        melt piece. <strong>One byte</strong>, and nothing moves &mdash; only
+        which eight pixels are fetched.</p>
+
+      <h3>Three items you cannot see when you select them</h3>
+      <p>The status bar draws whatever is selected from two tables indexed by
+        the selected slot: graphics at <span class="m">f6:$6838</span>, palette
+        and width at <span class="m">f6:$6845</span>. The cartridge carries a
+        second, correct copy of the same information for items lying on the
+        ground, and putting them side by side is the whole diagnosis.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>item</th><th class="m">on the ground</th>
+          <th class="m">in the status bar</th></tr></thead>
+        <tbody>
+          <tr><td>crypt key</td><td class="m">$D6 / $9E</td>
+              <td class="m">$D6 / <strong>$BE</strong></td></tr>
+          <tr><td>necklace</td><td class="m">$D2 / $9E</td>
+              <td class="m">$D2 / <strong>$BE</strong></td></tr>
+          <tr><td>plasmic pumpkin</td><td class="m">$F4 / $DE</td>
+              <td class="m"><strong>$D0</strong> / <strong>$BE</strong></td></tr>
+        </tbody>
+      </table></div>
+      <p>That zone loads its palettes from <span class="m">dat_4D1B</span>, which
+        makes <strong>palette 5 <span class="m">$00 $11 $14</span></strong>
+        &mdash; its first colour is pure black &mdash; and <strong>palette 4
+        <span class="m">$1A $22 $0D</span></strong>, a light gold. Every lit
+        pixel of the crypt key is that first colour, so it renders as nothing at
+        all. The necklace is mostly that colour with a little
+        <span class="m">$11</span>, which is why it reads as a smudge rather
+        than a necklace. The weapons in the same tables already use palette 4
+        and are perfectly legible.</p>
+      <p>The pumpkin is wrong twice. Its graphics entry is a copy of the
+        <em>heart's</em> <span class="m">$D0</span>. And on the ground it uses
+        palette 6, which the game randomises every frame &mdash; the pumpkin and
+        the diamond are the only two items on it, which is why those two sparkle
+        where nothing else does. The status strip holds its palettes fixed for
+        the whole zone and cannot do that, so even with the right artwork it
+        stays a dim brown outline until it is moved to palette 4 as well.</p>
+      <p><strong>Four bytes.</strong> The crypt key becomes a gold key where
+        there was nothing, the necklace a beaded ring, and the pumpkin its own
+        lit artwork.</p>
+
+      <h3>The item that never says anything</h3>
+      <p>Every item announces itself when you pick it up &mdash; except the
+        plasmic pumpkin. The chain at <span class="m">f6:$527A</span> links kind
+        1 to the cross's line, 2 to the crypt key's, 3 to the necklace's, 4 to
+        the heart's, 9 to the lantern's, and falls straight through to an
+        <span class="m">RTS</span> for kind 5. It is not a broken pointer or a
+        record that went missing; the case was never written.</p>
+      <p>That silence costs the player something real. The pumpkin is what ends
+        the game: carrying it selected onto the square whose terrain property is
+        <span class="m">$EF</span> wins, and exactly one room places that square
+        &mdash; <strong>room <span class="m">$1A</span>, in the pumpkin
+        fields</strong>. Nothing in the shipped game says so.</p>
+      <p>The pointer table has room for the fix already. Five of its 73 entries
+        &mdash; <span class="m">$24 $25 $26 $27</span> and
+        <span class="m">$32</span> &mdash; have no code path that can produce
+        them, each idly aimed at a neighbour's record. Slot
+        <span class="m">$24</span> can be pointed at a new record without
+        growing anything or stranding anything.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>piece</th><th class="m">where</th>
+          <th class="m">cost</th></tr></thead>
+        <tbody>
+          <tr><td>jump over the tail</td><td class="m">f6:$5296</td>
+              <td class="m">3, in place</td></tr>
+          <tr><td>the shim</td><td class="m">the pocket, else f6:$7FC4</td>
+              <td class="m">12</td></tr>
+          <tr><td>the record</td><td class="m">f6:$7F91</td>
+              <td class="m">3 + the text</td></tr>
+          <tr><td>slot $24 repointed</td><td class="m">f6:$69EF</td>
+              <td class="m">2, in place</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>The record ends <span class="m">$FE</span>, not
+        <span class="m">$FF</span>.</strong> That single byte is what makes the
+        banner shimmer. <span class="m">sub_687E</span> scans to the byte that
+        ends the text and, if it is <span class="m">$FE</span>, puts
+        <span class="m">$FF</span> in <span class="m">ram_1E7B</span>; the
+        display interrupt then runs <span class="m">LDA ram_0044 / AND ram_1E7B
+        / STA P0C2</span>, so the frame counter walks the text colour one step
+        per frame. With <span class="m">$FF</span> the mask is zero and the words
+        sit still. Nearly every stock pickup ends <span class="m">$FE</span> &mdash;
+        but four do not, and the editor offers the flip as a repair.</p>
+
+      <div class="card">
+        <h4>The four pickups that never shimmer</h4>
+        <p>Walking all 73 records and reading the byte each one stops on turns up
+          four exceptions, and every one of them is a pickup.</p>
+        <table class="grid"><thead>
+          <tr><th>record</th><th>pickup</th><th>terminator</th><th></th></tr>
+        </thead><tbody>
+          <tr><td class="m">$33</td><td>cross</td>
+              <td class="m">f6:$7236</td><td class="m">$FF</td></tr>
+          <tr><td class="m">$2F</td><td>axe</td>
+              <td class="m">f6:$717E</td><td class="m">$FF</td></tr>
+          <tr><td class="m">$30</td><td>blaster</td>
+              <td class="m">f6:$71BB</td><td class="m">$FF</td></tr>
+          <tr><td class="m">$31</td><td>mega blaster</td>
+              <td class="m">f6:$71F9</td><td class="m">$FF</td></tr>
+        </tbody></table>
+        <p>The knife's own four lines shimmer, as do both potions, the crypt key,
+          necklace, heart, lantern and all four diamond variants. There is no
+          rule under which the knife shimmers and the axe does not, which is what
+          makes these four look like an oversight rather than a distinction.
+          Four bytes.</p>
+      </div>
+      <p>The line itself is editable: up to 48 characters, with
+        <span class="m">|</span> breaking it and no single line over 39, the
+        widest the display fits. The default reads
+        <em>TAKE IT TO THE PUMPKIN FIELDS / AND SET ME FREE!</em></p>
+
+      <h3>Widening a room moves its header</h3>
+      <p>An area header is <span class="m">25 + 5n</span> bytes: 24 scalars, a
+        <span class="m">$00</span>-terminated list of n terrain-slice ids, then
+        four parallel n-entry exit arrays. The segment count <em>is</em> the
+        room's width, so changing it resizes the record.</p>
+      <p>They cannot grow where they sit. The shipped headers are packed with
+        nothing to spare, and <strong>five of them overlap their neighbour</strong>
+        &mdash; room <span class="m">$10</span>'s header begins three bytes
+        inside room <span class="m">$0F</span>'s last exit array, so its stream,
+        page and dark flag <em>are</em> the tail of the room before it. Editing a
+        tail in place would silently rewrite the next room.</p>
+      <p>So the editor moves the record instead. Headers are reached through the
+        pointer table at <span class="m">f7:$F32A</span> and never by walking, so
+        one may live anywhere; relocating leaves the original bytes untouched,
+        which is exactly what the overlapping rooms need. Coming back to the
+        shipped count writes the record home again, edits included, and releases
+        the borrowed space.</p>
+      <p><strong>Five segments is the ceiling</strong>, and it is the engine's
+        rather than the editor's. The map builder at
+        <span class="m">f7:$F243</span> lays each segment 20 columns into a
+        100&times;10 buffer at <span class="m">$2400</span>, so five fill it
+        exactly; a sixth would start at column 100 &mdash; the second band
+        &mdash; and its last row would run past <span class="m">$27E7</span>
+        over <span class="m">score_digits</span>. Fourteen shipped rooms already
+        use five and three use four, so there is nothing unusual about going
+        past three.</p>
+      <p>Space is not the binding constraint. A header must sit at
+        <span class="m">$F3CA</span> or above to stay a room to the rest of the
+        toolchain, which leaves 86 bytes at <span class="m">$FF24</span> and 30
+        at <span class="m">$FEE2</span>; a five-segment header is 50 bytes, so
+        the larger run takes anything the engine allows.</p>
+
+      <h3>What a patch costs</h3>
+      <p>Two of these append code, and bank 6 has one run of unused bytes for
+        everything that does &mdash; these patches and the test-build patcher
+        alike. The Items tab shows the budget: how much is still contiguous,
+        what each occupant takes, and what that leaves for a test build.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>change</th><th class="m">cost</th></tr></thead>
+        <tbody>
+          <tr><td>water walk by terrain</td><td class="m">21 bytes at $7FD0</td></tr>
+          <tr><td>music: extra tick</td><td class="m">16 bytes at $7FF0</td></tr>
+          <tr><td>music: rescale durations</td><td class="m">in place</td></tr>
+          <tr><td>debug hook repair</td><td class="m">in place</td></tr>
+          <tr><td>reticle leg</td><td class="m">in place, 1 byte</td></tr>
+          <tr><td>selected-item icons</td><td class="m">in place, 4 bytes</td></tr>
+          <tr><td>the pumpkin's pickup line</td><td class="m">up to 66 bytes</td></tr>
+          <tr><td>the axe tumbling</td><td class="m">in place, 9 bytes</td></tr>
+          <tr><td>a fourth axe pose</td><td class="m">33 bytes, into free space</td></tr>
+          <tr><td>the mega blaster's lost frames</td><td class="m">in place, 2 bytes</td></tr>
+          <tr><td>the ghost's first death frame</td><td class="m">in place, 1 byte</td></tr>
+          <tr><td>the actor death first frame</td><td class="m">in place, 1 byte</td></tr>
+          <tr><td>starting health and purity</td><td class="m">in place</td></tr>
+          <tr><td>everything else in the editor</td><td class="m">in place</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>In place means free.</strong> Starting health and purity are
+        the operands of immediates the reset already executes, so a test build
+        asking only for those appends nothing at all.</p>
+
+      <div class="note">
+        <span class="lead">Gated deliberately</span>
+        <p>Both <em>music</em> corrections are refused on an NTSC cartridge, in the interface
+          and in the server alike: applying either to a 60&nbsp;Hz machine makes
+          the music run 20% <em>fast</em>. Turning them off stays available on
+          any image, so a wrongly patched cartridge can always be put back.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap">
+    Part of a complete disassembly of Midnight Mutants that reassembles into a
+    byte-identical cartridge. The editor is <code>tools/editor.py</code>; the
+    write layer beneath it is <code>tools/romedit.py</code>.
+  </div>
+</footer>

@@ -1,0 +1,190 @@
+<title>Midnight Mutants Items</title>
+<style>
+:root{--bg:#EDE9E1;--ink:#1A1815;--mut:#6E665C;--rule:#CFC7B9;
+ --card:#F6F3EC;--accent:#A8641A;--hot:#9E2B25}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0F0E0C;--ink:#E6E1D7;--mut:#8A8177;--rule:#2A2621;
+ --card:#171512;--accent:#D98E2B;--hot:#FF5C5C}}
+:root[data-theme="dark"]{--bg:#0F0E0C;--ink:#E6E1D7;--mut:#8A8177;--rule:#2A2621;
+ --card:#171512;--accent:#D98E2B;--hot:#FF5C5C}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);margin:0;padding:3.5rem 1.5rem 6rem;
+ font:16px/1.6 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.wrap{max-width:1000px;margin:0 auto}
+.meta{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--accent);margin:0 0 .9rem}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 .5rem;font-weight:600;
+ letter-spacing:-.015em;text-wrap:balance}
+.sub{color:var(--mut);margin:0 0 2.4rem;max-width:64ch}
+.item{display:grid;grid-template-columns:auto 1fr;gap:1.3rem;align-items:start;
+ padding:1.3rem 0;border-top:1px solid var(--rule)}
+.ic{background:#0A0908;border-radius:2px;padding:8px;display:block}
+.ic img,.flash{display:block;image-rendering:pixelated}
+/* palettes 2 and 5 are nearly black; those icons need a pale mount to read */
+.ic.lightbg{background:#C9C3B7}
+.flash{background-repeat:no-repeat;background-position:0 0}
+@media (prefers-reduced-motion:reduce){.flash{animation:none!important}}
+h2{margin:0 0 .1rem;font-size:1.2rem;font-weight:600}
+.slot{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;color:var(--mut);
+ letter-spacing:.05em;margin:0 0 .6rem}
+.item p{margin:0 0 .5rem;max-width:60ch}
+.sel{background:var(--card);border-left:3px solid var(--accent);padding:.5rem .8rem;
+ margin:.6rem 0 0;max-width:60ch}
+.sel b.k{font-family:ui-monospace,Menlo,monospace;font-size:.68rem;
+ letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block}
+.rooms{font-family:ui-monospace,Menlo,monospace;font-size:.72rem;color:var(--mut);
+ margin:.55rem 0 0}
+.rooms a{color:inherit;border-bottom:1px dotted currentColor;text-decoration:none}
+.rooms a:hover{color:var(--accent)}
+.pend{color:var(--hot)}
+h3{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;margin:3rem 0 .8rem;
+ padding-bottom:.4rem;border-bottom:1px solid var(--rule);color:var(--accent)}
+table{border-collapse:collapse;font-size:.86rem;margin:.5rem 0 0;width:100%}
+th,td{text-align:left;padding:.35rem .9rem .35rem 0;border-bottom:1px solid var(--rule);
+ vertical-align:top}
+th{color:var(--mut);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+td code,p code{font-family:ui-monospace,Menlo,monospace;font-size:.82em}
+p{max-width:64ch}
+a{color:var(--accent)}
+.foot{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);
+ color:var(--mut);font-size:.85rem;max-width:64ch}
+</style>
+<div class="wrap">
+<p class="meta">Midnight Mutants &middot; Atari 7800 &middot; 1990</p>
+<h1>Midnight Mutants Items</h1>
+<p class="sub">Thirteen inventory slots, each icon drawn from the cartridge. What an item does when you <i>own</i> it and what it does when you <i>select</i> it are two different mechanisms, and four items only matter selected.</p>
+<div class="item">
+<span class="ic lightbg"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAAnUlEQVR42u3aUQ7AEAwA0Fp2V2dyWk4gi8Ri7PW7wYumIaR4OXKOOpJfSqSR/Cs2DwCAvwPuiWPVTlfpdSc7AAAAAAAAALA60sSxhm5ezkIAAACPXah+aaG9rqWEAAAAAAAAAE66kXkjAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4FLDs1+KsuZUQAMDm0QBLkA5XwKasyQAAAABJRU5ErkJggg==" width="48" height="96" alt="Cross"></span>
+<div>
+<h2>Cross</h2>
+<p class="slot">id $01 &middot; slot $1F3E &middot; icon cell $D4 &middot; palette 5</p>
+<p>Eight separate effects, more than anything else in the game &mdash; and the only item whose presence changes how enemies <i>spawn</i>.</p>
+<p class="sel"><b class="k">when selected</b>immune to contact blood loss (<code>f6:$5FA7</code>)</p>
+<p class="rooms">found in <a href="rooms.html#r14">$14</a></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAAuElEQVR42u3b4Q1AMBAG0KtYyggmNkLHYgGVSK4VvPspQl5cvlzREklV67qfHV+WrWSc36opXl4AAH8HzL1v0EobTwAAAGBMCrXq7syjhQAAPgooWRfKmnmsyAAAzEJjZp6s1NJCAABSyIoMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4FV1+zvVUzs1tBAAwN9SqHd62EcGAAAQEYn/C/VOLS0EAAAAAAAAMHJFljXzeC8EAABwWQc4dzHwZYuVDQAAAABJRU5ErkJggg==" width="48" height="96" alt="Crypt key"></span>
+<div>
+<h2>Crypt key</h2>
+<p class="slot">id $02 &middot; slot $1F3F &middot; icon cell $D6 &middot; palette 4</p>
+<p>Read twice: Grampa's advice chain, and the door.</p>
+<p class="sel"><b class="k">when selected</b>terrain <code>$85</code> opens the way to the Skull &mdash; the key must be <b>in hand</b>, not merely owned (<code>f6:$56E2</code>)</p>
+<p class="rooms">found in <a href="rooms.html#r4A">$4A</a> <span class="pend">pending</span></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAA+0lEQVR42u3bsQ2DMBRFUSfKPqkZgSnSMhJtpmAE6kyULOBffMnIAZ9XGoS44vN0LUEpIiI9c2t1odezfGvryzpXz1+Xrbr+/uTu6X72JwAAwOgA6Rba97naNtO0NWm0qM2idjJCAABctYWybdAq2ZYzQgAAXLWFjnaeVo5khAAAOHsL9XKeVo5khAAAOHsL/ZvzcCEAALgQFzJCAABwIS4EAMA4LZR963s5EhcCAGC0FurlSL4XAgBAC/V1Id8LAQAwGMAjOhC1TStHiq5jhAAA4EJtd1LRf2TZcCEAAEZzoWwid1pK+XoCAAAAON6FssnuyLgQAAAXBfgB07FX+LyBzhYAAAAASUVORK5CYII=" width="48" height="96" alt="Necklace"></span>
+<div>
+<h2>Necklace</h2>
+<p class="slot">id $03 &middot; slot $1F40 &middot; icon cell $D2 &middot; palette 4</p>
+<p>Adds four extra blood-purity drains when hit by a thrown projectile (<code>f6:$6016</code>) &mdash; it costs 9 instead of 5.</p>
+<p class="sel"><b class="k">when selected</b>walk on water, in room <code>$01</code> only (<code>f7:$D0C5</code>)</p>
+<p class="rooms">found in <a href="rooms.html#r12">$12</a></p>
+</div></div>
+<div class="item">
+<span class="ic lightbg"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAAxElEQVR42u3azQmEMBAG0LhsG9ZgI/awjezRRuzBRqxhC3EbcA4DifjzvqMhgUeGYSCWIiIiIvLcdNHCZyjb3vd5jfdkUuv819VvAADg6YAu6gbZRN2j9flKCADg4nlnN0zLb39h7Dc3AAAAUK8LRd3mO/ZuAAAAAAAAAOD2s9DZZh4lBAAAAAAAANAg6Zf61vFSDwAAAAAAAHCGWaj1jFTr70clBAAAAAAAAHDkLJSdkWrNPEoIAAAAAAAAAAAAAOB2gD9brR0Sq3SQlgAAAABJRU5ErkJggg==" width="48" height="96" alt="Heart"></span>
+<div>
+<h2>Heart</h2>
+<p class="slot">id $04 &middot; slot $1F41 &middot; icon cell $D0 &middot; palette 4</p>
+<p>Cancels <b>every</b> blood-purity drain in the game. The test sits inside the shared <code>DrainBloodPurity</code> routine, so one check disables all 17 call sites.</p>
+<p class="rooms">found in <a href="rooms.html#r01">$01</a></p>
+</div></div>
+<div class="item">
+<style>.fl05{width:48px;height:96px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYAAAABgCAYAAAAU9KWJAAAFFElEQVR42u3dv2tVZxgH8JwSKKSDpJNDp2IbXfyxCHeqILRkECdpEBEMiAFROkjAQUSECuJUK2iFCFYk4iSCwYJgu1xwqNVFYyVTZ7NUR2//gfeBPnAu77n3fj7jSXjOk5Dw5XC/vKeZGrJ+f36Q+f5eb62Z6pDBtTup/ZuTRzq1/8Xjr1L7n7u5o1P7T82fT+0/tXahU/uvDp6n9l9o9nTr7//1k9zf//b9ndp/5eEgtf/igaZT++9auZLa/8XimdT+n0wBMJEEAIAAAEAAACAAABhPrX3ire1Tl7ZPXdo+dWn7eAIAQAAAIAAAEAAACACAiTc97Bt0re2T1bW2T1bn2j5ZHWv7ZHWt7ZP+++9Y2yera22frLbaPp4AABAAAAgAAAEAgAAAYAKkP2G+//Jw6syKL95vFq//89ls8fqhnXeH+qn3qbfPUvv/9PhN8frp774uXr+6be9Q9z+2vJ7a/8vNj8XrG7Pl7L91eW6o+5+dOZja/9I3u8tzfv+r/P0fHgx1/+yZOffmPi9e/379Xfkfcsitm+yZRdGe0c817NbT09u5M382ZqP/i/L1fUeH2xrqL5xI7b/07VfF69d/+7t4vbd6wxvBABAAAAgAAAQAAAIAYFKFnxhn2z5Reyd6U1jUAsrOj2TbPlF7J3pTWNQCys6PZNs+UXsnelNY1ALKzo+k2z5Reyd4U1jUAkrPD7T1hqyodRO1a7LzI229oSz6PUQtoOz8SLbtE7V3ojeFRS2g7PxItu0TtXeiN4VFLaDsfE8AABNKAAAIAAAEAAACAIDxlH4jWFttn2hOtn2U1VbbJ5qTbR9ltdX2ieZk20dZbbV9ojnZ9lFWW22faE62fZTVVtsnmpNtH2W11faJ5mTbR1lttX2iOdn2kScAgAklAAAEAAACAAABAMB4mh5266Yt0Z5/zPwwEr/oqB307y9bRmL/qB209eflkdg/agf9+Ofpkdi/rTN5aonaQVt/3T0S+0ftoE8fLY3E/lE7yBMAwIQSAAACAAABAIAAAGA8Tde6cdTqqXVGUFbU6ql1RlBW1OqpdUZQVtTqqXVGUFbU6ql1RlBW1OqpdUZQVtTqqXVGUFbU6smeEeQJAGBCCQAAAQCAAABAAAAgAAAQAAAIAAAEAAACAAABAIAAAEAAACAAABAAAAgAAAQAAAIAAAEAgAAAQAAAIAAAEAAACAAABACAAABAAAAgAAAQAAAIAAAEAAACAAABAIAAAEAAANAtTfSF+y8PDzKDDu28W5zV788X5/R6a03mvtH8yKm3z1L7X922tzh/cO1OcU5z8kiTuW80P3JseT21/63Lc8X5F4+/Ks45d3NHk7lvND9yduZgav9LHx6U58+fL89Zu9Bk7hvODwxeP0nt32zfX5y/OnhenLPQ7Gky943mR6L7RtraJ/vzRp7eHqT233e0Kc5feVies3ig/P3RfaP5kf7CidT+vdUbxfm7Vq4U57xYPNNk7hvN9wQAMKEEAIAAAEAAACAAABhP07Vu3Fbbp5a22j61tNX2qaWttk8tbbV9ammr7VNLW22fWrJtH08AAAgAAAQAgAAAQAAAMAHCFlDUxonaO+HZQe83q/xgURsnau+EZwc9flNl/6iNE7V3wrODNj9W2T9q40TtnbDVU+kfI2rjRO2d6Pq9SvtHbZyovROeHbT+rsr+URsnau9E1zcq/f6jNk7U3omuL3kCAEAAACAAABAAAAgAAP6v/wB2Hi3Kt02O4gAAAABJRU5ErkJggg==);animation:fl05 0.67s steps(8) infinite}@keyframes fl05{to{background-position:-384px 0}}</style>
+<span class="ic"><span class="flash fl05"></span></span>
+<div>
+<h2>Plasmic pumpkin</h2>
+<p class="slot">id $05 &middot; slot $1F42 &middot; icon cell $F4 &middot; palette 6</p>
+<p>Has its own spawn check &mdash; it is placed rather than found, which is why no room lists it. Like the diamond it uses palette 6, so it strobes.</p>
+<p class="sel"><b class="k">when selected</b><b>wins the game</b> when used on terrain <code>$EF</code> (<code>f6:$575C</code>)</p>
+</div></div>
+<div class="item">
+<span class="ic lightbg"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAA3ElEQVR42u3a0QmFMAwF0PhwnG7gQM7Ugdyg+/gWsEKgIurJp2jtwXCJ6BSDal1jz5xfa0wj7vuLhxcAwNcB6STopU2t6XWGpJMWAgD4WgqVcpxCy5JbxywEAAAQERFz9oLWuumxewIAAAAAAAAAb5+Fem9kvTp5U9uTs5YWAgAAAAAAABhd06iZJ1u9GWnbjo/3ZiQtBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJCs+a4b976FaSEAgI8Bzv4QPPxSX8q1G2ott1ctBADw4hRKpdNde9JCAAAPrz+1Nx1omtilMwAAAABJRU5ErkJggg==" width="48" height="96" alt="Red potion"></span>
+<div>
+<h2>Red potion</h2>
+<p class="slot">id $06 &middot; slot $1F43 &middot; icon cell $F2 &middot; palette 5</p>
+<p>Restores health on use, and is used automatically when health runs out.</p>
+<p class="rooms">found in <a href="rooms.html#r0C">$0C</a>, <a href="rooms.html#r21">$21</a> <span class="pend">pending</span>, <a href="rooms.html#r4B">$4B</a> <span class="pend">pending</span></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAA6UlEQVR42u3aQQ2EMBAFUNhwRQRWMIAAjujqcQVgoFZWxApgDdBNJikhwJsz0L4wmfxQ2qZSLe/vFrk+zX1bY91Xc/ECAHg6IDwJStMmzX30OVWmkxYCALh4ddEbcs6hqSILAQAA1J1CnzTtTo/crJs3AAAAAAAAAHD3LDQsscwzjmMTyU6lrKWFAAAAAAAAAA6otlbmiVYxIxW+fpcykhYCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFZ31sKlszAtBADwMMC/PwR3T+qHZT10Q580hfaqhQAAbjyFQtPprD1pIQCAi9cPelIqpx12c6oAAAAASUVORK5CYII=" width="48" height="96" alt="Blue potion"></span>
+<div>
+<h2>Blue potion</h2>
+<p class="slot">id $07 &middot; slot $1F44 &middot; icon cell $F2 &middot; palette 3</p>
+<p>Restores blood purity, auto-used the same way, and is reported on the boss status line.</p>
+<p class="rooms">found in <a href="rooms.html#r0B">$0B</a>, <a href="rooms.html#r15">$15</a>, <a href="rooms.html#r1E">$1E</a>, <a href="rooms.html#r2E">$2E</a> <span class="pend">pending</span>, <a href="rooms.html#r30">$30</a> <span class="pend">pending</span>, <a href="rooms.html#r3C">$3C</a>, <a href="rooms.html#r4D">$4D</a></p>
+</div></div>
+<div class="item">
+<style>.fl08{width:48px;height:96px;background-image:url(data:image/png;base64,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);animation:fl08 0.67s steps(8) infinite}@keyframes fl08{to{background-position:-384px 0}}</style>
+<span class="ic"><span class="flash fl08"></span></span>
+<div>
+<h2>Diamond</h2>
+<p class="slot">id $08 &middot; slot $1F45 &middot; icon cell $F0 &middot; palette 6</p>
+<p><b>Nothing ever reads this slot</b> &mdash; but the health it grants is read, and it decides whether you can be resurrected. <code>f6:$520F</code> adds 8 to <code>hp_max</code> at pickup; the death path revives you only if <code>hp_max &ge; $30</code>, which from a base of <code>$27</code> takes <b>two diamonds</b>. Fewer than two and death is final. Drawn with MARIA palette 6, which the game randomises every frame, so it strobes &mdash; one frame of that is shown here.</p>
+<p class="rooms">found in <a href="rooms.html#r08">$08</a>, <a href="rooms.html#r0D">$0D</a>, <a href="rooms.html#r0E">$0E</a>, <a href="rooms.html#r0F">$0F</a> <span class="pend">pending</span>, <a href="rooms.html#r11">$11</a>, <a href="rooms.html#r16">$16</a>, <a href="rooms.html#r26">$26</a> <span class="pend">pending</span>, <a href="rooms.html#r33">$33</a>, <a href="rooms.html#r40">$40</a> <span class="pend">pending</span>, <a href="rooms.html#r41">$41</a> <span class="pend">pending</span>, <a href="rooms.html#r47">$47</a> <span class="pend">pending</span>, <a href="rooms.html#r49">$49</a>, <a href="rooms.html#r4C">$4C</a> <span class="pend">pending</span>, <a href="rooms.html#r4E">$4E</a> <span class="pend">pending</span></p>
+</div></div>
+<div class="item">
+<span class="ic lightbg"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAAvUlEQVR42u3bvQ2DMBAGUB/KXnRswABMlgHYIF0mgwWggJwROO8rKWw9cTrb/EQ5nqXkJDIG6crDAwDw74C4oNtU7U5KCAAAAAAAAODiU5ETmRICABARaSVnngtF0twp41vIAABERMReyEIGANBkFzqU7zRsdpX+/Ql3AAAAYDcveyElBABw2y4Ulef2ph4AAMD3QkoIAODOXajqHxzjuH19np3IAAAAAAAAANrfC2Wd1JQQAAAAAAAAwA9ZAXPrEqZYL4RbAAAAAElFTkSuQmCC" width="48" height="96" alt="Lantern"></span>
+<div>
+<h2>Lantern</h2>
+<p class="slot">id $09 &middot; slot $1F46 &middot; icon cell $F6 &middot; palette 2</p>
+<p>Lights the dark areas, and changes Grampa's advice.</p>
+<p class="rooms">found in <a href="rooms.html#r1B">$1B</a></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAAZ0lEQVR42u3WYQ2AIBCAUXDWIIORLGMkG10QTeC/mwx4L8CNb9wYpQAAAAAAAMBa6nmUJ2PQdUeXgG30GxAgYPWAfZSDttaqFRIgYMKAmjUoIlL+VF+vjRUSIGDSAAAAAAAAAADgTy/VHwglsEs5iAAAAABJRU5ErkJggg==" width="48" height="96" alt="Knife"></span>
+<div>
+<h2>Knife</h2>
+<p class="slot">id $0C &middot; slot $1F49 &middot; icon cell $AC &middot; palette 4</p>
+<p><code>weapon_level 0</code> &mdash; it adds <b>nothing</b> to any damage accumulator, so it only kills things that die on a single hit: bats, crows, wolves. No boss can be hurt with it.</p>
+<p class="rooms">found in <a href="rooms.html#r43">$43</a></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAA5klEQVR42u3awQ0CIRAFUDC2QQ02Yg824tFG7MFGrIFCtAE5zAbQlTfnzYYXJj8MuzkFq9b6ijxfSslpYB3SzgsAYHVA3kvaaCEAACm0rVrpdDml0Pvvz89r1UIAAFJoW13PJZQ2WggAQArNqdbZqbUeLQQAsFoKRe9/RqeZFgIA+NcU6lWt+5/bo9oBAACAlI6j08YOAAAAzDkLtVIoetscneC0EAAAAAAAAMDMiazX5NXrr0gtBACwWgq1Kjp59frXWgsBAAAAAAAAjDgLfeublxYCAJBCfScvOwAAAAAAAADww/UGUNg7SOTxD5EAAAAASUVORK5CYII=" width="48" height="96" alt="Axe"></span>
+<div>
+<h2>Axe</h2>
+<p class="slot">id $0D &middot; slot $1F4A &middot; icon cell $BC &middot; palette 4</p>
+<p><code>weapon_level 1</code>.</p>
+<p class="rooms">found in <a href="rooms.html#r1D">$1D</a></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAAA2ElEQVR42u3ZsQ2DMBBGYRMxBjukZgSmSJeh0mWKjECdHdiDLICRTnJwgr9XWsjmyafTf5ASAAAAAAAAWqQrtdE8T+vW+ji+QmfcrmmNPH/59xsgQKB1ga7WwdFuo4QIEDipQP9rL/R8xzqjEiJAQBban8iiRCc4JUSAQGtZKNpthuGxub4sdzdAgACBA7KQLkSAAIFjulCp7JSbyHL7KCECBFqbyHJE/3lFv//knldCBAi0loVy3Sb6b8sNECBAoGwW+vYEJwsRIKAL1c08SogAgZMKAEBdPrSEK+z2rIyjAAAAAElFTkSuQmCC" width="48" height="96" alt="Blaster"></span>
+<div>
+<h2>Blaster</h2>
+<p class="slot">id $0E &middot; slot $1F4B &middot; icon cell $A0 &middot; palette 4</p>
+<p><code>weapon_level 2</code>.</p>
+<p class="rooms">found in <a href="rooms.html#r1C">$1C</a> <span class="pend">pending</span></p>
+</div></div>
+<div class="item">
+<span class="ic"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAABgCAYAAABbjPFwAAABFklEQVR42u3bsQ3CQAxG4QtiDWagZoRI2YGWISgZgpYdkBiBmhkYBBbASEYOKOF7dUjydNYvn4+0BgC/pKu60XbdHmO+6On2+l0XU18BAgT+XSCdQlHaRClxvfYvr99sLl1FmikhAgTmmkJRGuyOfcukyti9lhIiQGDiLLM/qEqbbI+khAgQ+LdeKEqJ4+5S8uBoB6eECBCQQp/tjA7ne+o++2FVkk5KiACBue7Ixu6FwtQaVql5lBIiQGCuKVRF1PNEqRIRzYuUEAECU0+haIdVdZJuBQgQIPA+haI5TPakPup5rAABAgS+syPL/mvRChAgQKC1VnhGlp3zRFNuZ2QECEihz8jOi6q++FBCBAgAAABgsjwBu19KUhSCPWMAAAAASUVORK5CYII=" width="48" height="96" alt="Mega blaster"></span>
+<div>
+<h2>Mega blaster</h2>
+<p class="slot">id $0F &middot; slot $1F4C &middot; icon cell $A4 &middot; palette 4</p>
+<p><code>weapon_level 3</code>. Like the diamond, its slot is written and never read &mdash; the weapon works through <code>weapon_level</code>. Against a boss it is identical to the axe: the damage step tests only that the level is non-zero.</p>
+<p class="rooms">found in <a href="rooms.html#r20">$20</a> <span class="pend">pending</span></p>
+</div></div>
+<h3>Two icons have no colour of their own</h3>
+<p>The <b>diamond</b> and the <b>plasmic pumpkin</b> are drawn in MARIA palette 6, and <code>f6:$4C70</code> rewrites all three of its registers from the random generator every frame:</p>
+<pre style="background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:.7rem .9rem;font-family:ui-monospace,Menlo,monospace;font-size:.76rem;overflow-x:auto">JSR Random : STA P6C1 : EOR #$F0 : STA P6C2 : ADC #$10 : STA P6C3</pre>
+<p>The three colours are <code>c</code>, <code>c ^ $F0</code> and <code>(c ^ $F0) + $10</code> &mdash; hue-contrasted at matched luminance, which is why they strobe rather than flickering as noise. Both icons above cycle eight sampled frames; the cartridge changes them sixty times a second.</p>
+<h3>Pending items</h3>
+<p>Bit 7 of the header byte marks an item as <b>pending</b>: it is in the room but is not drawn and cannot be taken until the room has been cleared. <code>DrawItemIcon</code> returns early on <code>BMI</code>, so nothing appears at all.</p>
+<p>Both strong weapons are pending. The knife and axe lie in the open; the <b>blaster and mega blaster</b> only appear once their room is emptied &mdash; which a knife cannot do, since it adds nothing to any damage accumulator.</p>
+<h3>The cross does eight things</h3>
+<p>Found by scanning all eight banks for every opcode that can reference <code>$1F3E</code>, plus the one selected-item test. Seven machine-code references and one check, and that is all of them &mdash; assembled piecemeal over several sessions before the exhaustive scan, each time as &ldquo;another cross effect&rdquo;.</p>
+<table><tr><th>where</th><th>effect</th></tr>
+<tr><td><code>f6:$5FA7</code></td><td><b>selected</b>: immune to contact blood loss</td></tr>
+<tr><td><code>f6:$5FB0</code></td><td>owned: contact blood loss halved</td></tr>
+<tr><td><code>f7:$D403</code></td><td>owned: every source of health damage halved</td></tr>
+<tr><td><code>f7:$F066</code></td><td>an area's spawn definition <code>$EF</code> becomes <code>$22</code> &mdash; amount 2 at 1-in-64 instead of unbounded and constant</td></tr>
+<tr><td><code>f7:$F1FC</code></td><td>a further per-area spawn limit</td></tr>
+<tr><td><code>f6:$5D01</code></td><td>three times in four an actor wanders instead of homing on you</td></tr>
+<tr><td><code>f6:$4EB2</code></td><td>at zero blood purity, <code>undead_flag</code> is <code>$FF</code> holding the cross and <code>$FE</code> without &mdash; <b>a different ending</b></td></tr>
+<tr><td><code>b0:$A40B</code></td><td>Grampa says something different</td></tr>
+</table>
+<h3>Two slots are written and never read</h3>
+<p>The <b>diamond</b> and the <b>mega blaster</b>. Neither is a bug: the diamond's effect happens at pickup, and the weapons act through <code>weapon_level</code> rather than the counter. The counters exist so the icons can be drawn on Grampa's screen.</p>
+<p>The other three weapons are read exactly once each, and only by Grampa's message selector. <b>Carrying a weapon changes what he says; it does not change what the weapon does.</b></p>
+<h3>Grampa's advice is item-gated</h3>
+<p>A chain of tests at <code>b0:$A3E2</code> picks his message: <code>heart &rarr; knife &rarr; cross &rarr; axe &rarr; crypt key &rarr; blaster &rarr; lantern</code>. The first that passes wins, so his dialogue tracks the inventory rather than <code>boss_flags</code>.</p>
+<p class="foot">Icons rendered from <code>tbl_ItemIconCol</code> and page <code>$E0</code>; locations from area header byte +7. Rooms link to the <a href="rooms.html">room gallery</a>, and the weapon rules to the <a href="bosses.html">bosses</a>.</p>
+</div>
