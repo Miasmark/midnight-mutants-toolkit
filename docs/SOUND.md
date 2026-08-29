@@ -494,3 +494,26 @@ Every other row completes inside its own notes. In practice instrument 9 is a
 flat volume-8 voice and the swell written into it is never heard. Reading the
 instrument table without checking it against the music it plays gives exactly
 the wrong impression of that row.
+
+## Checking this reading against the game's own player
+
+`music.py` parses the song tables and models the player, and the editor
+previews through it -- so a misreading shared by both would not show up in a
+note-for-note check against `music.py` itself. `checkmusic.py` checks it from
+the other side, against the register writes the cartridge's own player makes:
+
+    python tools/checkmusic.py rom.a78 --log capture.log
+
+A note's second byte carries pitch and timbre together -- the chip keeps bits
+0-4 for AUDF and the player shifts the top three out to choose AUDC -- and the
+player writes the whole byte. So the byte in a capture is the byte in the song
+data, and the two compare directly with nothing modelled in between.
+
+Run against a passive capture, the player writes `5F 5D 5F 5D ...` on voice 0
+and `D8 DA D8 DA ...` on voice 1, and those are song 6's and song 0's notes
+respectively. **The parse agrees with the cartridge.**
+
+The capture can come from MAME, or from the toolkit's `sim.py`, which executes
+the cartridge's own 6502 and traps its audio writes. On this game that
+reproduces a MAME capture at 99% agreement with the frame clock exact, so the
+audio trace does not require an emulator to be installed.

@@ -173,3 +173,40 @@ Nothing structural. What remains is soft:
 
 The rebuild is byte-identical to the cartridge, which bounds all of this: no
 claim here can be hiding a misread instruction, only a misread intention.
+
+## Checking the "no missed code" claim mechanically
+
+`disasm.py --check-gaps` scans for a `JSR`/`JMP` whose operand lands in a range
+the recursive descent never reached, and classifies each candidate rather than
+listing them raw. On its own that scan is close to useless -- `$20`, `$4C` and
+`$6C` are ordinary byte values that occur constantly inside graphics and tables
+and as the second or third byte of longer instructions, so the coincidences
+swamp the real sites. This run finds **147 of them and one real call**.
+
+Two things make it worth running. The tracer already knows every address that
+is the first byte of an instruction, so a candidate whose opcode byte is not
+one of those is not an instruction at all. And for `JMP ($xxxx)` the operand is
+the *pointer*, not the target, so it is dereferenced -- which matters here more
+than in most games, because this one's display-interrupt chain runs on RAM
+vectors and a scan comparing the operand against the gap list would be asking
+about the wrong address every time. Those two sites are reported separately:
+
+    f6:400C  JMP ($2135)     the DLI chain
+    f6:7590  JMP ($1FAC)     the music player's per-voice vector
+
+### What it found
+
+    b5:B460  JSR $B687   <-- reached by the tracer, target never disassembled
+
+`sub5_B45C` tests `ram_00C8`, branches past the call when it is zero, and
+otherwise calls `$B687`. The bytes there are a coherent routine:
+
+    b5:B687   DEC $C8
+    b5:B689   BPL +5
+    b5:B68B   LDA #$00
+    b5:B68D   STA $C8
+    b5:B68F   RTS
+
+A decrement-and-clamp on the same variable the caller guards on, which is
+exactly what the guard implies. It is neither code nor a declared block in the
+listing, so the coverage figures above are short by those bytes.

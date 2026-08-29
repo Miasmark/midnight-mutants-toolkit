@@ -542,12 +542,108 @@ class Emitter:
         return end
 
 
+def check_gaps(an, cart, spaces):
+    """Are the unreached byte ranges really free of missed code?
+
+    A gap is a range the recursive descent never entered, and the obvious
+    check is to scan for a JSR/JMP whose operand lands in one. That scan is
+    close to pure noise on its own: $20/$4C/$6C are ordinary byte values that
+    occur constantly inside graphics and tables and as the second or third
+    byte of longer instructions, so the coincidences outnumber the real call
+    sites heavily.
+
+    Two things make it trustworthy, and the second matters here in particular:
+
+      * The tracer already knows every address that is the FIRST byte of an
+        instruction. A candidate whose opcode byte is not one of those is not
+        an instruction at all.
+      * For `JMP ($xxxx)` the operand is the POINTER, not the target, so it
+        is dereferenced. This game's display-interrupt chain runs on RAM
+        vectors -- each DLI installs the handler for the next zone -- and a
+        scan that compares the operand against the gap list is asking about
+        the wrong address every time.
+
+    Prints one line per candidate, classified, so "no missed code" is a
+    checked claim rather than an asserted one.
+    """
+    real, bogus, ramind = [], [], []
+    for space in spaces:
+        base = cart.base_of(space)
+        size = BANK_SIZE
+        in_rom = lambda x: cart.in_space(space, x)
+        covered = set()
+        for (sp, a) in an.code:
+            if sp != space:
+                continue
+            for i in range(an.insn[(sp, a)][3]):
+                covered.add(a + i)
+        for (sp, a) in an.forced_data:
+            if sp == space:
+                covered.add(a)
+        for a in range(base, base + size - 2):
+            try:
+                op = cart.byte(space, a)
+            except Exception:                                # noqa: BLE001
+                continue
+            if op not in (0x20, 0x4C, 0x6C):
+                continue
+            operand = cart.byte(space, a + 1) | (cart.byte(space, a + 2) << 8)
+            traced = (space, a) in an.code
+            if op == 0x6C:
+                if not in_rom(operand):
+                    if traced:
+                        ramind.append((space, a, operand))
+                    continue
+                target = (cart.byte(space, operand)
+                          | (cart.byte(space, operand + 1) << 8))
+                name = "JMP ($%04X) ->" % operand
+            else:
+                target = operand
+                name = "JSR" if op == 0x20 else "JMP"
+            if not in_rom(target) or target in covered:
+                continue
+            (real if traced else bogus).append((space, a, target, name))
+
+    print("\ngap entry points (apparent JSR/JMP into an unreached range):")
+    if not (real or bogus or ramind):
+        print("  none")
+        return 0
+    if bogus:
+        print("  %d coincidence%s -- the opcode byte is not an instruction "
+              "start, so it is data or a mid-instruction byte:"
+              % (len(bogus), "" if len(bogus) == 1 else "s"))
+        for space, a, t, nm in bogus[:12]:
+            print("    %s:%04X  %-16s $%04X" % (space, a, nm, t))
+        if len(bogus) > 12:
+            print("    ... and %d more" % (len(bogus) - 12))
+    if real:
+        print("  %d REAL call site%s -- a traced instruction branching into an "
+              "unreached range. Investigate:"
+              % (len(real), "" if len(real) == 1 else "s"))
+        for space, a, t, nm in real:
+            print("    %s:%04X  %-16s $%04X   <-- MISSED CODE" % (space, a, nm, t))
+    elif bogus:
+        print("  no real call site among them.")
+    if ramind:
+        print("  %d traced JMP ($xxxx) through a RAM pointer -- target not "
+              "knowable statically (this is the DLI chain):" % len(ramind))
+        for space, a, ptr in ramind[:8]:
+            print("    %s:%04X  JMP ($%04X)" % (space, a, ptr))
+        if len(ramind) > 8:
+            print("    ... and %d more" % (len(ramind) - 8))
+    return len(real)
+
+
 # ----------------------------------------------------------------------- main
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("rom")
     ap.add_argument("-c", "--config", default=None)
     ap.add_argument("-o", "--outdir", default="src")
+    ap.add_argument("--check-gaps", action="store_true",
+                    help="for every apparent JSR/JMP into a range the tracer "
+                         "never reached, say whether it is a real instruction "
+                         "or just the opcode byte occurring inside data")
     args = ap.parse_args()
 
     cart = Cart(args.rom)
@@ -621,6 +717,10 @@ def main():
                   % (space, cart.bank_of(space), cnt, BANK_SIZE,
                      100.0 * cnt / BANK_SIZE,
                      sum(1 for (s, a) in an.code if s == space)))
+    if args.check_gaps:
+        check_gaps(an, cart, [sp for sp in spaces
+                              if any(x == sp for (x, _a) in an.code)])
+
     if an.bankswitch:
         print("\nbank-switch sites:")
         for loc in sorted(an.bankswitch):
