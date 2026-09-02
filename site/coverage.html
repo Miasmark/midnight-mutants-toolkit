@@ -1,0 +1,276 @@
+<title>Midnight Mutants ROM coverage</title>
+<style>
+:root{
+  --bg:#f5f3ef; --surface:#ffffff; --sunk:#efece6; --line:#dcd8d1;
+  --text:#1c1a24; --muted:#5e5a69; --accent:#b45f18; --accent-soft:#f0e2d4;
+  --ok:#3f7d51; --ok-soft:#e2efe5;
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --r:3px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141219; --surface:#1c1a24; --sunk:#17151d; --line:#2f2c3a;
+    --text:#dedae6; --muted:#918da1; --accent:#e0833c; --accent-soft:#33261b;
+    --ok:#74b184; --ok-soft:#1c2a20;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141219; --surface:#1c1a24; --sunk:#17151d; --line:#2f2c3a;
+  --text:#dedae6; --muted:#918da1; --accent:#e0833c; --accent-soft:#33261b;
+  --ok:#74b184; --ok-soft:#1c2a20;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--bg); color:var(--text);
+  font-family:var(--sans); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
+.col{max-width:70ch}
+.hero{border-bottom:1px solid var(--line); padding:56px 0 36px}
+.eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin:0 0 18px}
+h1{font-family:var(--mono); font-weight:700; letter-spacing:-.03em;
+  font-size:clamp(1.8rem,5vw,3rem); line-height:1.05; margin:0 0 16px}
+.lede{font-size:1.05rem; color:var(--muted); margin:0; max-width:66ch}
+.lede strong{color:var(--text); font-weight:600}
+section{padding:44px 0; border-bottom:1px solid var(--line)}
+h2{font-family:var(--mono); font-size:.8rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 18px; font-weight:700}
+h3{font-size:1.2rem; margin:0 0 12px}
+p{margin:0 0 16px}
+a{color:var(--accent)}
+code{font-family:var(--mono); font-size:.875em; background:var(--sunk);
+  border:1px solid var(--line); border-radius:var(--r); padding:1px 5px}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:var(--r);
+  overflow:hidden; margin:0 0 28px}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-family:var(--mono); font-size:1.6rem; font-weight:700; letter-spacing:-.02em}
+.stat .l{font-size:11px; color:var(--muted); text-transform:uppercase;
+  letter-spacing:.08em; font-family:var(--mono); margin-top:3px}
+table{border-collapse:collapse; width:100%; font-size:13.5px; font-variant-numeric:tabular-nums}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+th{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.m,th.m{font-family:var(--mono); font-size:12.6px; white-space:nowrap}
+td.w{white-space:nowrap}
+.pct{color:var(--muted); font-size:.9em}
+.scroll{overflow-x:auto; margin:0 0 22px; border:1px solid var(--line);
+  border-radius:var(--r); background:var(--surface)}
+.scroll table{margin:0}
+.mapwrap{border:1px solid var(--line); border-radius:var(--r); background:var(--surface);
+  padding:16px; margin:0 0 20px; overflow-x:auto}
+.mapwrap img{image-rendering:pixelated; display:block; max-width:100%; height:auto}
+.legend{display:flex; gap:22px; flex-wrap:wrap; font-size:12.5px; color:var(--muted); font-family:var(--mono)}
+.swatch{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:7px; vertical-align:-1px}
+blockquote{margin:22px 0; padding:16px 20px; border-left:3px solid var(--accent);
+  background:var(--sunk); border-radius:0 var(--r) var(--r) 0;
+  font-size:14px; line-height:1.7}
+.badge{display:inline-flex; align-items:center; gap:10px; margin-top:22px;
+  background:var(--ok-soft); color:var(--ok); border:1px solid currentColor;
+  border-radius:var(--r); padding:9px 14px; font-family:var(--mono); font-size:12.5px}
+footer{padding:36px 0 60px; font-size:13px; color:var(--muted)}
+</style>
+
+<div class="hero"><div class="wrap">
+  <p class="eyebrow">Midnight Mutants &middot; byte-level ROM coverage</p>
+  <h1>Where every byte of the cartridge goes</h1>
+  <p class="lede col">One pixel per ROM byte across all eight physical banks (bank 7's
+  duplicate view through the <code>$8000</code> window is excluded, matching
+  <code>docs/COVERAGE.md</code>'s own convention). Green is code the disassembler's
+  recursive-descent tracer actually reached; blue is data this page can positively
+  identify -- declared text/byte/word blocks from <code>annotations.json</code>, the
+  fixed <code>$C000</code>-<code>$CFFF</code> graphics window in bank 7, and the two
+  character sets plus terrain slices that fill each pure area bank
+  (<code>docs/AREAS.md</code>, "What an area bank contains"). Red is neither -- see the
+  caveat below before reading that as "unknown."</p>
+  <div class="badge"><span class="dot"></span>
+    <span>Independently regenerated from the current cartridge + <code>annotations.json</code> --
+    not copied from <code>docs/COVERAGE.md</code></span>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+<section>
+<h2>Totals</h2>
+<div class="stats">
+  <div class="stat"><div class="v">131,072</div><div class="l">total bytes (8 &times; 16K)</div></div>
+  <div class="stat"><div class="v">14,466</div><div class="l">code &middot; 11.0%</div></div>
+  <div class="stat"><div class="v">64,132</div><div class="l">known data &middot; 48.9%</div></div>
+  <div class="stat"><div class="v">52,474</div><div class="l">unclassified &middot; 40.0%</div></div>
+</div>
+
+<blockquote><strong>What "unclassified" does <em>not</em> mean.</strong> This page uses
+three cheap, mechanical signals: the disassembler's own instruction trace, the
+<code>blocks</code> declarations in <code>annotations.json</code> (script text and a
+handful of explicit byte/word tables), and two facts stated directly in this project's
+own docs (bank 7's graphics window, and the area-bank character-set/terrain accounting
+in <code>AREAS.md</code>). <code>docs/COVERAGE.md</code> is unambiguous that structurally
+nothing here is unresolved -- sprite storage and assembly, every song, all 76 rooms,
+every boss, the full script and more are all traced and, where the claim is about
+behaviour, checked against a running machine. Most of what this page marks red is
+territory those narrative docs already cover in prose (room streams, sprite tables,
+boss data, music) that just isn't captured by a simple parseable list the way script
+text is. Treat red as <em>"not in this page's three mechanical buckets,"</em> not as a
+gap in the project.</blockquote>
+</section>
+
+<section>
+<h2>Coverage map</h2>
+<p>128&times;128 px per bank (16,384 bytes, one pixel each), four per row.</p>
+<div class="mapwrap">
+  <img src="data:image/png;base64,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AAAAccuMVyfw39bb62lP9jbPFm6jBwAAAJiDDSAAAACAOAEIAAAAIO7pr2/fRs8ATMoJKgAAwDZsAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQJwABAAAABAnAAEAAADECUAAAAAAcQIQAAAAQNxyvZxP+7a+339+Y/+jAv/M/3xxAwAA8LVsAAEAAADECUAAAAAAcctp91x+AQAAAHyGDSAAAACAOAEIAAAAYOITsL+f3/pH5rnY+siPzzw/GgAAAMBu2QACAAAAiBOAAAAAAOKeLuv302H92ZEasBPX57fRIwAAAEzBBhAAAABAnAAEAAAAELe4ogIAAABoswEEAAAAECcAAQAAAMQtG3yM6+W8wUcBjscFKgAAwCZsAAEAAADECUAAAAAAcYv7LAAAAIA2G0AAAAAAcQIQAAAAQNwWr4ARtr4f7xknZ48AAADMxgYQAAAAQJwABAAAABD3dFm/j54BDnlu5pTsAe4voycAAACYgg0gAAAAgDgBCAAAACDOK2AcxidPrj5yQeaqCwAAgCQbQAAAAABxAhAAAABAnBMwZuG8CwAAgGnZAAIAAACIE4AAAAAA4gQgAAAAgDgBCAAAACBOAAIAAACIy74Ctr7fT7vkLSra/tGX3vX5K0cBAADg32wAAQAAAMQJQAAAAABxT399+/arv3Z9fvvt37/eXh890rxchzGd+8voCQAAAKZgAwgAAAAgTgACAAAAiHu6rN9HzwBT2+2LdRv4yJ0pAAAAn2cDCAAAACBOAAIAAACIW2Y+PwEAAACYgQ0gAAAAgDgBCAAAACBOAAIAAACIE4AAAAAA4gQgAAAAgDgBCAAAACBOAAIAAACIE4AAAAAA4pbRA8Bcrpfz6BH25D56AAAAgDnYAAIAAACIE4AAAAAA4hYHKQAAAABtNoAAAAAA4gQgAAAAgDivgPFL6/tjnmhyZggAAABj2QACAAAAiBOAAAAAAOKcgPFLTrcAAACgwQYQAAAAQJwABAAAABDnBGxSj3rhCz7j+jx6AgAAgDnYAAIAAACIE4AAAAAA4pa9nQJ5eWobfpzZ3t5+tQEAAJiHDSAAAACAOAEIAAAAIG53r4A5EgEAAAB4LBtAAAAAAHECEAAAAECcAAQAAAAQJwABAAAAxAlAAAAAAHECEAAAAECcAAQAAAAQJwABAAAAxAlAAAAAAHECEAAAAECcAAQAAAAQJwABAAAAxAlAAAAAAHECEAAAAECcAAQAAAAQJwABAAAAxAlAAAAAAHECEAAAAECcAAQAAAAQJwABAAAAxAlAAAAAAHECEAAAAECcAAQAAABwavsXsK2FT/44TNoAAAAASUVORK5CYII=" width="1536" height="768">
+</div>
+<div class="legend">
+  <div><span class="swatch" style="background:#468f5a"></span>code (disassembler-traced)</div>
+  <div><span class="swatch" style="background:#4664c8"></span>known data (blocks / graphics window / area-bank charset+terrain)</div>
+  <div><span class="swatch" style="background:#c83c3c"></span>unclassified by this page</div>
+</div>
+</section>
+
+<section>
+<h2>Per bank</h2>
+<div class="scroll">
+<table>
+<tr><th>space</th><th>bank</th><th class="m">window</th><th>mapping</th><th>code</th><th>known data</th><th>unclassified</th><th>holds (per docs/COVERAGE.md)</th></tr>
+<tr>
+      <td class="m">f6</td>
+      <td>bank 6</td>
+      <td class="m">$4000-$7FFF</td>
+      <td>fixed</td>
+      <td class="w">8,888 <span class="pct">(54.2%)</span></td>
+      <td class="w">2,975 <span class="pct">(18.2%)</span></td>
+      <td class="w">4,521 <span class="pct">(27.6%)</span></td>
+      <td>main loop, actors, terrain code, items, transitions</td>
+    </tr><tr>
+      <td class="m">f7</td>
+      <td>bank 7</td>
+      <td class="m">$C000-$FFFF</td>
+      <td>fixed</td>
+      <td class="w">1,582 <span class="pct">(9.7%)</span></td>
+      <td class="w">5,408 <span class="pct">(33.0%)</span></td>
+      <td class="w">9,394 <span class="pct">(57.3%)</span></td>
+      <td>sprites, area headers, service table, RESET</td>
+    </tr><tr>
+      <td class="m">b0</td>
+      <td>bank 0</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">1,227 <span class="pct">(7.5%)</span></td>
+      <td class="w">6,531 <span class="pct">(39.9%)</span></td>
+      <td class="w">8,626 <span class="pct">(52.6%)</span></td>
+      <td>sound engine, text renderer, the script</td>
+    </tr><tr>
+      <td class="m">b3</td>
+      <td>bank 3</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">668 <span class="pct">(4.1%)</span></td>
+      <td class="w">62 <span class="pct">(0.4%)</span></td>
+      <td class="w">15,654 <span class="pct">(95.5%)</span></td>
+      <td>screen streams, the intro, the palette block</td>
+    </tr><tr>
+      <td class="m">b5</td>
+      <td>bank 5</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">2,101 <span class="pct">(12.8%)</span></td>
+      <td class="w">4 <span class="pct">(0.0%)</span></td>
+      <td class="w">14,279 <span class="pct">(87.2%)</span></td>
+      <td>boss fights, the boss music</td>
+    </tr><tr>
+      <td class="m">b1</td>
+      <td>bank 1</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td class="w">16,384 <span class="pct">(100.0%)</span></td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td>area bank -- two character sets, terrain slices</td>
+    </tr><tr>
+      <td class="m">b2</td>
+      <td>bank 2</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td class="w">16,384 <span class="pct">(100.0%)</span></td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td>area bank -- two character sets, terrain slices</td>
+    </tr><tr>
+      <td class="m">b4</td>
+      <td>bank 4</td>
+      <td class="m">$8000-$BFFF</td>
+      <td>switched</td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td class="w">16,384 <span class="pct">(100.0%)</span></td>
+      <td class="w">0 <span class="pct">(0.0%)</span></td>
+      <td>area bank -- two character sets, terrain slices</td>
+    </tr>
+</table>
+</div>
+</section>
+
+<section>
+<h2>Unclassified runs of 16+ bytes (44 total)</h2>
+<p>Grouped by bank, in address order. <code>b1</code>/<code>b2</code>/<code>b4</code> have
+none -- their whole window is accounted for as character sets and terrain slices.</p>
+<div class="scroll">
+<table>
+<tr><th>space</th><th class="m">range</th><th>bytes</th></tr>
+<tr><td class="m">f6</td><td class="m">$426D-$4318</td><td class="w">172</td></tr>
+<tr><td class="m">f6</td><td class="m">$455C-$4A29</td><td class="w">1230</td></tr>
+<tr><td class="m">f6</td><td class="m">$4D1B-$4D36</td><td class="w">28</td></tr>
+<tr><td class="m">f6</td><td class="m">$4EDE-$4EF9</td><td class="w">28</td></tr>
+<tr><td class="m">f6</td><td class="m">$4F72-$4FE1</td><td class="w">112</td></tr>
+<tr><td class="m">f6</td><td class="m">$548B-$54BA</td><td class="w">48</td></tr>
+<tr><td class="m">f6</td><td class="m">$5B8B-$5B9E</td><td class="w">20</td></tr>
+<tr><td class="m">f6</td><td class="m">$5CCA-$5CED</td><td class="w">36</td></tr>
+<tr><td class="m">f6</td><td class="m">$5E6A-$5E7D</td><td class="w">20</td></tr>
+<tr><td class="m">f6</td><td class="m">$6211-$6220</td><td class="w">16</td></tr>
+<tr><td class="m">f6</td><td class="m">$6453-$653F</td><td class="w">237</td></tr>
+<tr><td class="m">f6</td><td class="m">$66AB-$66C4</td><td class="w">26</td></tr>
+<tr><td class="m">f6</td><td class="m">$67C9-$67F8</td><td class="w">48</td></tr>
+<tr><td class="m">f6</td><td class="m">$6838-$6851</td><td class="w">26</td></tr>
+<tr><td class="m">f6</td><td class="m">$69A7-$6A38</td><td class="w">146</td></tr>
+<tr><td class="m">f6</td><td class="m">$6A6C-$6ABD</td><td class="w">82</td></tr>
+<tr><td class="m">f6</td><td class="m">$7734-$7F64</td><td class="w">2097</td></tr>
+<tr><td class="m">f6</td><td class="m">$7FD5-$7FFF</td><td class="w">43</td></tr>
+<tr><td class="m">f7</td><td class="m">$D045-$D0A4</td><td class="w">96</td></tr>
+<tr><td class="m">f7</td><td class="m">$D1A1-$D1D3</td><td class="w">51</td></tr>
+<tr><td class="m">f7</td><td class="m">$D3D8-$D401</td><td class="w">42</td></tr>
+<tr><td class="m">f7</td><td class="m">$D44B-$D7FF</td><td class="w">949</td></tr>
+<tr><td class="m">f7</td><td class="m">$D9E8-$D9FF</td><td class="w">24</td></tr>
+<tr><td class="m">f7</td><td class="m">$DD00-$EFFF</td><td class="w">4864</td></tr>
+<tr><td class="m">f7</td><td class="m">$F2B4-$FEFF</td><td class="w">3148</td></tr>
+<tr><td class="m">f7</td><td class="m">$FF24-$FFFF</td><td class="w">220</td></tr>
+<tr><td class="m">b0</td><td class="m">$8000-$9FFF</td><td class="w">8192</td></tr>
+<tr><td class="m">b0</td><td class="m">$A084-$A19D</td><td class="w">282</td></tr>
+<tr><td class="m">b0</td><td class="m">$A467-$A47F</td><td class="w">25</td></tr>
+<tr><td class="m">b0</td><td class="m">$A581-$A5B0</td><td class="w">48</td></tr>
+<tr><td class="m">b0</td><td class="m">$A66C-$A6A2</td><td class="w">55</td></tr>
+<tr><td class="m">b3</td><td class="m">$81C9-$81E8</td><td class="w">32</td></tr>
+<tr><td class="m">b3</td><td class="m">$829C-$85FB</td><td class="w">864</td></tr>
+<tr><td class="m">b3</td><td class="m">$866A-$B00E</td><td class="w">10661</td></tr>
+<tr><td class="m">b3</td><td class="m">$B01A-$BFFF</td><td class="w">4070</td></tr>
+<tr><td class="m">b5</td><td class="m">$8000-$AFFF</td><td class="w">12288</td></tr>
+<tr><td class="m">b5</td><td class="m">$B195-$B28A</td><td class="w">246</td></tr>
+<tr><td class="m">b5</td><td class="m">$B3C0-$B3D3</td><td class="w">20</td></tr>
+<tr><td class="m">b5</td><td class="m">$B44C-$B45B</td><td class="w">16</td></tr>
+<tr><td class="m">b5</td><td class="m">$B618-$B628</td><td class="w">17</td></tr>
+<tr><td class="m">b5</td><td class="m">$B687-$B6AB</td><td class="w">37</td></tr>
+<tr><td class="m">b5</td><td class="m">$B764-$B961</td><td class="w">510</td></tr>
+<tr><td class="m">b5</td><td class="m">$BB38-$BB8F</td><td class="w">88</td></tr>
+<tr><td class="m">b5</td><td class="m">$BBFE-$BFFF</td><td class="w">1026</td></tr>
+</table>
+</div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+Generated by re-running <code>tools/disasm.py</code> against the current
+<code>annotations.json</code> and this project's own NTSC cartridge image, then
+classifying bytes with a standalone script kept outside this repository. No project
+file was modified to produce this page.
+</div></footer>
