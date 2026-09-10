@@ -70,6 +70,24 @@ The `.abp` route does this for you: `patchset.py` signs what it writes and
 says so. The two `.bps` files do not, and cannot -- a BPS is a fixed delta,
 and the correct signature depends on which options you chose.
 
+**PAL needs none of this.** No European console checks, and the retail PAL
+cartridge carries `$FF` where a signature would go rather than a signature
+that fails. `mm-pal.abp` therefore signs nothing, and says so.
+
+That holds for a headerless dump as well, which is the case worth calling
+out: a `.bin` has no `.a78` TV byte, and the region cannot be recovered
+from the bytes either -- an unsigned NTSC cartridge and a PAL one look
+identical from the inside. So each bundle declares the region it was built
+for, and the patcher asks the bundle before it asks the file. Checked all
+four ways:
+
+```
+headered   NTSC   signature: valid for a real NTSC 7800
+headerless NTSC   signature: valid for a real NTSC 7800
+headered   PAL    signature: not needed, this is a PAL cartridge
+headerless PAL    signature: not needed, this is a PAL cartridge
+```
+
 ---
 
 ## Repairs

@@ -37,6 +37,14 @@ mistaken for an oversight:
   - `set_music_retick` is PAL only and refuses an NTSC cartridge, which is
     correct; it appears in the PAL bundle alone.
 
+## Signing
+
+The NTSC bundle's output is signed by `patchset.py` on the way out; the
+PAL bundle's is not, because no PAL console checks and the retail PAL
+cartridge carries `$FF` where a signature would go. Each bundle declares
+its region so that holds for a headerless dump too, which has no `.a78`
+TV byte to read.
+
 ## A note on addresses
 
 A 128K bankswitched cartridge has no single CPU address for a file offset,
@@ -178,6 +186,13 @@ def build(region, rel):
             "body_size": len(body),
             "body_sha256": __import__("hashlib").sha256(body).hexdigest(),
             "headers": [0, 128],
+            # A headerless dump carries no TV byte, and the region cannot
+            # be recovered from the bytes -- an unsigned NTSC cartridge and
+            # a PAL one are both $FF where a signature would go. So the
+            # bundle is where that fact has to live: it was built for one
+            # cartridge and says which, and that survives the header being
+            # stripped off the file it is handed.
+            "region": region,
             "base": 0,
             "anchors": anchors,
         },
