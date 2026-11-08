@@ -202,6 +202,16 @@ do their work and restore `$BF` afterwards.
 MARIA `CTRL = $50` — DMA on, one-byte characters, read mode 00 (160×2/160×4).
 The display list list lives at `$0140` in RAM (`DPPH/DPPL`).
 
+> **Corrected 2026-11-08:** `$50` is `0101 0000`, and bit 4 is CWIDTH, so the
+> characters are **two bytes** wide, not one: DMA on (bits 6-5 = `10`), two-byte
+> characters, black border, kangaroo off, read mode 00. MARIA fetches the map
+> byte and the one after it, which gives 8 pixels per character at 160×2.
+> `tools/rooms.py` had already settled this two ways: a 20-character terrain
+> slice is the 160 world units of one exit segment, and every non-zero character
+> number in the room grids is even. `$50` is the playfield value, written at
+> `$4BDD` (`$4BE0` on PAL), `$4087` and `$4161`; the DLI handlers also write
+> `$C3` (`$4107`) and `$40` (`$4056`), both with bit 4 clear.
+
 NMI is MARIA's display-list interrupt. `$400C` is `JMP ($2135)`, an indirect
 jump through RAM, so each DLI installs the handler for the next zone. The chain
 is three handlers, and `tools/disasm.py` rediscovers it automatically by
@@ -226,6 +236,17 @@ STA $8000           ; now safe to page the bank back in
 It parks the CPU until the raster has passed the zone, then swaps banks — bank
 switching mid-zone would pull the graphics out from under MARIA.
 
+> **Corrected 2026-11-08:** `$4150` is not foreground code. It is the tail of
+> the `$4104` handler, reached by falling through from `$414E`, and nothing else
+> branches or jumps to it. The chain from the vector: NMI `$FFFA` → `$400C`
+> `JMP ($2135)` → `$4104`, which pages in bank 0, points `$2135` at `$416F`,
+> clears `$1E68`, sets the top zone's colours, and then spins at `$4152`
+> **inside the NMI**. The next zone's DLI is a second NMI on top of the first
+> (NMI cannot be masked); it runs `$416F`'s `DEC $1E68` and returns into the
+> spin. `$4104` then restores `cur_bank`, `CHARBASE` and `CTRL = $50`, points
+> the vector at `$400F` and returns. So the wait holds the CPU from one DLI to
+> the next, and the foreground program does not run during it.
+
 ## Graphics format
 
 In character-map mode MARIA forms a character's address as
@@ -233,6 +254,11 @@ In character-map mode MARIA forms a character's address as
 page `CHARBASE+0` holds line 0 of all 256 characters, `CHARBASE+1` holds line 1,
 etc. At 160×2 each byte is four 2-bit pixels (MSB first), so one character is
 4 pixels wide.
+
+> **Corrected 2026-11-08:** in play the characters are two bytes wide (`CTRL`
+> bit 4, see [Display](#display)), so a character is **8 pixels** wide: the
+> formula gives its first byte and MARIA reads the second at `char_number + 1`.
+> Each set therefore holds 128 characters, at even numbers.
 
 `CHARBASE` is loaded from `area_page` (`$1FCF`), which is `$80` or `$A0` — the
 two halves of the paged window. `tools/gfx.py` renders these; see `build/gfx/`.

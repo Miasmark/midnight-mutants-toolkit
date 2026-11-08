@@ -9,8 +9,10 @@ graphics as
 
 so a character set is stored *line-planar*: page CHARBASE+0 holds line 0 of all
 256 characters, page CHARBASE+1 holds line 1, and so on.  Midnight Mutants runs
-with CTRL = $50 (read mode 00 = 160x2, one-byte characters), so each character
-is one byte = 4 pixels wide, and each byte holds four 2-bit pixels, MSB first.
+with CTRL = $50 (read mode 00 = 160x2, bit 4 set: two-byte characters), so each
+byte holds four 2-bit pixels, MSB first, and a character is two bytes = 8 pixels
+wide.  This sheet draws one byte per 4-pixel cell; an even character and the odd
+one after it sit side by side, so each tile still reads whole across two cells.
 
 Colour is decided at run time by the MARIA palette registers, so by default this
 renders the raw 2-bit pixel indices as four grey levels -- that shows the real
